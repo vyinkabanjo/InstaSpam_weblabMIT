@@ -12,11 +12,7 @@ import "./Post.css";
  * @param {object} senderInfo object containing sender information
  */
 const Post = (props) => {
-  return (
-    <div>
-      <h1>Post with content: </h1>
-    </div>
-  );
+  return <div>Post with content: {JSON.stringify(props)}</div>;
 };
 
 export default Post;
