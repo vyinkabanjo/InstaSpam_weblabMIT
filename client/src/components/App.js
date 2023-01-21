@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 
 import NotFound from "./pages/NotFound.js";
 import Skeleton from "./pages/Skeleton.js";
-import NavBar from "./pages/NavBar.js";
+import Main from "./pages/Main.js";
 
 import "../utilities.css";
 
@@ -45,7 +45,7 @@ const App = () => {
   return (
     <>
       <Router>
-        <NavBar path="/" />
+        <Main path="/" />
         {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
         <NotFound default />
       </Router>
