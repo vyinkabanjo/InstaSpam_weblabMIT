@@ -13,7 +13,7 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 
 /**
- * Define the "App" component
+ * The main component that renders our web application
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
@@ -45,7 +45,7 @@ const App = () => {
   return (
     <>
       <Router>
-        <Main path="/" />
+        <Main path="/" userId={userId} />
         {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
         <NotFound default />
       </Router>

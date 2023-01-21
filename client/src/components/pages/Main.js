@@ -4,6 +4,12 @@ import Feed from "./Feed";
 
 import "../../utilities.css";
 
+/**
+ * Main is the component responsible for displaying the main dashboard
+ *
+ * Proptypes
+ * @param {string} user_id user id of the client
+ */
 const Main = (props) => {
   return (
     <>
