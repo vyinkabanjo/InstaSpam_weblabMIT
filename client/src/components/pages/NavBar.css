@@ -1,10 +1,27 @@
 .NavBar-container {
     height: 100%;
-    width: var(--xxl);
+    width: var(--navBarWidth);
     border-right: var(--xxs) solid black;
     z-index: 1;
 
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     top: 0; /* Stay at the top */
     left: 0;
+}
+
+.NavBar-headers {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.NavBar-headerItem {
+    display: flex;
+    column-gap: 5%;
+}
+
+#outlook-logo {
+    background: url(../modules/Outlook_Icon.svg) no-repeat center;
+    width: 2.5em;
+    height: 2.5em;
+    background-size: contain;
 }

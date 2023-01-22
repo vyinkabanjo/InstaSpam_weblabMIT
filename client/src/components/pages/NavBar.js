@@ -11,10 +11,15 @@ import "./NavBar.css";
  */
 const NavBar = (props) => {
   return (
-    <nav className="u-flexColumn NavBar-container u-flex-alignCenter">
-      <h1>Outlook</h1>
-      <h1>Home</h1>
-      <h1>Profile</h1>
+    <nav className="NavBar-container">
+      <div className="u-flexColumn NavBar-headers">
+        <div className="NavBar-headerItem u-flex-alignCenter">
+          <div id="outlook-logo" />
+          <h1>Outlook</h1>
+        </div>
+        <h1>Home</h1>
+        <h1>Profile</h1>
+      </div>
     </nav>
   );
 };
