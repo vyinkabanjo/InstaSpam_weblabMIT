@@ -697,7 +697,7 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 // function to return the 
-const parseRawEmails = (rawEmailData) => {
+const parsedRawEmails = (rawEmailData) => {
   rawEmailData.map((email) => {
     // is this syntactically correct? why is it displaying info this way?
     {
@@ -705,43 +705,71 @@ const parseRawEmails = (rawEmailData) => {
       'senderName':email.from.emailAddress.name,
       'header':email.subject,
       'hasAttachment':email.hasAttachments,
-      'attachment':'',
+
+      // not sure if line below is right syntax for function call
+      // 'attachment_64base': "data:image/jpeg;base64," + {getAttachment(email.id)},
+      'attachment': "data:image/jpeg;base64,"
       'emailID': email.id,
       'content': emailbody.content,
-      'links': List, 
+      'links': [], //need to figure out how to filter out the <a></a> from the html content
       'emailURL': email.webLink, 
       'isRead': email.isRead, 
       'isFlagged': email.flag.flagStatus
-
     }
-  });
+  }
+  // TODO: add a ternary operator or some kind of conditional check so that the attachment entry isn't created unless
+  // there is an actual attachment? Can also handle this on the front end side so that the attachment placeholder 
+  // is only displayed if the getAttachment func returns more than empty screen, i.e, attachment var is more than just "data:image/jpeg;base64,"
+  );
 };
 
-router.get("/emails", auth.ensureLoggedIn, (req, res) => {
+router.get("/emails", (req, res) => {
   // make a GET request to Microsoft graph
-  // const options = {
-  //   authProvider,
-  // };
-  // const client = Client.init(options);
-
-  // let emails = client
-  //   .api(
-  //     "/me/messages/AAMkAGQ5ZmE1OWRhLWEyZjMtNDdjMy05MDkxLWE5ZDdjYjk5MGYxOQBGAAAAAADUUd0brNnoRIN5P34i1rIFBwB61lxwDLvUQqZrtY0R3GwIAAAAAAEMAAAP9LzBTsYnT6xwROru1J9IAAGFqNfpAAA="
-  //   )
-  //   .get()
-  //   .then((emails) => console.log(emails));
-
-  // console.log(message);
   // get the JSON data that's returned and store as a constant
   // for now this is just a constant string we have in our back end
   const rawEmailData = GENERIC_EMAILS.value;
   console.log(rawEmailData);
+  res.send(parsedRawEmails);
 });
+
+router.post("/flag", )
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ msg: "API route not found" });
 });
+
+// Functions for later use when the graph API is working:
+
+// GET ATTACHMENT
+// const getAttachment = (emailID) => {
+//   const options = {
+//     authProvider,
+//   };
+  
+//   const client = Client.init(options);
+  
+//   let attachment = client.api('/me/messages/AAMkAGUzY5QKjAAA=/attachments/AAMkAGUzY5QKjAAABEgAQAMkpJI_X-LBFgvrv1PlZYd8=').get();
+//   // /me/messages/{id}/attachments/{id}
+
+//   return attachment.contentBytes
+// }
+
+
+// GET EMAILS
+// const options = {
+//   authProvider,
+// };
+// const client = Client.init(options);
+
+// let emails = client
+//   .api(
+//     "/me/messages/AAMkAGQ5ZmE1OWRhLWEyZjMtNDdjMy05MDkxLWE5ZDdjYjk5MGYxOQBGAAAAAADUUd0brNnoRIN5P34i1rIFBwB61lxwDLvUQqZrtY0R3GwIAAAAAAEMAAAP9LzBTsYnT6xwROru1J9IAAGFqNfpAAA="
+//   )
+//   .get()
+//   .then((emails) => console.log(emails));
+
+// console.log(message);
 
 module.exports = router;
