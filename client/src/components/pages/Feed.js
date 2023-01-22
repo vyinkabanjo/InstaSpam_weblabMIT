@@ -56,7 +56,7 @@ const Feed = (props) => {
   }, []);
 
   return (
-    <div>
+    <section className="u-flexColumn Feed-container">
       {emails.map((emailObj, id) => (
         <Post
           key={id}
@@ -65,7 +65,7 @@ const Feed = (props) => {
           senderInfo={emailObj.senderInfo}
         />
       ))}
-    </div>
+    </section>
   );
 };
 

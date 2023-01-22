@@ -11,11 +11,11 @@ import "./NavBar.css";
  */
 const NavBar = (props) => {
   return (
-    <div>
+    <nav className="u-flexColumn NavBar-container u-flex-alignCenter">
       <h1>Outlook</h1>
       <h1>Home</h1>
       <h1>Profile</h1>
-    </div>
+    </nav>
   );
 };
 

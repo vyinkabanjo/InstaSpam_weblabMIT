@@ -1,0 +1,10 @@
+.NavBar-container {
+    height: 100%;
+    width: var(--xxl);
+    border-right: var(--xxs) solid black;
+    z-index: 1;
+
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    top: 0; /* Stay at the top */
+    left: 0;
+}

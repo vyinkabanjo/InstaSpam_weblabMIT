@@ -15,7 +15,7 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Inter&display=swap");
 
 :root {
   --primary: #396dff;
@@ -25,16 +25,18 @@
   --grey: #f7f7f7;
   --white: #fff;
 
+  --xxs: 1px;
   --xs: 4px;
   --s: 8px;
   --m: 16px;
   --l: 24px;
+  --xxl: 192px;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 300;
 }
 
@@ -79,12 +81,14 @@ form {
   cursor: pointer;
 }
 
+/* TODO: Change Styling of .u-link to reflect wireframe*/
 .u-link {
   color: var(--primary);
   text-decoration: none;
   cursor: pointer;
 }
 
+/* TODO: Add slight grayed background on hover */
 .u-link:hover {
   color: var(--primary--dim);
 }
