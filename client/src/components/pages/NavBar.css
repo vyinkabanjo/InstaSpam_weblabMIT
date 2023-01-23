@@ -1,7 +1,7 @@
 .NavBar-container {
     height: 100%;
     width: var(--navBarWidth);
-    border-right: var(--xxs) solid black;
+    border-right: var(--xxs) solid rgba(221, 221, 221, 0.7);;
     z-index: 1;
 
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
@@ -10,18 +10,37 @@
 }
 
 .NavBar-headers {
-    margin-left: 20%;
-    margin-right: 20%;
+    /* margin-left: 20%; */
+    /* margin-right: 15%; */
+    margin-top: 30%;
 }
 
 .NavBar-headerItem {
+    padding-left: 20%;
     display: flex;
-    column-gap: 5%;
+    column-gap: 15%;
+    height: 64px;
+ 
+    font-weight: 300;
+    text-align: left;
+    font-size: 18px;
+    color:#262626;
+    transition: transform .3s, font-weight .2s,
+     font-size .2s, color .2s, background .4s;
 }
 
-#outlook-logo {
-    background: url(../modules/Outlook_Icon.svg) no-repeat center;
-    width: 2.5em;
-    height: 2.5em;
-    background-size: contain;
+.NavBar-headerItem:hover {
+    transition: transform .3s, font-weight 1s,
+    font-size .5s, color 1s, background .6s;
+    transition-timing-function: cubic-bezier(0,.81,0,1.01);
+    font-weight: 700;
+    font-size: 20px;
+    transform: scale(1.02);
+    background: rgba(233, 233, 233, 0.3);
+    color: #A32E00;
+}
+
+.NavBar-icon {
+    width: var(--xl);
+    height: var(--xl);
 }

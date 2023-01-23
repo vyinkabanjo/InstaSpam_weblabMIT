@@ -1,4 +1,7 @@
 import React from "react";
+import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
+import HomeIcon from "../../public/icons/Home Icon.png";
+import ProfileIcon from "../../public/icons/Profile Icon.png";
 
 import "../../utilities.css";
 import "./NavBar.css";
@@ -13,12 +16,20 @@ const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="u-flexColumn NavBar-headers">
-        <div className="NavBar-headerItem u-flex-alignCenter">
-          <div id="outlook-logo" />
-          <h1>Outlook</h1>
-        </div>
-        <h1>Home</h1>
-        <h1>Profile</h1>
+        <span className="NavBar-headerItem u-flex-alignCenter">
+          <img src={OutlookIcon} className="NavBar-icon" />
+          <p>Outlook</p>
+        </span>
+
+        <span className="NavBar-headerItem u-flex-alignCenter">
+          <img src={HomeIcon} className="NavBar-icon" />
+          <p>Home</p>
+        </span>
+
+        <span className="NavBar-headerItem u-flex-alignCenter">
+          <img src={ProfileIcon} className="NavBar-icon" />
+          <p>Profile</p>
+        </span>
       </div>
     </nav>
   );

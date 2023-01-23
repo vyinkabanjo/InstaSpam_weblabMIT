@@ -15,7 +15,8 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url("https://fonts.googleapis.com/css?family=Inter&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
   --primary: #396dff;
@@ -30,7 +31,9 @@
   --s: 8px;
   --m: 16px;
   --l: 24px;
-  --navBarWidth: 200px;
+  --xl: 40px;
+  --xxl: 80px;
+  --navBarWidth: 225px;
 }
 
 body {
@@ -68,6 +71,11 @@ form {
 .u-horizCenter {
   margin-left: auto;
   margin-right: auto;
+}
+
+.u-bgCenter {
+  background: no-repeat center;
+  background-size: contain;
 }
 
 .u-bold {
