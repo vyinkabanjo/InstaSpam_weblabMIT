@@ -40,7 +40,7 @@
     /* height: 7vh; */
     transform: scale(1.02);
     background: rgba(233, 233, 233, 0.3);
-    color: #A32E00;
+    color: var(--primary);
 }
 
 .NavBar-icon {

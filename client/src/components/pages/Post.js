@@ -1,5 +1,6 @@
 import React from "react";
 import SenderInfo from "./SenderInfo";
+import Attachments from "./Attachments";
 
 import "../../utilities.css";
 import "./Post.css";
@@ -20,6 +21,7 @@ const Post = (props) => {
         email={props.senderInfo.senderEmail}
         time={props.senderInfo.time}
       />
+      <Attachments media={props.attachments} />
       Post with content: {JSON.stringify(props)}
     </article>
   );

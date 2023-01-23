@@ -1,11 +1,11 @@
 .Post-container {
-    border-top: 2px solid #A32E00;
-    border-bottom: 2px solid #A32E00;
+    border-top: 2px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
     overflow:scroll
 }
 
 /* Prevents "Double Borders" issue */
 .Post-container + .Post-container {
     border-top: 0;
-    border-bottom: 2px solid #A32E00;
+    border-bottom: 2px solid var(--primary);
 }
