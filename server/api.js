@@ -6,7 +6,7 @@
 | This file defines the routes for your server.
 |
 */
-GENERIC_EMAILS = {
+const GENERIC_EMAILS = {
   "@odata.context":
     "https://graph.microsoft.com/v1.0/$metadata#users('69a9d829-3df0-4733-9925-0a604cf7b67a')/messages",
   "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/messages?$skip=10",
