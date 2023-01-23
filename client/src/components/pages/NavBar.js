@@ -46,7 +46,7 @@ const NavBar = (props) => {
           <p>Profile</p>
         </span>
         {/* code to create button that sends data to database */}
-        <button onClick={parseDateTime}>Send to DB</button>
+        <button onClick={writetoDB}>Send to DB</button>
       </div>
     </nav>
   );

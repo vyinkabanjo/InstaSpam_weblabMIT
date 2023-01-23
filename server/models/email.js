@@ -15,8 +15,8 @@ const EmailSchema = new mongoose.Schema({
   venue: String,
   emailURL: String,
   isRead: Boolean,
-  isFlagged: Boolean,
-  timeReceived: Date,
+  isFlagged: String,
+  timeReceived: String,
 });
 
 // compile model from schema

@@ -720,10 +720,10 @@ const writeToDb = (email) => {
     attachments: [],
     // attachment: "data:image/jpeg;base64,".concat(GENEREIC_ATTACHMENT),
     emailID: email.id,
-    content: emailbody.content,
-    links: [], //need to figure out how to filter out the <a></a> from the html content
+    content: email.body.content,
+    links: getLinks(email.body.content),
     times: [],
-    relevantDates: [],
+    relevantDates: [chrono.parseDate(email.body.content)],
     venue: "",
     emailURL: email.webLink,
     isRead: email.isRead,
@@ -744,6 +744,20 @@ const parsedRawEmails = (rawEmailData) => {
   });
   return parsedEmails;
   // is this syntactically correct? why is it displaying info this way?
+};
+
+const getLinks = (email_content) => {
+  const rawHTML = email_content;
+  const doc = document.createElement("html");
+  doc.innerHTML = rawHTML;
+  const links = doc.getElementsByTagName("a");
+  const urls = [];
+
+  for (var i = 0; i < links.length; i++) {
+    urls.push(links[i].getAttribute("href"));
+  }
+  return urls;
+  // alert(urls);
 };
 
 // can change to get later
