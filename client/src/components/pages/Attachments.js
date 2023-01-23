@@ -2,7 +2,7 @@ import React from "react";
 import "../../utilities.css";
 import "./Attachments.css";
 /**
- * Post displays content for a specific email
+ * Displays attachment content for a specific emali Post
  *
  * Proptypes
  * @param {Array} media list of attachements

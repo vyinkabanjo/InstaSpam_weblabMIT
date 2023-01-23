@@ -10,8 +10,9 @@ const testEmails = [
     content: {
       subject: "Volunteer to be a Blueprint 2023 Mentor",
       dates: ["2/18", "2/19"],
-      links:
+      links: [
         "https://docs.google.com/forms/d/e/1FAIpQLSeP8qEUv5QPr1D0zD9yUPYvM-DhGfroXMhvwsEnIbCgPL7fAA/viewform",
+      ],
       times: ["7-8:30pm EST"],
       venues: [],
     },
@@ -28,7 +29,7 @@ const testEmails = [
     content: {
       subject: "Introducing OpenCode @ MIT!",
       dates: ["Monday, 16 January"],
-      links: "https://mit.zoom.us/j/99427694577#success",
+      links: ["https://mit.zoom.us/j/99427694577#success"],
       times: ["2pm EST"],
       venues: ["5-134"],
     },

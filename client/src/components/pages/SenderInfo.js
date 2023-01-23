@@ -4,7 +4,7 @@ import "./SenderInfo.css";
 
 import ProfileIcon from "../../public/icons/Profile Icon.png";
 /**
- * Post displays content for a specific email
+ * Displays Sender Information for a specific post
  *
  * Proptypes
  * @param {string} name
