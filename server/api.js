@@ -659,7 +659,7 @@ GENERIC_EMAILS = {
     },
   ],
 };
-// TODO: add 64 base code for a generic attachment 
+// TODO: add 64 base code for a generic attachment
 const load = async (attachment) => {
   try {
     const response = await fetch(attachment);
@@ -670,7 +670,7 @@ const load = async (attachment) => {
   }
 };
 
-load(attachment.txt);
+load("attachment.txt");
 
 const express = require("express");
 
@@ -708,30 +708,31 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-// function to return the 
+// function to return the
 const parsedRawEmails = (rawEmailData) => {
-  rawEmailData.map((email) => {
-    // is this syntactically correct? why is it displaying info this way?
-    {
-      'senderEmail':email.from.emailAddress.address,
-      'senderName':email.from.emailAddress.name,
-      'header':email.subject,
-      'hasAttachment':email.hasAttachments,
+  rawEmailData.map(
+    (email) => {
+      // is this syntactically correct? why is it displaying info this way?
+      return {
+        senderEmail: email.from.emailAddress.address,
+        senderName: email.from.emailAddress.name,
+        header: email.subject,
+        hasAttachment: email.hasAttachments,
 
-      // not sure if line below is right syntax for function call
-      // 'attachment_64base': "data:image/jpeg;base64," + {getAttachment(email.id)},
-      'attachment': "data:image/jpeg;base64,"
-      'emailID': email.id,
-      'content': emailbody.content,
-      'links': [], //need to figure out how to filter out the <a></a> from the html content
-      'emailURL': email.webLink, 
-      'isRead': email.isRead, 
-      'isFlagged': email.flag.flagStatus
+        // not sure if line below is right syntax for function call
+        // 'attachment_64base': "data:image/jpeg;base64," + {getAttachment(email.id)},
+        attachment: "data:image/jpeg;base64,".concat(GENEREIC_ATTACHMENT),
+        emailID: email.id,
+        content: emailbody.content,
+        links: [], //need to figure out how to filter out the <a></a> from the html content
+        emailURL: email.webLink,
+        isRead: email.isRead,
+        isFlagged: email.flag.flagStatus,
+      };
     }
-  }
-  // TODO: add a ternary operator or some kind of conditional check so that the attachment entry isn't created unless
-  // there is an actual attachment? Can also handle this on the front end side so that the attachment placeholder 
-  // is only displayed if the getAttachment func returns more than empty screen, i.e, attachment var is more than just "data:image/jpeg;base64,"
+    // TODO: add a ternary operator or some kind of conditional check so that the attachment entry isn't created unless
+    // there is an actual attachment? Can also handle this on the front end side so that the attachment placeholder
+    // is only displayed if the getAttachment func returns more than empty screen, i.e, attachment var is more than just "data:image/jpeg;base64,"
   );
 };
 
@@ -745,16 +746,16 @@ router.get("/emails", (req, res) => {
 });
 
 // flag incoming emails
-router.post("/flag", auth.ensureLoggedIn, (req, res) => {
-
-}
-)
+router.post("/flag", auth.ensureLoggedIn, (req, res) => {});
 
 // read incoming emails
-router.post("/flag", auth.ensureLoggedIn, (req, res) => {
+router.post("/read", auth.ensureLoggedIn, (req, res) => {
+  console.log("Email read!");
 
-}
-)
+  // patch request code to outlook to mark email as read
+
+  // take email
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
@@ -769,15 +770,14 @@ router.all("*", (req, res) => {
 //   const options = {
 //     authProvider,
 //   };
-  
+
 //   const client = Client.init(options);
-  
+
 //   let attachment = client.api('/me/messages/AAMkAGUzY5QKjAAA=/attachments/AAMkAGUzY5QKjAAABEgAQAMkpJI_X-LBFgvrv1PlZYd8=').get();
 //   // /me/messages/{id}/attachments/{id}
 
 //   return attachment.contentBytes
 // }
-
 
 // GET EMAILS
 // const options = {
