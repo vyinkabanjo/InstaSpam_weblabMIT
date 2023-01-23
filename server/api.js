@@ -663,15 +663,14 @@ GENERIC_EMAILS = {
 const load = async (attachment) => {
   try {
     const response = await fetch(attachment);
-    const data = await response.text();
-    console.log(attachment);
+    const GENEREIC_ATTACHMENT = await response.text();
+    console.log(GENEREIC_ATTACHMENT);
   } catch (err) {
     console.error(err);
   }
 };
 
 load(attachment.txt);
-// GENEREIC_ATTACHMENT = ''
 
 const express = require("express");
 
