@@ -723,7 +723,7 @@ const writeToDb = (email) => {
     content: emailbody.content,
     links: [], //need to figure out how to filter out the <a></a> from the html content
     times: [],
-    relevantDates: [],
+    relevantDates: [chrono.parseDate(emailbody.content)],
     venue: "",
     emailURL: email.webLink,
     isRead: email.isRead,
