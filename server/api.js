@@ -678,6 +678,9 @@ const express = require("express");
 const User = require("./models/user");
 const Email = require("./models/email");
 
+// import chrono library for parsing dates and times
+const chrono = require("chrono-node");
+
 // import authentication library
 const auth = require("./auth");
 
