@@ -1,4 +1,5 @@
 import React from "react";
+import SenderInfo from "./SenderInfo";
 
 import "../../utilities.css";
 import "./Post.css";
@@ -12,7 +13,16 @@ import "./Post.css";
  * @param {object} senderInfo object containing sender information
  */
 const Post = (props) => {
-  return <article>Post with content: {JSON.stringify(props)}</article>;
+  return (
+    <article className="Post-container u-flexColumn">
+      <SenderInfo
+        name={props.senderInfo.sender}
+        email={props.senderInfo.senderEmail}
+        time={props.senderInfo.time}
+      />
+      Post with content: {JSON.stringify(props)}
+    </article>
+  );
 };
 
 export default Post;

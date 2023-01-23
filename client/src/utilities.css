@@ -33,7 +33,8 @@
   --l: 24px;
   --xl: 40px;
   --xxl: 80px;
-  --navBarWidth: 225px;
+  /* --navBarWidth: 14vw; */
+  --navBarWidth: 250px;
 }
 
 body {

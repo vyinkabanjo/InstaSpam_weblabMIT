@@ -13,21 +13,23 @@
     /* margin-left: 20%; */
     /* margin-right: 15%; */
     margin-top: 30%;
+    overflow: hidden;
 }
 
 .NavBar-headerItem {
     padding-left: 20%;
     display: flex;
     column-gap: 15%;
-    height: 64px;
+    height: 6.5vh;
  
     font-weight: 300;
     text-align: left;
     font-size: 18px;
     color:#262626;
     transition: transform .3s, font-weight .2s,
-     font-size .2s, color .2s, background .4s;
+    font-size .2s, color .2s, background .4s;
 }
+
 
 .NavBar-headerItem:hover {
     transition: transform .3s, font-weight 1s,
@@ -35,6 +37,7 @@
     transition-timing-function: cubic-bezier(0,.81,0,1.01);
     font-weight: 700;
     font-size: 20px;
+    /* height: 7vh; */
     transform: scale(1.02);
     background: rgba(233, 233, 233, 0.3);
     color: #A32E00;
