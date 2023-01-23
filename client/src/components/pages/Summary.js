@@ -13,13 +13,13 @@ import "./Attachments.css";
  */
 const Summary = (props) => {
   return (
-    <div className="u-flexColumn u-flex-alignCenter">
+    <div className="u-flexColumn">
       <h1>{props.subject}</h1>
-      <p>Date(s): {props.dates}</p>
-      <p>
-        Relevant Links: <a href={props.links}>here</a>
-      </p>
-      <p>Time(s): {props.times}</p>
+      <span>Date(s): {props.dates.join(", ")}</span>
+      <span>
+        Relevant Links: <a href={props.links.join(", ")}>here</a>
+      </span>
+      <span>Time(s): {props.times.join(", ")}</span>
     </div>
   );
 };

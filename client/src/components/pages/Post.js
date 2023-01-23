@@ -2,6 +2,7 @@ import React from "react";
 import SenderInfo from "./SenderInfo.js";
 import Attachments from "./Attachments.js";
 import Summary from "./Summary.js";
+import Actions from "./Actions.js";
 
 import "../../utilities.css";
 import "./Post.css";
@@ -23,17 +24,16 @@ const Post = (props) => {
         time={props.senderInfo.time}
       />
       <Attachments media={props.attachments} />
-      {/* dates: ["Monday, 16 January"],
-      links: ["https://mit.zoom.us/j/99427694577#success"],
-      times: ["2pm EST"],
-      venues: ["5-134"], */}
-      <Summary
-        subject={props.content.subject}
-        dates={props.content.dates}
-        links={props.content.links}
-        times={props.content.times}
-        venues={props.content.venues}
-      />
+      <div className="u-flex u-flex-alignCenter Post-info">
+        <Summary
+          subject={props.content.subject}
+          dates={props.content.dates}
+          links={props.content.links}
+          times={props.content.times}
+          venues={props.content.venues}
+        />
+        <Actions />
+      </div>
     </article>
   );
 };

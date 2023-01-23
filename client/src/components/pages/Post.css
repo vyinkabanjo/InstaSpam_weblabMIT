@@ -1,11 +1,16 @@
 .Post-container {
     border-top: 2px solid var(--primary);
     border-bottom: 2px solid var(--primary);
-    overflow:scroll
+    overflow:scroll;
+    padding: 2vh 3vw;
 }
 
 /* Prevents "Double Borders" issue */
 .Post-container + .Post-container {
     border-top: 0;
     border-bottom: 2px solid var(--primary);
+}
+
+.Post-info {
+    justify-content: space-between;
 }

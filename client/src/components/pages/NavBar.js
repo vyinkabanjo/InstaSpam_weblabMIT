@@ -17,17 +17,17 @@ const NavBar = (props) => {
     <nav className="NavBar-container">
       <div className="u-flexColumn NavBar-headers">
         <span className="NavBar-headerItem u-flex-alignCenter">
-          <img src={OutlookIcon} className="NavBar-icon" />
+          <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
           <p>Outlook</p>
         </span>
 
         <span className="NavBar-headerItem u-flex-alignCenter">
-          <img src={HomeIcon} className="NavBar-icon" />
+          <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
           <p>Home</p>
         </span>
 
         <span className="NavBar-headerItem u-flex-alignCenter">
-          <img src={ProfileIcon} className="NavBar-icon" />
+          <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
           <p>Profile</p>
         </span>
       </div>
