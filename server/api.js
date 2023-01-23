@@ -659,6 +659,19 @@ GENERIC_EMAILS = {
     },
   ],
 };
+// TODO: add 64 base code for a generic attachment 
+const load = async (attachment) => {
+  try {
+    const response = await fetch(attachment);
+    const data = await response.text();
+    console.log(attachment);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+load(attachment.txt);
+// GENEREIC_ATTACHMENT = ''
 
 const express = require("express");
 
@@ -732,7 +745,17 @@ router.get("/emails", (req, res) => {
   res.send(parsedRawEmails);
 });
 
-router.post("/flag", )
+// flag incoming emails
+router.post("/flag", auth.ensureLoggedIn, (req, res) => {
+
+}
+)
+
+// read incoming emails
+router.post("/flag", auth.ensureLoggedIn, (req, res) => {
+
+}
+)
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
