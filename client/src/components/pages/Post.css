@@ -1,7 +1,7 @@
 .Post-container {
     border-top: 2px solid var(--primary);
     border-bottom: 2px solid var(--primary);
-    overflow:scroll;
+    overflow: auto;
     padding: 2vh 3vw;
 }
 

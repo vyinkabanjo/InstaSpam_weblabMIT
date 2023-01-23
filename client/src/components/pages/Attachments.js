@@ -10,8 +10,8 @@ import "./Attachments.css";
 const Attachments = (props) => {
   return (
     <div className="u-flex u-flex-justifyCenter">
-      {props.media.map((attachment) => (
-        <img src={attachment} alt="Email Attachment" />
+      {props.media.map((attachment, id) => (
+        <img src={attachment} alt="Email Attachment" key={id} />
       ))}
     </div>
   );
