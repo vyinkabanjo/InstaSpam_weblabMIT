@@ -676,6 +676,10 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const Email = require("./models/email");
+
+// import chrono library for parsing dates and times
+const chrono = require("chrono-node");
 
 // import authentication library
 const auth = require("./auth");
@@ -707,39 +711,48 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
-
+const writeToDb = (email) => {
+  const newEmail = new Email({
+    senderEmail: email.from.emailAddress.address,
+    senderName: email.from.emailAddress.name,
+    header: email.subject,
+    hasAttachment: email.hasAttachments,
+    attachments: [],
+    // attachment: "data:image/jpeg;base64,".concat(GENEREIC_ATTACHMENT),
+    emailID: email.id,
+    content: emailbody.content,
+    links: [], //need to figure out how to filter out the <a></a> from the html content
+    times: [],
+    relevantDates: [],
+    venue: "",
+    emailURL: email.webLink,
+    isRead: email.isRead,
+    isFlagged: email.flag.flagStatus,
+    timeReceived: email.receivedDateTime,
+  });
+  newEmail.save();
+  return newEmail;
+  console.log(newEmail);
+  // newEmail.save().then((email) => res.send(email));
+};
 // function to return the
 const parsedRawEmails = (rawEmailData) => {
-  rawEmailData.map((email) => {
-    // is this syntactically correct? why is it displaying info this way?
-    return {
-      senderEmail: email.from.emailAddress.address,
-      senderName: email.from.emailAddress.name,
-      header: email.subject,
-      hasAttachment: email.hasAttachments,
-      attachments: [],
-      // attachment: "data:image/jpeg;base64,".concat(GENEREIC_ATTACHMENT),
-      emailID: email.id,
-      content: emailbody.content,
-      links: [], //need to figure out how to filter out the <a></a> from the html content
-      times: [],
-      relevantDates: [],
-      venue: "",
-      emailURL: email.webLink,
-      isRead: email.isRead,
-      isFlagged: email.flag.flagStatus,
-      timeReceived: email.receivedDateTime,
-    };
+  // write a function writeToDb(email) which takes email input and writes to db
+  // rawEmailData.map(writeToDb)
+  parsedEmails = rawEmailData.map((email) => {
+    writeToDb(email);
   });
+  return parsedEmails;
+  // is this syntactically correct? why is it displaying info this way?
 };
 
-router.get("/emails", (req, res) => {
+// can change to get later
+router.post("/emails", (req, res) => {
   // make a GET request to Microsoft graph
   // get the JSON data that's returned and store as a constant
   // for now this is just a constant string we have in our back end
   const rawEmailData = GENERIC_EMAILS.value;
-  console.log(rawEmailData);
-  res.send(parsedRawEmails);
+  console.log(parsedRawEmails(rawEmailData));
 });
 
 // flag email on feed
