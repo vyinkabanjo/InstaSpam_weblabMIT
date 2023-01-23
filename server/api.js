@@ -670,7 +670,7 @@ const load = async (attachment) => {
   }
 };
 
-load("attachment.txt");
+// load("attachment.txt");
 
 const express = require("express");
 
@@ -745,16 +745,23 @@ router.get("/emails", (req, res) => {
   res.send(parsedRawEmails);
 });
 
-// flag incoming emails
+// flag email on feed
 router.post("/flag", auth.ensureLoggedIn, (req, res) => {});
 
-// read incoming emails
+// patch request code to outlook to mark email as read
+
+// get email ID from mongoDB and create a new document for it in the collection of read emails for the given user
+
+// flag email on feed and maybe display its header on the profile for now
+
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
   console.log("Email read!");
 
   // patch request code to outlook to mark email as read
 
-  // take email
+  // get email ID from mongoDB and create a new document for it in the collection of read emails for the given user
+
+  // should disappear from the user's feed! write function to exclude from user's feed if in 'read emails' DB
 });
 
 // anything else falls to this "not found" case
@@ -762,36 +769,5 @@ router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ msg: "API route not found" });
 });
-
-// Functions for later use when the graph API is working:
-
-// GET ATTACHMENT
-// const getAttachment = (emailID) => {
-//   const options = {
-//     authProvider,
-//   };
-
-//   const client = Client.init(options);
-
-//   let attachment = client.api('/me/messages/AAMkAGUzY5QKjAAA=/attachments/AAMkAGUzY5QKjAAABEgAQAMkpJI_X-LBFgvrv1PlZYd8=').get();
-//   // /me/messages/{id}/attachments/{id}
-
-//   return attachment.contentBytes
-// }
-
-// GET EMAILS
-// const options = {
-//   authProvider,
-// };
-// const client = Client.init(options);
-
-// let emails = client
-//   .api(
-//     "/me/messages/AAMkAGQ5ZmE1OWRhLWEyZjMtNDdjMy05MDkxLWE5ZDdjYjk5MGYxOQBGAAAAAADUUd0brNnoRIN5P34i1rIFBwB61lxwDLvUQqZrtY0R3GwIAAAAAAEMAAAP9LzBTsYnT6xwROru1J9IAAGFqNfpAAA="
-//   )
-//   .get()
-//   .then((emails) => console.log(emails));
-
-// console.log(message);
 
 module.exports = router;
