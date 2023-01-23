@@ -710,30 +710,24 @@ router.post("/initsocket", (req, res) => {
 
 // function to return the
 const parsedRawEmails = (rawEmailData) => {
-  rawEmailData.map(
-    (email) => {
-      // is this syntactically correct? why is it displaying info this way?
-      return {
-        senderEmail: email.from.emailAddress.address,
-        senderName: email.from.emailAddress.name,
-        header: email.subject,
-        hasAttachment: email.hasAttachments,
-
-        // not sure if line below is right syntax for function call
-        // 'attachment_64base': "data:image/jpeg;base64," + {getAttachment(email.id)},
-        attachment: "data:image/jpeg;base64,".concat(GENEREIC_ATTACHMENT),
-        emailID: email.id,
-        content: emailbody.content,
-        links: [], //need to figure out how to filter out the <a></a> from the html content
-        emailURL: email.webLink,
-        isRead: email.isRead,
-        isFlagged: email.flag.flagStatus,
-      };
-    }
-    // TODO: add a ternary operator or some kind of conditional check so that the attachment entry isn't created unless
-    // there is an actual attachment? Can also handle this on the front end side so that the attachment placeholder
-    // is only displayed if the getAttachment func returns more than empty screen, i.e, attachment var is more than just "data:image/jpeg;base64,"
-  );
+  rawEmailData.map((email) => {
+    // is this syntactically correct? why is it displaying info this way?
+    return {
+      senderEmail: email.from.emailAddress.address,
+      senderName: email.from.emailAddress.name,
+      header: email.subject,
+      hasAttachment: email.hasAttachments,
+      attachments: [],
+      // attachment: "data:image/jpeg;base64,".concat(GENEREIC_ATTACHMENT),
+      emailID: email.id,
+      content: emailbody.content,
+      links: [], //need to figure out how to filter out the <a></a> from the html content
+      emailURL: email.webLink,
+      isRead: email.isRead,
+      isFlagged: email.flag.flagStatus,
+      timeReceived: email.receivedDateTime,
+    };
+  });
 };
 
 router.get("/emails", (req, res) => {
