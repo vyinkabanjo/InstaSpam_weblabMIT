@@ -710,7 +710,22 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
-const writeToDb = (email) => {
+const getLinks = (email_content) => {
+  const rawHTML = email_content;
+  const doc = document.createElement("html");
+  doc.innerHTML = rawHTML;
+  const links = doc.getElementsByTagName("a");
+  const urls = [];
+
+  for (let i = 0; i < links.length; i++) {
+    urls.push(links[i].getAttribute("href"));
+  }
+  return urls;
+  // console.log(urls);
+};
+// return urls;
+
+const writeToDB = (email) => {
   const newEmail = new Email({
     senderEmail: email.from.emailAddress.address,
     senderName: email.from.emailAddress.name,
@@ -719,9 +734,10 @@ const writeToDb = (email) => {
     attachments: [],
     emailID: email.id,
     content: email.body.content,
-    links: getLinks(email.body.content),
+    links: [],
+    // links: getLinks(email.body.content),
     times: [],
-    relevantDates: [chrono.parseDate(email.body.content)],
+    relevantDates: chrono.parse(email.body.content)[0].text,
     venue: "",
     emailURL: email.webLink,
     isRead: email.isRead,
@@ -735,33 +751,22 @@ const writeToDb = (email) => {
 const parsedRawEmails = (rawEmailData) => {
   const parsedEmails = rawEmailData.map((email) => {
     // console.log(email);
-    writeToDb(email);
+    writeToDB(email);
   });
   return parsedEmails;
 };
 
-const getLinks = (email_content) => {
-  const rawHTML = email_content;
-  const doc = document.createElement("html");
-  doc.innerHTML = rawHTML;
-  const links = doc.getElementsByTagName("a");
-  const urls = [];
-
-  for (var i = 0; i < links.length; i++) {
-    urls.push(links[i].getAttribute("href"));
-  }
-  return urls;
-  // alert(urls);
-};
-
-// can change to get later
+// send dummy data to database
 router.post("/emails", (req, res) => {
-  // make a GET request to Microsoft graph
-  // get the JSON data that's returned and store as a constant
-  // for now GENERIC_EMAILS is just a constant string we have in our back end
   const rawEmailData = GENERIC_EMAILS.value;
   parsedRawEmails(rawEmailData);
-  res.send("posted!");
+  // res.send("posted!");
+});
+
+// get data from database
+router.get("/emails", (req, res) => {
+  // empty selector means get all documents
+  Email.find({}).then((emails) => res.send(emails));
 });
 
 // flag email on feed

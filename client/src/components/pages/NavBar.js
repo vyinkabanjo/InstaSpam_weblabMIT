@@ -23,23 +23,6 @@ const writetoDB = () => {
   });
 };
 
-const getLinks = (email_content) => {
-  const rawHTML = email_content;
-  const doc = document.createElement("html");
-  doc.innerHTML = rawHTML;
-  const links = doc.getElementsByTagName("a");
-  const urls = [];
-
-  for (var i = 0; i < links.length; i++) {
-    urls.push(links[i].getAttribute("href"));
-  }
-  console.log(urls);
-  // return urls;
-  // alert(urls);
-};
-
-// const URLS = getLinks(TEST_CONTENT);
-
 const parseDateTime = () => {
   const result = chrono.parse(TEST_CONTENT);
   console.log(result[0].text);
