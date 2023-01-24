@@ -1,7 +1,7 @@
 .NavBar-container {
     height: 100%;
     width: var(--navBarWidth);
-    border-right: var(--xxs) solid rgba(221, 221, 221, 0.7);
+    border-right: var(--xxs) solid var(--transparent-gray);
     z-index: 1;
 
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */

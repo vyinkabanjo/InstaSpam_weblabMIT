@@ -11,7 +11,7 @@ const EmailSchema = new mongoose.Schema({
   content: String,
   links: Array,
   times: Array,
-  relevantDates: Array,
+  relevantDates: String,
   venue: String,
   emailURL: String,
   isRead: Boolean,

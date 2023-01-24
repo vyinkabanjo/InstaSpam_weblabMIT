@@ -1,6 +1,5 @@
 /* TODO: Make right border a static div */
 .Feed-container {
     margin-left: var(--navBarWidth);
-    margin-right: var(--navBarWidth);
-    border-right: var(--xxs) solid rgba(221, 221, 221, 0.7);
+    margin-right: var(--rightBarWidth);
 }
