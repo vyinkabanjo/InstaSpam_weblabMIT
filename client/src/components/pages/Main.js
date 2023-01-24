@@ -15,7 +15,7 @@ const Main = (props) => {
   return (
     <>
       <NavBar />
-      <Feed />
+      <Feed userId={props.userId} />
       <div className="Main-RightSidebar"></div>
     </>
   );
