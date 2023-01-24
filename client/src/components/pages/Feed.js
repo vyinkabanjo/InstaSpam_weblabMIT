@@ -53,8 +53,9 @@ const Feed = (props) => {
 
   useEffect(() => {
     //TODO: Replace this with an API call
-    emailSetter(testEmails);
-  }, []);
+    get("/api/emails").then((emailObjs) => {
+      emailSetter(emailObjs);
+  },[]);
 
   return (
     <section className="u-flexColumn Feed-container">
