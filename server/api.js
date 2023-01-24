@@ -57,7 +57,7 @@ router.get("/emails", (req, res) => {
 // flag email on feed
 router.post("/flag", auth.ensureLoggedIn, (req, res) => {
   const flagEmail = new FlagEmail({
-    userID: req.body.userId,
+    userID: req.body.userID,
     subject: req.body.subject,
     emailID: req.body.emailID,
   });
@@ -67,6 +67,7 @@ router.post("/flag", auth.ensureLoggedIn, (req, res) => {
 router.get("/read", (req, res) => {
   // TODO: use the userID to narrow in on the find
   ReadEmail.find({}).then((emailsRead) => {
+    // ReadEmail.find({ userID: req.query.userID }).then((emailsRead) => {
     let excludedEmails = emailsRead.map((emails) => emails.emailID);
     res.send(excludedEmails);
   });
