@@ -57,6 +57,9 @@ const Feed = (props) => {
       emailSetter(emailObjs);
   },[]);
 
+  let emailsList = null; 
+  const hasEmails = emails.length !== 0; 
+
   return (
     <section className="u-flexColumn Feed-container">
       {emails.map((emailObj, id) => (
