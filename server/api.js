@@ -738,7 +738,7 @@ const writeToDB = (email) => {
     content: email.body.content,
     links: [],
     // links: getLinks(email.body.content),
-    // times: [],
+    times: [],
     relevantDates: chrono.parse(email.body.content)[0].text,
     venue: "",
     emailURL: email.webLink,

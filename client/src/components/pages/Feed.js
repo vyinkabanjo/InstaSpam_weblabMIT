@@ -48,30 +48,45 @@ const testEmails = [
  * Proptypes
  * @param {string} user_id user id of the client
  */
+
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
 
   useEffect(() => {
     //TODO: Replace this with an API call
-    // get("/api/emails").then((emailObjs) => {
-    //   emailSetter(emailObjs);
-    // });
-    emailSetter(testEmails);
+    get("/api/emails").then((emailObjs) => {
+      emailSetter(emailObjs);
+    });
+    // emailSetter(testEmails);
   }, []);
 
   let emailsList = null;
   const hasEmails = emails.length !== 0;
 
+  if (hasEmails) {
+    emailsList = emails.map((emailObj,id) => {
+      <Post
+          key={id}
+          // content={emailObj.content}
+          attachments={emailObj.attachments}
+          senderEmail={emailObj.senderEmail}
+          senderName = {emailObj.senderName}
+          header = {emailObj.header}
+          timeReceived = {emailObj.timeReceived}
+          emailURL = {emailObj.emailURL}
+          links = {emailObj.links}
+          dates = {emailObj.relevantDates}
+          times = {emailObj.times}
+          isRead = {emailObj.isRead}
+          isFlagged = {emailObj.isFlagged}
+
+      />
+    }
+  }
+
   return (
     <section className="u-flexColumn Feed-container">
-      {emails.map((emailObj, id) => (
-        <Post
-          key={id}
-          content={emailObj.content}
-          attachments={emailObj.attachments}
-          senderInfo={emailObj.senderInfo}
-        />
-      ))}
+      {emailsList}
     </section>
   );
 };
