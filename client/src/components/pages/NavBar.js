@@ -50,10 +50,6 @@ const NavBar = (props) => {
           <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
           <p>Profile</p>
         </span>
-        <span className="NavBar-headerItem u-flex-alignCenter">
-          {/* code to create button that sends data to database */}
-          <button onClick={writetoDB}>Send to DB</button>
-        </span>
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           {props.userId ? (
             <button

@@ -4,6 +4,7 @@ import { get } from "../../utilities";
 import "../../utilities.css";
 import "./Feed.css";
 import Post from "./Post";
+import { get, post } from "../../utilities";
 
 // Test emails for ensuring the front end works correctly
 const testEmails = [
@@ -49,32 +50,77 @@ const testEmails = [
  * Proptypes
  * @param {string} user_id user id of the client
  */
+
+const getLinks = (email_content) => {
+  const rawHTML = email_content;
+  const doc = document.createElement("html");
+  doc.innerHTML = rawHTML;
+  const links = doc.getElementsByTagName("a");
+  const urls = [];
+
+  for (let i = 0; i < links.length; i++) {
+    urls.push(links[i].getAttribute("href"));
+  }
+  return urls;
+  // console.log(urls);
+};
+
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
+  const [readEmailIDs, emailsReadSetter] = useState([]);
 
-  useEffect(() => {
+useEffect(() => {
     //TODO: Replace this with an API call
-    emailSetter(testEmails);
-    // get("/api/emails").then((emailObjs) => {
-    //   emailSetter(emailObjs);
-    // });
+    get("/api/read").then((readEmails) => {
+      emailsReadSetter(readEmails);
+    });
+    get("/api/emails").then((emailObjs) => {
+      // apply a filter here for things in the api/read!
+      emailSetter(emailObjs);
+    });
   }, []);
+  const ReadEmail = (email_ID, subject) => {
+    // post("/api/read", { userId: props.userId, emailID: email_ID });
+    post("/api/read", { emailID: email_ID, subject: subject });
+  };
+  const FlagEmail = (email_ID, subject) => {
+    post("/api/flag", { emailID: email_ID, subject: subject });
+    // post("/api/flag", { userId: props.userId, emailID: email_ID });
+    // TODO: add code to change the color of the flag icon to red?
+  };
+
+  console.log(readEmailIDs);
 
   let emailsList = null;
   const hasEmails = emails.length !== 0;
 
-  return (
-    <section className="u-flexColumn Feed-container">
-      {emails.map((emailObj, id) => (
-        <Post
-          key={id}
-          content={emailObj.content}
-          attachments={emailObj.attachments}
-          senderInfo={emailObj.senderInfo}
-        />
-      ))}
-    </section>
-  );
+  if (hasEmails) {
+    emailsList = emails.filter((email) => !readEmailIDs.includes(email.emailID));
+    emailsList = emailsList.map((emailObj, id) => (
+      <Post
+        key={id}
+        // content={emailObj.content}
+        emailID={emailObj.emailID}
+        attachments={emailObj.attachments}
+        senderEmail={emailObj.senderEmail}
+        senderName={emailObj.senderName}
+        header={emailObj.header}
+        timeReceived={emailObj.timeReceived}
+        emailURL={emailObj.emailURL}
+        links={getLinks(emailObj.content)}
+        dates={emailObj.relevantDates}
+        venue={emailObj.venue}
+        times={emailObj.times}
+        isRead={emailObj.isRead}
+        isFlagged={emailObj.isFlagged}
+        readEmail={ReadEmail}
+        flagEmail={FlagEmail}
+      />
+    ));
+    console.log(emailsList);
+  }
+
+  return <section className="u-flexColumn Feed-container">{emailsList}</section>;
 };
 
 export default Feed;
