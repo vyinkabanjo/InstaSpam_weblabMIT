@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import Feed from "./Feed";
 
 import "../../utilities.css";
+import "./Main.css";
 
 /**
  * Main is the component responsible for displaying the main dashboard
@@ -15,6 +16,7 @@ const Main = (props) => {
     <>
       <NavBar />
       <Feed />
+      <div className="Main-RightSidebar"></div>
     </>
   );
 };
