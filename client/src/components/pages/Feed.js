@@ -82,7 +82,6 @@ const Feed = (props) => {
     // post("/api/read", { userId: props.userId, emailID: email_ID });
     post("/api/read", { emailID: email_ID, subject: subject });
   };
-
   const FlagEmail = (email_ID, subject) => {
     post("/api/flag", { emailID: email_ID, subject: subject });
     // post("/api/flag", { userId: props.userId, emailID: email_ID });

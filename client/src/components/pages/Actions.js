@@ -6,6 +6,7 @@ import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
 import PinIcon from "../../public/icons/Pin Icon.png";
 import MailIcon from "../../public/icons/Mail Icon.png";
 import FlagIcon from "../../public/icons/Flag Icon.png";
+import RedFlagIcon from "../../public/icons/RedFlag Icon.png";
 
 /**
  * Displays Action information for a specific email Post
@@ -40,7 +41,11 @@ const Actions = (props) => {
           props.FlagEmail(props.emailID, props.subject);
         }}
       >
-        <img src={FlagIcon} alt="Flag Icon" className="Actions-icon" />
+        {flagged ? (
+          <img src={RedFlagIcon} alt="Flag Icon" className="Actions-icon" />
+        ) : (
+          <img src={FlagIcon} alt="Flag Icon" className="Actions-icon" />
+        )}
       </button>
       <button className="Actions-button">
         <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" />
