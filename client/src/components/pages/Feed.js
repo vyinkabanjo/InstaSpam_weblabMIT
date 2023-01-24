@@ -39,7 +39,7 @@ const Feed = (props) => {
       emailSetter(emailObjs);
     });
     //TODO: get flagged emails to display on the user's profile
-  }, []);
+  }, [readEmailIDs]);
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userId, emailID: email_ID, subject: subject }).then(() => {
       emailsReadSetter(readEmailIDs);
