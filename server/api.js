@@ -749,7 +749,6 @@ const parsedRawEmails = (rawEmailData) => {
 router.post("/emails", (req, res) => {
   const rawEmailData = GENERIC_EMAILS.value;
   parsedRawEmails(rawEmailData);
-  // res.send("posted!");
 });
 
 // get data from database
@@ -769,9 +768,16 @@ router.post("/flag", (req, res) => {
   flagEmail.save().then(res.send(flagEmail));
 });
 
-// patch request code to outlook to mark email as read
+router.get("/read", (req, res) => {
+  // TODO: use the userID to narrow in on the find
+  ReadEmail.find({}).then((emailsRead) => {
+    let excludedEmails = emailsRead.map((emails) => emails.emailID);
+    res.send(excludedEmails);
+  });
+  // console.log(emailsRead);
+});
 
-// flag email on feed and maybe display its header on the profile for now
+// TODO: patch request code to outlook to mark email as read
 
 // router.post("/read", auth.ensureLoggedIn, (req, res) => {
 router.post("/read", (req, res) => {

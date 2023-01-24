@@ -66,15 +66,18 @@ const getLinks = (email_content) => {
 
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
+  const [readEmailIDs, emailsReadSetter] = useState([]);
 
   useEffect(() => {
     //TODO: Replace this with an API call
+    get("/api/read").then((readEmails) => {
+      emailsReadSetter(readEmails);
+    });
     get("/api/emails").then((emailObjs) => {
+      // apply a filter here for things in the api/read!
       emailSetter(emailObjs);
     });
-    // emailSetter(testEmails);
   }, []);
-
   const ReadEmail = (email_ID, subject) => {
     // post("/api/read", { userId: props.userId, emailID: email_ID });
     post("/api/read", { emailID: email_ID, subject: subject });
@@ -86,11 +89,14 @@ const Feed = (props) => {
     // TODO: add code to change the color of the flag icon to red?
   };
 
+  console.log(readEmailIDs);
+
   let emailsList = null;
   const hasEmails = emails.length !== 0;
 
   if (hasEmails) {
-    emailsList = emails.map((emailObj, id) => (
+    emailsList = emails.filter((email) => !readEmailIDs.includes(email.emailID));
+    emailsList = emailsList.map((emailObj, id) => (
       <Post
         key={id}
         // content={emailObj.content}

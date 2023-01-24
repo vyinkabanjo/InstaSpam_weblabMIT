@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../utilities.css";
 import "./Actions.css";
 
@@ -6,7 +6,6 @@ import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
 import PinIcon from "../../public/icons/Pin Icon.png";
 import MailIcon from "../../public/icons/Mail Icon.png";
 import FlagIcon from "../../public/icons/Flag Icon.png";
-import { get, post } from "../../utilities";
 
 /**
  * Displays Action information for a specific email Post
@@ -14,12 +13,20 @@ import { get, post } from "../../utilities";
  * Proptypes
  */
 const Actions = (props) => {
+  const [buttonClick, setButton] = useState(false);
+  const [flagged, setFlagged] = useState(false);
+
+  useEffect(() => {
+    setButton(!buttonClick);
+  }, []);
+
   return (
     <div className="u-flexColumn u-flex-alignCenter">
       <button
         className="Actions-button"
         type="button"
         onClick={() => {
+          setButton;
           props.ReadEmail(props.emailID, props.subject);
         }}
       >
@@ -29,6 +36,7 @@ const Actions = (props) => {
         className="Actions-button"
         type="button"
         onClick={() => {
+          setFlagged(!flagged);
           props.FlagEmail(props.emailID, props.subject);
         }}
       >
