@@ -763,23 +763,24 @@ router.get("/emails", (req, res) => {
 router.post("/flag", (req, res) => {
   const flagEmail = new FlagEmail({
     // userID: req.body.userId,
+    subject: req.body.subject,
     emailID: req.body.emailID,
   });
-  flagEmail.save();
+  flagEmail.save().then(res.send(flagEmail));
 });
 
 // patch request code to outlook to mark email as read
 
-// get email ID from mongoDB and create a new document for it in the collection of read emails for the given user
-
 // flag email on feed and maybe display its header on the profile for now
 
-router.post("/read", auth.ensureLoggedIn, (req, res) => {
+// router.post("/read", auth.ensureLoggedIn, (req, res) => {
+router.post("/read", (req, res) => {
   const readEmail = new ReadEmail({
-    userID: req.body.userId,
+    // userID: req.body.userId,
+    subject: req.body.subject,
     emailID: req.body.emailID,
   });
-  readEmail.save();
+  readEmail.save().then(res.send(readEmail));
 
   // get email ID from mongoDB and create a new document for it in the collection of read emails for the given user
 
