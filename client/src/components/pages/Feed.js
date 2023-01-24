@@ -53,9 +53,10 @@ const Feed = (props) => {
 
   useEffect(() => {
     //TODO: Replace this with an API call
-    get("/api/emails").then((emailObjs) => {
-      emailSetter(emailObjs);
-    });
+    // get("/api/emails").then((emailObjs) => {
+    //   emailSetter(emailObjs);
+    // });
+    emailSetter(testEmails);
   }, []);
 
   let emailsList = null;
