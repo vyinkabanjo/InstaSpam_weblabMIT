@@ -14,7 +14,11 @@ import "./Main.css";
 const Main = (props) => {
   return (
     <>
-      <NavBar />
+      <NavBar
+        userId={props.userId}
+        handleLogin={props.handleLogin}
+        handleLogout={props.handleLogout}
+      />
       <Feed />
       <div className="Main-RightSidebar"></div>
     </>

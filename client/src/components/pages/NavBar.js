@@ -5,6 +5,9 @@ import ProfileIcon from "../../public/icons/Profile Icon.png";
 import { get } from "../../utilities";
 import { post } from "../../utilities";
 import * as chrono from "chrono-node";
+import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
+
+const GOOGLE_CLIENT_ID = "711219562850-kft2385qcmndjq2p9dviq87fv5dao8er.apps.googleusercontent.com";
 
 import "../../utilities.css";
 import "./NavBar.css";
@@ -47,8 +50,24 @@ const NavBar = (props) => {
           <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
           <p>Profile</p>
         </span>
-        {/* code to create button that sends data to database */}
-        <button onClick={writetoDB}>Send to DB</button>
+        <span className="NavBar-headerItem u-flex-alignCenter">
+          {/* code to create button that sends data to database */}
+          <button onClick={writetoDB}>Send to DB</button>
+        </span>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          {props.userId ? (
+            <button
+              onClick={() => {
+                googleLogout();
+                props.handleLogout();
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
+          )}
+        </GoogleOAuthProvider>
       </div>
     </nav>
   );
