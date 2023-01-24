@@ -64,6 +64,10 @@ const getLinks = (email_content) => {
   // console.log(urls);
 };
 
+const ReadEmail = () => {};
+
+const FlagEmail = () => {};
+
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
 

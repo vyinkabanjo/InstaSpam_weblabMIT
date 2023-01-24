@@ -14,7 +14,7 @@ import ProfileIcon from "../../public/icons/Profile Icon.png";
 
 const SenderInfo = (props) => {
   return (
-    <div className="u-flex u-flex-alignCenter u-flex-justifyCenter SenderInfo-div">
+    <div className="u-flex u-flex-alignCenter SenderInfo-div">
       {props.name} | {props.email} | {props.time}{" "}
       <div>
         <img className="SenderInfo-icon" src={ProfileIcon} />
