@@ -75,16 +75,16 @@ const Feed = (props) => {
     // emailSetter(testEmails);
   }, []);
 
-  // const ReadEmail = (email_ID, subject) => {
-  //   // post("/api/read", { userId: props.userId, emailID: email_ID });
-  //   post("/api/read", { emailID: email_ID, subject: subject });
-  // };
+  const ReadEmail = (email_ID, subject) => {
+    // post("/api/read", { userId: props.userId, emailID: email_ID });
+    post("/api/read", { emailID: email_ID, subject: subject });
+  };
 
-  // const FlagEmail = (email_ID, subject) => {
-  //   post("/api/flag", { emailID: email_ID, subject: subject });
-  //   // post("/api/flag", { userId: props.userId, emailID: email_ID });
-  //   // TODO: add code to change the color of the flag icon to red?
-  // };
+  const FlagEmail = (email_ID, subject) => {
+    post("/api/flag", { emailID: email_ID, subject: subject });
+    // post("/api/flag", { userId: props.userId, emailID: email_ID });
+    // TODO: add code to change the color of the flag icon to red?
+  };
 
   let emailsList = null;
   const hasEmails = emails.length !== 0;
@@ -107,8 +107,8 @@ const Feed = (props) => {
         times={emailObj.times}
         isRead={emailObj.isRead}
         isFlagged={emailObj.isFlagged}
-        // readEmail={ReadEmail}
-        // flagEmail={FlagEmail}
+        readEmail={ReadEmail}
+        flagEmail={FlagEmail}
       />
     ));
     console.log(emailsList);

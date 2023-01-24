@@ -53,8 +53,8 @@ const Post = (props) => {
         <Actions
           subject={props.header}
           emailID={props.emailID}
-          // readEmail={props.readEmail}
-          // flagEmail={props.flagEmail}
+          ReadEmail={props.readEmail}
+          FlagEmail={props.flagEmail}
         />
       </div>
     </article>
