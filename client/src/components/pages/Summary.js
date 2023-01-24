@@ -16,7 +16,8 @@ const Summary = (props) => {
     return (
       <div className="u-flexColumn">
         <h1>{props.subject}</h1>
-        <span>Date(s): {props.dates}</span>
+        {props.dates !== "null" ? <span>Date(s): {props.dates}</span> : <span></span>}
+        {/* <span>Date(s): {props.dates}</span> */}
         <span>
           Relevant Links: <a href={props.links.join(", ")}>here</a>
         </span>
