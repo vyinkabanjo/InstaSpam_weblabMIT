@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { get } from "../../utilities";
 
 import "../../utilities.css";
 import "./Feed.css";
@@ -68,7 +69,7 @@ const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
   const [readEmailIDs, emailsReadSetter] = useState([]);
 
-  useEffect(() => {
+useEffect(() => {
     //TODO: Replace this with an API call
     get("/api/read").then((readEmails) => {
       emailsReadSetter(readEmails);
