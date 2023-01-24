@@ -15,10 +15,16 @@ import FlagIcon from "../../public/icons/Flag Icon.png";
 const Actions = (props) => {
   return (
     <div className="u-flexColumn u-flex-alignCenter">
-      <img src={MailIcon} alt="Mail Icon" className="Actions-icon" />
-      <img src={PinIcon} alt="Pin Icon" className="Actions-icon" />
-      <img src={FlagIcon} alt="Flag Icon" className="Actions-icon" />
-      <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" />
+      <button className="Actions-button">
+        <img src={MailIcon} alt="Mail Icon" className="Actions-icon" />
+      </button>
+      <button className="Actions-button">
+        <img src={FlagIcon} alt="Flag Icon" className="Actions-icon" />
+      </button>
+      <button className="Actions-button">
+        <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" />
+      </button>
+      {/* <img src={PinIcon} alt="Pin Icon" className="Actions-icon" /> */}
     </div>
   );
 };
