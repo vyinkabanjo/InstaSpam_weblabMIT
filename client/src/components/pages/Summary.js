@@ -12,7 +12,7 @@ import "./Attachments.css";
  * @param {string[]} venues event venues
  */
 const Summary = (props) => {
-  if (props.links !== []) {
+  if (props.links.length !== 0) {
     return (
       <div className="u-flexColumn">
         <h1>{props.subject}</h1>
