@@ -1,4 +1,9 @@
 .SenderInfo-icon {
-    width: var(--l);
-    height: var(--l);
+  width: var(--l);
+  height: var(--l);
+}
+
+.SenderInfo-div {
+  display: flex;
+  justify-content: space-between;
 }
