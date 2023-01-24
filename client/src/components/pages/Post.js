@@ -34,6 +34,11 @@ const parseDateTime = (dateTime) => {
   return result;
 };
 const Post = (props) => {
+  // bad practice but need to re-render this post ugh
+  // const [pageRefresh, refreshPage] = useState(false);
+
+  // useEffect(() => {}, [<Actions />]);
+
   return (
     <article className="Post-container u-flexColumn">
       <SenderInfo

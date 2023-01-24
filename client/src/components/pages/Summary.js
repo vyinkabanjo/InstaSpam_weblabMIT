@@ -19,7 +19,7 @@ const Summary = (props) => {
         {props.dates !== "null" ? <span>Date(s): {props.dates}</span> : <span></span>}
         {/* <span>Date(s): {props.dates}</span> */}
         <span>
-          Relevant Links: <a href={props.links.join(", ")}>here</a>
+          Relevant Links: <a href={props.links[0]}>here</a>
         </span>
         {/* <span>Time(s): {props.times.join(", ")}</span> */}
       </div>
