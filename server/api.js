@@ -670,7 +670,6 @@ const load = async (attachment) => {
     console.error(err);
   }
 };
-
 // load("attachment.txt");
 
 const express = require("express");
@@ -678,6 +677,8 @@ const express = require("express");
 // import models so we can interact with the database
 const User = require("./models/user");
 const Email = require("./models/email");
+const ReadEmail = require("./models/readEmail");
+const FlagEmail = require("./models/flagged");
 
 // import chrono library for parsing dates and times
 const chrono = require("chrono-node");
@@ -758,7 +759,14 @@ router.get("/emails", (req, res) => {
 });
 
 // flag email on feed
-router.post("/flag", auth.ensureLoggedIn, (req, res) => {});
+// router.post("/flag", auth.ensureLoggedIn, (req, res) => {
+router.post("/flag", (req, res) => {
+  const flagEmail = new FlagEmail({
+    // userID: req.body.userId,
+    emailID: req.body.emailID,
+  });
+  flagEmail.save();
+});
 
 // patch request code to outlook to mark email as read
 
@@ -767,9 +775,11 @@ router.post("/flag", auth.ensureLoggedIn, (req, res) => {});
 // flag email on feed and maybe display its header on the profile for now
 
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
-  console.log("Email read!");
-
-  // patch request code to outlook to mark email as read
+  const readEmail = new ReadEmail({
+    userID: req.body.userId,
+    emailID: req.body.emailID,
+  });
+  readEmail.save();
 
   // get email ID from mongoDB and create a new document for it in the collection of read emails for the given user
 

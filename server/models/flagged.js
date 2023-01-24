@@ -7,4 +7,4 @@ const flaggedEmailSchema = new mongoose.Schema({
 });
 
 // compile model from schema
-module.exports = mongoose.model("flaggedEmail", EmailSchema);
+module.exports = mongoose.model("flaggedEmail", flaggedEmailSchema);

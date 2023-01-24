@@ -15,10 +15,10 @@ import FlagIcon from "../../public/icons/Flag Icon.png";
 const Actions = (props) => {
   return (
     <div className="u-flexColumn u-flex-alignCenter">
-      <button className="Actions-button">
+      <button className="Actions-button" onClick={props.readEmail(props.emailID)}>
         <img src={MailIcon} alt="Mail Icon" className="Actions-icon" />
       </button>
-      <button className="Actions-button">
+      <button className="Actions-button" onClick={props.flagEmail(props.emailID)}>
         <img src={FlagIcon} alt="Flag Icon" className="Actions-icon" />
       </button>
       <button className="Actions-button">

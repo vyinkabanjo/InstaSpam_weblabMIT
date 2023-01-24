@@ -50,7 +50,7 @@ const Post = (props) => {
           times={props.times}
           venue={props.venue}
         />
-        <Actions />
+        <Actions emailID={props.emailID} readEmail={props.readEmail} flagEmail={props.flagEmail} />
       </div>
     </article>
   );

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../../utilities.css";
 import "./Feed.css";
 import Post from "./Post";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 
 // Test emails for ensuring the front end works correctly
 const testEmails = [
@@ -64,10 +64,6 @@ const getLinks = (email_content) => {
   // console.log(urls);
 };
 
-const ReadEmail = () => {};
-
-const FlagEmail = () => {};
-
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
 
@@ -78,6 +74,15 @@ const Feed = (props) => {
     });
     // emailSetter(testEmails);
   }, []);
+
+  const ReadEmail = (email_ID) => {
+    post("/api/read", { userId: props.userId, emailID: email_ID });
+  };
+
+  const FlagEmail = (email_ID) => {
+    post("/api/flag", { userId: props.userId, emailID: email_ID });
+    // TODO: add code to change the color of the flag icon to red?
+  };
 
   let emailsList = null;
   const hasEmails = emails.length !== 0;
@@ -100,6 +105,8 @@ const Feed = (props) => {
         times={emailObj.times}
         isRead={emailObj.isRead}
         isFlagged={emailObj.isFlagged}
+        readEmail={ReadEmail}
+        flagEmail={FlagEmail}
       />
     ));
     console.log(emailsList);
