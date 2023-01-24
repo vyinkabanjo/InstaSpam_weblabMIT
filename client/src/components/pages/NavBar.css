@@ -1,49 +1,70 @@
 .NavBar-container {
-    height: 100%;
-    width: var(--navBarWidth);
-    border-right: var(--xxs) solid var(--transparent-gray);
-    z-index: 1;
+  height: 100%;
+  width: var(--navBarWidth);
+  border-right: var(--xxs) solid var(--transparent-gray);
+  z-index: 1;
 
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    top: 0; /* Stay at the top */
-    left: 0;
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  top: 0; /* Stay at the top */
+  left: 0;
 }
 
 .NavBar-headers {
-    /* margin-left: 20%; */
-    /* margin-right: 15%; */
-    margin-top: 30%;
-    overflow: hidden;
+  /* margin-left: 20%; */
+  /* margin-right: 15%; */
+  margin-top: 30%;
+  overflow: hidden;
 }
 
 .NavBar-headerItem {
-    padding-left: 20%;
-    display: flex;
-    column-gap: 15%;
-    height: 6.5vh;
- 
-    font-weight: 300;
-    text-align: left;
-    font-size: 18px;
-    color:#262626;
-    transition: transform .3s, font-weight .2s,
-    font-size .2s, color .2s, background .4s;
+  padding-left: 20%;
+  display: flex;
+  column-gap: 15%;
+  height: 6.5vh;
+
+  font-weight: 300;
+  text-align: left;
+  font-size: 18px;
+  color: #262626;
+  transition: transform 0.3s, font-weight 0.2s, font-size 0.2s, color 0.2s, background 0.4s;
 }
 
-
 .NavBar-headerItem:hover {
-    transition: transform .3s, font-weight 1s,
-    font-size .5s, color 1s, background .6s;
-    transition-timing-function: cubic-bezier(0,.81,0,1.01);
-    font-weight: 700;
-    font-size: 20px;
-    /* height: 7vh; */
-    transform: scale(1.02);
-    background: rgba(233, 233, 233, 0.3);
-    color: var(--primary);
+  transition: transform 0.3s, font-weight 1s, font-size 0.5s, color 1s, background 0.6s;
+  transition-timing-function: cubic-bezier(0, 0.81, 0, 1.01);
+  font-weight: 700;
+  font-size: 20px;
+  /* height: 7vh; */
+  transform: scale(1.02);
+  background: rgba(233, 233, 233, 0.3);
+  color: var(--primary);
 }
 
 .NavBar-icon {
-    width: var(--xl);
-    height: var(--xl);
+  width: var(--xl);
+  height: var(--xl);
+}
+
+.NavBar-active-icon {
+  padding-left: 20%;
+  display: flex;
+  column-gap: 15%;
+  height: 6.5vh;
+  font-weight: 300;
+  text-align: left;
+  font-size: 18px;
+  color: var(--primary);
+  font-weight: bold;
+  transition: transform 0.3s, font-weight 0.2s, font-size 0.2s, color 0.2s, background 0.4s;
+}
+
+.NavBar-active-icon:hover {
+  transition: transform 0.3s, font-weight 1s, font-size 0.5s, color 1s, background 0.6s;
+  transition-timing-function: cubic-bezier(0, 0.81, 0, 1.01);
+  font-weight: 700;
+  font-size: 20px;
+  /* height: 7vh; */
+  transform: scale(1.02);
+  background: rgba(233, 233, 233, 0.3);
+  color: var(--primary);
 }
