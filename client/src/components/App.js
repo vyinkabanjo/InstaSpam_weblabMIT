@@ -33,12 +33,12 @@ const App = () => {
     console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
-      // post("/api/initsocket", { socketid: socket.id });
     });
   };
 
   const handleLogout = () => {
-    setUserId(undefined);
+    console.log("Logged out successfully!");
+    setUserId(null);
     post("/api/logout");
   };
 

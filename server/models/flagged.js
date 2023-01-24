@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 //define an email schema for the database
 const flaggedEmailSchema = new mongoose.Schema({
+  userID: String,
   subject: String,
-  // userID: String,
   emailID: String,
 });
 

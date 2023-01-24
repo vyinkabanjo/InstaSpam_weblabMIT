@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 //define an email schema for the database
 const readEmailSchema = new mongoose.Schema({
-  // userID: String,
+  userID: String,
   subject: String,
   emailID: String,
 });
