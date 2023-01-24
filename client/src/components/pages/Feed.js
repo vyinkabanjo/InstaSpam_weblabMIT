@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../../utilities.css";
 import "./Feed.css";
 import Post from "./Post";
+import { get } from "../../utilities";
 
 // Test emails for ensuring the front end works correctly
 const testEmails = [
@@ -48,7 +49,8 @@ const testEmails = [
  * Proptypes
  * @param {string} user_id user id of the client
  */
- const getLinks = (email_content) => {
+
+const getLinks = (email_content) => {
   const rawHTML = email_content;
   const doc = document.createElement("html");
   doc.innerHTML = rawHTML;
@@ -77,31 +79,29 @@ const Feed = (props) => {
   const hasEmails = emails.length !== 0;
 
   if (hasEmails) {
-    emailsList = emails.map((emailObj,id) => {
+    emailsList = emails.map((emailObj, id) => (
       <Post
-          key={id}
-          // content={emailObj.content}
-          attachments={emailObj.attachments}
-          senderEmail={emailObj.senderEmail}
-          senderName = {emailObj.senderName}
-          header = {emailObj.header}
-          timeReceived = {emailObj.timeReceived}
-          emailURL = {emailObj.emailURL}
-          links = {emailObj.links}
-          dates = {emailObj.relevantDates}
-          times = {emailObj.times}
-          isRead = {emailObj.isRead}
-          isFlagged = {emailObj.isFlagged}
-
+        key={id}
+        // content={emailObj.content}
+        emailID={emailObj.emailID}
+        attachments={emailObj.attachments}
+        senderEmail={emailObj.senderEmail}
+        senderName={emailObj.senderName}
+        header={emailObj.header}
+        timeReceived={emailObj.timeReceived}
+        emailURL={emailObj.emailURL}
+        links={getLinks(emailObj.content)}
+        dates={emailObj.relevantDates}
+        venue={emailObj.venue}
+        times={emailObj.times}
+        isRead={emailObj.isRead}
+        isFlagged={emailObj.isFlagged}
       />
-    }
+    ));
+    console.log(emailsList);
   }
 
-  return (
-    <section className="u-flexColumn Feed-container">
-      {emailsList}
-    </section>
-  );
+  return <section className="u-flexColumn Feed-container">{emailsList}</section>;
 };
 
 export default Feed;
