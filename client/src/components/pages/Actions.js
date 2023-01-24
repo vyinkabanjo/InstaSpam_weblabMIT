@@ -21,6 +21,10 @@ const Actions = (props) => {
     setButton(!buttonClick);
   }, []);
 
+  function outlookOpen() {
+    window.location.href = props.emailURL;
+  }
+
   return (
     <div className="u-flexColumn u-flex-alignCenter">
       <button
@@ -48,7 +52,7 @@ const Actions = (props) => {
         )}
       </button>
       <button className="Actions-button">
-        <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" />
+        <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" onClick={outlookOpen} />
       </button>
       {/* <img src={PinIcon} alt="Pin Icon" className="Actions-icon" /> */}
     </div>
