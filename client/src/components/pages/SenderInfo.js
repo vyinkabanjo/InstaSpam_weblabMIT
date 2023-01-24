@@ -11,11 +11,14 @@ import ProfileIcon from "../../public/icons/Profile Icon.png";
  * @param {string} email
  * @param {string} time
  */
+
 const SenderInfo = (props) => {
   return (
-    <div className="u-flex u-flex-alignCenter u-flex-justifyCenter">
-      {props.name} | {props.email} {props.time}{" "}
-      <img className="SenderInfo-icon" src={ProfileIcon} />
+    <div className="u-flex u-flex-alignCenter SenderInfo-div">
+      {props.name} | {props.email} | {props.time}{" "}
+      <div>
+        <img className="SenderInfo-icon" src={ProfileIcon} />
+      </div>
     </div>
   );
 };

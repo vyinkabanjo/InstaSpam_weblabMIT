@@ -1,4 +1,11 @@
 .SenderInfo-icon {
-    width: var(--l);
-    height: var(--l);
+  width: var(--l);
+  height: var(--l);
+  margin-left: 8px;
+}
+
+.SenderInfo-div {
+  display: flex;
+  align-items: flex-start;
+  /* justify-content: space-between; */
 }
