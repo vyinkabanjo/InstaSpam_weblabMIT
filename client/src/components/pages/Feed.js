@@ -55,10 +55,11 @@ const Feed = (props) => {
     //TODO: Replace this with an API call
     get("/api/emails").then((emailObjs) => {
       emailSetter(emailObjs);
-  },[]);
+    });
+  }, []);
 
-  let emailsList = null; 
-  const hasEmails = emails.length !== 0; 
+  let emailsList = null;
+  const hasEmails = emails.length !== 0;
 
   return (
     <section className="u-flexColumn Feed-container">
