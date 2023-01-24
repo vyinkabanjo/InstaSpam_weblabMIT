@@ -6,6 +6,7 @@ import { get } from "../../utilities";
 import { post } from "../../utilities";
 import * as chrono from "chrono-node";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
+import "./Actions.css";
 
 const GOOGLE_CLIENT_ID = "711219562850-kft2385qcmndjq2p9dviq87fv5dao8er.apps.googleusercontent.com";
 
@@ -32,14 +33,20 @@ const parseDateTime = () => {
   // return result;
 };
 
+function outlookOpen() {
+  window.location.href = "https://outlook.office.com/mail/";
+}
+
 const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="u-flexColumn NavBar-headers">
-        <span className="NavBar-headerItem u-flex-alignCenter">
-          <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
-          <p>Outlook</p>
-        </span>
+        <button onClick={outlookOpen} className="Actions-button">
+          <span className="NavBar-headerItem u-flex-alignCenter">
+            <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
+            <p>Outlook</p>
+          </span>
+        </button>
 
         {props.userId ? (
           <span className="NavBar-active-icon u-flex-alignCenter">

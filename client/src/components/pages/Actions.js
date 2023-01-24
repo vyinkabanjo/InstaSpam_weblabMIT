@@ -16,10 +16,6 @@ import RedFlagIcon from "../../public/icons/RedFlag Icon.png";
 const Actions = (props) => {
   const [flagged, setFlagged] = useState(false);
 
-  // useEffect(() => {
-  //   setButton(!buttonClick);
-  // }, []);
-
   function outlookOpen() {
     window.location.href = props.emailURL;
   }
