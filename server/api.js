@@ -659,6 +659,7 @@ const GENERIC_EMAILS = {
     },
   ],
 };
+
 // TODO: add 64 base code for a generic attachment
 const load = async (attachment) => {
   try {
@@ -669,8 +670,6 @@ const load = async (attachment) => {
     console.error(err);
   }
 };
-
-// load("attachment.txt");
 
 const express = require("express");
 
@@ -718,7 +717,6 @@ const writeToDb = (email) => {
     header: email.subject,
     hasAttachment: email.hasAttachments,
     attachments: [],
-    // attachment: "data:image/jpeg;base64,".concat(GENEREIC_ATTACHMENT),
     emailID: email.id,
     content: email.body.content,
     links: getLinks(email.body.content),
@@ -732,18 +730,14 @@ const writeToDb = (email) => {
   });
   newEmail.save();
   return newEmail;
-  console.log(newEmail);
-  // newEmail.save().then((email) => res.send(email));
 };
 // function to return the
 const parsedRawEmails = (rawEmailData) => {
-  // write a function writeToDb(email) which takes email input and writes to db
-  // rawEmailData.map(writeToDb)
-  parsedEmails = rawEmailData.map((email) => {
+  const parsedEmails = rawEmailData.map((email) => {
+    // console.log(email);
     writeToDb(email);
   });
   return parsedEmails;
-  // is this syntactically correct? why is it displaying info this way?
 };
 
 const getLinks = (email_content) => {
@@ -764,9 +758,10 @@ const getLinks = (email_content) => {
 router.post("/emails", (req, res) => {
   // make a GET request to Microsoft graph
   // get the JSON data that's returned and store as a constant
-  // for now this is just a constant string we have in our back end
+  // for now GENERIC_EMAILS is just a constant string we have in our back end
   const rawEmailData = GENERIC_EMAILS.value;
-  console.log(parsedRawEmails(rawEmailData));
+  parsedRawEmails(rawEmailData);
+  res.send("posted!");
 });
 
 // flag email on feed
