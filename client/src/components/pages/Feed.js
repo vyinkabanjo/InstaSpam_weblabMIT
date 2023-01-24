@@ -48,6 +48,19 @@ const testEmails = [
  * Proptypes
  * @param {string} user_id user id of the client
  */
+ const getLinks = (email_content) => {
+  const rawHTML = email_content;
+  const doc = document.createElement("html");
+  doc.innerHTML = rawHTML;
+  const links = doc.getElementsByTagName("a");
+  const urls = [];
+
+  for (let i = 0; i < links.length; i++) {
+    urls.push(links[i].getAttribute("href"));
+  }
+  return urls;
+  // console.log(urls);
+};
 
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);

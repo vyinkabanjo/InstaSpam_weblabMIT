@@ -712,20 +712,6 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
-const getLinks = (email_content) => {
-  const rawHTML = email_content;
-  const doc = document.createElement("html");
-  doc.innerHTML = rawHTML;
-  const links = doc.getElementsByTagName("a");
-  const urls = [];
-
-  for (let i = 0; i < links.length; i++) {
-    urls.push(links[i].getAttribute("href"));
-  }
-  return urls;
-  // console.log(urls);
-};
-// return urls;
 
 const writeToDB = (email) => {
   const newEmail = new Email({
