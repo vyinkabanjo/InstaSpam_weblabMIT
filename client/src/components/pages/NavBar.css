@@ -16,7 +16,14 @@
   overflow: hidden;
 }
 
+/* TODO: Should we move this to utilities? */
+button {
+  font-family: Inter;
+}
+
 .NavBar-headerItem {
+  cursor: pointer;
+
   padding-left: 20%;
   display: flex;
   column-gap: 15%;
@@ -46,16 +53,8 @@
 }
 
 .NavBar-active-icon {
-  padding-left: 20%;
-  display: flex;
-  column-gap: 15%;
-  height: 6.5vh;
-  font-weight: 300;
-  text-align: left;
-  font-size: 18px;
   color: var(--primary);
   font-weight: bold;
-  transition: transform 0.3s, font-weight 0.2s, font-size 0.2s, color 0.2s, background 0.4s;
 }
 
 .NavBar-active-icon:hover {

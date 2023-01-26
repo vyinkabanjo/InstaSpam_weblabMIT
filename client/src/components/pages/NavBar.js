@@ -41,15 +41,16 @@ const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="u-flexColumn NavBar-headers">
-        <button onClick={outlookOpen} className="Actions-button">
-          <span className="NavBar-headerItem u-flex-alignCenter">
-            <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
-            <p>Outlook</p>
-          </span>
+        <button
+          onClick={outlookOpen}
+          className="Actions-button NavBar-headerItem u-flex-alignCenter"
+        >
+          <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
+          <p>Outlook</p>
         </button>
 
         {props.userId ? (
-          <span className="NavBar-active-icon u-flex-alignCenter">
+          <span className="NavBar-headerItem NavBar-active-icon u-flex-alignCenter">
             <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
             <p>Home</p>
           </span>

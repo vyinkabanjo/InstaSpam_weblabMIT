@@ -11,18 +11,15 @@ import { get, post } from "../../utilities";
  * @param {string} user_id user id of the client
  */
 
+// TODO: Parse this better and move it to the backend
 const getLinks = (email_content) => {
-  const rawHTML = email_content;
-  const doc = document.createElement("html");
-  doc.innerHTML = rawHTML;
-  const links = doc.getElementsByTagName("a");
-  const urls = [];
+  const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
+  const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
 
-  for (let i = 0; i < links.length; i++) {
-    urls.push(links[i].getAttribute("href"));
-  }
-  return urls;
-  // console.log(urls);
+  // TODO: Filter links (remove "mailto:" links, or format them differently on the frontend) (can be done with .filter() method)
+  // Also add "https://" to links that don't have them, and maybe also move to backend
+  // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
+  return unfiltered_links;
 };
 
 const Feed = (props) => {
@@ -40,6 +37,9 @@ const Feed = (props) => {
     });
     //TODO: get flagged emails to display on the user's profile
   }, [readEmailIDs]);
+
+  // Functions for changing emails
+  //TODO: Standardize "userId" to be "userID"
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userId, emailID: email_ID, subject: subject }).then(() => {
       emailsReadSetter(readEmailIDs);
