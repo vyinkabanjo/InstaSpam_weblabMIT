@@ -14,12 +14,7 @@ import RedFlagIcon from "../../public/icons/RedFlag Icon.png";
  * Proptypes
  */
 const Actions = (props) => {
-  const [buttonClick, setButton] = useState(false);
   const [flagged, setFlagged] = useState(false);
-
-  useEffect(() => {
-    setButton(!buttonClick);
-  }, []);
 
   function outlookOpen() {
     window.location.href = props.emailURL;
@@ -31,7 +26,6 @@ const Actions = (props) => {
         className="Actions-button"
         type="button"
         onClick={() => {
-          setButton;
           props.ReadEmail(props.emailID, props.subject);
         }}
       >
@@ -52,7 +46,7 @@ const Actions = (props) => {
         )}
       </button>
       <button className="Actions-button">
-        <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" onClick={outlookOpen} />
+        <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" />
       </button>
       {/* <img src={PinIcon} alt="Pin Icon" className="Actions-icon" /> */}
     </div>

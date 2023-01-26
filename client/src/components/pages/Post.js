@@ -46,6 +46,7 @@ const Post = (props) => {
     emailID,
     emailURL,
   } = props.emailData;
+
   return (
     <article className="Post-container u-flexColumn">
       <SenderInfo name={senderName} email={senderEmail} time={parseDateTime(timeReceived)} />
