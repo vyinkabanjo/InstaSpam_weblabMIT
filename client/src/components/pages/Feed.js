@@ -49,35 +49,15 @@ const Feed = (props) => {
     post("/api/flag", { userID: props.userId, emailID: email_ID, subject: subject });
   };
 
-  console.log(readEmailIDs);
-
   let emailsList = null;
   const hasEmails = emails.length !== 0;
 
   if (hasEmails) {
     emailsList = emails.filter((email) => !readEmailIDs.includes(email.emailID));
-    emailsList = emailsList.map((emailObj, id) => (
-      <Post
-        key={id}
-        // content={emailObj.content}
-        emailID={emailObj.emailID}
-        attachments={emailObj.attachments}
-        senderEmail={emailObj.senderEmail}
-        senderName={emailObj.senderName}
-        header={emailObj.header}
-        timeReceived={emailObj.timeReceived}
-        emailURL={emailObj.emailURL}
-        links={getLinks(emailObj.content)}
-        dates={emailObj.relevantDates}
-        venue={emailObj.venue}
-        times={emailObj.times}
-        isRead={emailObj.isRead}
-        isFlagged={emailObj.isFlagged}
-        readEmail={ReadEmail}
-        flagEmail={FlagEmail}
-      />
-    ));
-    console.log(emailsList);
+    emailsList = emailsList.map((emailObj, id) => {
+      emailObj.links = getLinks(emailObj.content);
+      return <Post key={id} emailData={emailObj} readEmail={ReadEmail} flagEmail={FlagEmail} />;
+    });
   }
 
   return <section className="u-flexColumn Feed-container">{emailsList}</section>;

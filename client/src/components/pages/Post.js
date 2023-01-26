@@ -14,7 +14,7 @@ import "./Post.css";
  * Proptypes
  * @param {object} content content of email, including subject, date, relevant links, etc.
  * @param {string[]} attachments array containing attachment links
- * @param {object} senderInfo object containing sender information
+ * @param {object} emailData object containing email data
  */
 const parseDateTime = (dateTime) => {
   const chronoVal = chrono.parse(dateTime)[0].start;
@@ -34,28 +34,30 @@ const parseDateTime = (dateTime) => {
   return result;
 };
 const Post = (props) => {
+  const {
+    senderName,
+    senderEmail,
+    timeReceived,
+    header,
+    relevantDates,
+    links,
+    times,
+    venue,
+    emailID,
+    emailURL,
+  } = props.emailData;
   return (
     <article className="Post-container u-flexColumn">
-      <SenderInfo
-        name={props.senderName}
-        email={props.senderEmail}
-        time={parseDateTime(props.timeReceived)}
-      />
+      <SenderInfo name={senderName} email={senderEmail} time={parseDateTime(timeReceived)} />
       {/* <Attachments media={props.attachments} /> */}
       <div className="u-flex u-flex-alignCenter Post-info">
-        <Summary
-          subject={props.header}
-          dates={props.dates}
-          links={props.links}
-          times={props.times}
-          venue={props.venue}
-        />
+        <Summary subject={header} dates={relevantDates} links={links} times={times} venue={venue} />
         <Actions
-          subject={props.header}
-          emailID={props.emailID}
+          subject={header}
+          emailID={emailID}
           ReadEmail={props.readEmail}
           FlagEmail={props.flagEmail}
-          emailURL={String(props.emailURL)}
+          emailURL={String(emailURL)}
         />
       </div>
     </article>
