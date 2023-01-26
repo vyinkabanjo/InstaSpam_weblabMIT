@@ -11,7 +11,6 @@ import { get, post } from "../../utilities";
  * @param {string} user_id user id of the client
  */
 
-// TODO: Parse this better and move it to the backend
 const getLinks = (email_content) => {
   const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
   const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
@@ -21,13 +20,12 @@ const getLinks = (email_content) => {
   // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
   return unfiltered_links;
 };
-
+// TODO: Add date indicators between posts
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
   const [readEmailIDs, emailsReadSetter] = useState([]);
 
   useEffect(() => {
-    //TODO: Replace this with an API call
     get("/api/read").then((readEmails) => {
       emailsReadSetter(readEmails);
     });
@@ -39,7 +37,8 @@ const Feed = (props) => {
   }, [readEmailIDs]);
 
   // Functions for changing emails
-  //TODO: Standardize "userId" to be "userID"
+  //TODO: Standardize "userId" to be "userID",
+  // also try and avoid updating realtime synchronously after DB entry in case of a slow DB
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userId, emailID: email_ID, subject: subject }).then(() => {
       emailsReadSetter(readEmailIDs);

@@ -67,7 +67,7 @@ const NavBar = (props) => {
             <p>Profile</p>
           </span>
         ) : (
-          <span className="NavBar-active-icon u-flex-alignCenter">
+          <span className="NavBar-headerItem NavBar-active-icon u-flex-alignCenter">
             <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
             <p>Profile</p>
           </span>

@@ -52,6 +52,7 @@ button {
   height: var(--xl);
 }
 
+/* TODO: More effective way to display "active icon?" */
 .NavBar-active-icon {
   color: var(--primary);
   font-weight: bold;
