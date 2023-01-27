@@ -20,6 +20,11 @@ const Actions = (props) => {
     window.location.href = props.emailURL;
   }
 
+  // why is this causing too may re-renders??
+  if (props.flaggedEmailIDs.includes(props.emailID)) {
+    setFlagged(true);
+  }
+
   return (
     <div className="u-flexColumn u-flex-alignCenter">
       <button
@@ -32,6 +37,7 @@ const Actions = (props) => {
         <img src={MailIcon} alt="Mail Icon" className="Actions-icon" />
       </button>
       <button
+        // TODO: add code to delete the flagged status of the email from the database once it is "re-flagged"
         className="Actions-button"
         type="button"
         onClick={() => {
@@ -39,6 +45,8 @@ const Actions = (props) => {
           props.FlagEmail(props.emailID, props.subject);
         }}
       >
+        {/* if (props.flaggedEmailIDs.includes(props.emailID)) {setFlagged(true)} */}
+        {/* {props.flaggedEmailIDs.includes(props.emailID) ? setFlagged(true) : setFlagged(flagged)} */}
         {flagged ? (
           <img src={RedFlagIcon} alt="Flag Icon" className="Actions-icon" />
         ) : (
@@ -48,7 +56,6 @@ const Actions = (props) => {
       <button className="Actions-button">
         <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" />
       </button>
-      {/* <img src={PinIcon} alt="Pin Icon" className="Actions-icon" /> */}
     </div>
   );
 };

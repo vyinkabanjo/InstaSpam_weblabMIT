@@ -65,7 +65,9 @@ router.post("/flag", auth.ensureLoggedIn, (req, res) => {
     subject: req.body.subject,
     emailID: req.body.emailID,
   });
-  flagEmail.save().then(res.send(flagEmail));
+  flagEmail.save().then(() => {
+    res.send(flagEmail);
+  });
 });
 
 router.get("/read", (req, res) => {

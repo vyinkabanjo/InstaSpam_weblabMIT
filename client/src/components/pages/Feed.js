@@ -25,40 +25,39 @@ const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
   const [readEmailIDs, emailsReadSetter] = useState([]);
   const [flaggedEmailIDs, emailsFlaggedSetter] = useState([]);
-  const [triggerEmails, setTriggerEmails] = useState(0);
+  const [triggerRead, setTriggerRead] = useState(0);
   const [triggerFlagged, setTriggerFlagged] = useState(0);
+
+  // console.log(flaggedEmailIDs);
 
   useEffect(() => {
     console.log("triggering use effect");
     get("/api/read", { userID: props.userID }).then((readEmails) => {
       emailsReadSetter(readEmails);
     });
-    //TODO: get flagged emails to display on the user's profile
-  }, [triggerEmails]);
+  }, [triggerRead]);
 
   useEffect(() => {
     get("/api/flag", { userID: props.userID }).then((flaggedEmails) => {
+      console.log(flaggedEmails);
       emailsFlaggedSetter(flaggedEmails);
     });
-    //TODO: get flagged emails to display on the user's profile
   }, [triggerFlagged]);
 
   useEffect(() => {
     get("/api/emails").then((emailObjs) => {
-      // apply a filter here for things in the api/read!
       emailSetter(emailObjs);
     });
-    //TODO: get flagged emails to display on the user's profile
   }, []);
 
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
-      setTriggerEmails(triggerEmails);
+      setTriggerRead(triggerRead);
     });
   };
   const FlagEmail = (email_ID, subject) => {
     post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
-      setTriggerFlagged(triggerFlagged);
+      setTriggerFlagged(triggerFlagged + 1);
     });
   };
 

@@ -59,6 +59,7 @@ const Post = (props) => {
           ReadEmail={props.readEmail}
           FlagEmail={props.flagEmail}
           emailURL={String(emailURL)}
+          flaggedEmailIDs={props.flaggedEmailIDs}
         />
       </div>
     </article>
