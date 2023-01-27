@@ -32,12 +32,20 @@ const Feed = (props) => {
       console.log(readEmails);
       emailsReadSetter(readEmails);
     });
+    // get("/api/emails").then((emailObjs) => {
+    //   // apply a filter here for things in the api/read!
+    //   emailSetter(emailObjs);
+    // });
+    //TODO: get flagged emails to display on the user's profile
+  }, [triggerReload]);
+
+  useEffect(() => {
     get("/api/emails").then((emailObjs) => {
       // apply a filter here for things in the api/read!
       emailSetter(emailObjs);
     });
     //TODO: get flagged emails to display on the user's profile
-  }, [triggerReload]);
+  }, []);
 
   // Functions for changing emails
   //TODO: Standardize "userId" to be "userID",

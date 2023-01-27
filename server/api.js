@@ -71,8 +71,6 @@ router.post("/flag", auth.ensureLoggedIn, (req, res) => {
 router.get("/read", (req, res) => {
   // console.log("getting read");
   // TODO: use the userID to narrow in on the find
-  // ReadEmail.find({})
-  //   .then((emailsRead) => {
   ReadEmail.find({ userID: req.query.userID })
     .then((emailsRead) => {
       // console.log(emailsRead);
@@ -95,6 +93,20 @@ router.post("/read", auth.ensureLoggedIn, (req, res) => {
   readEmail.save().then(() => {
     res.send(readEmail);
   });
+});
+
+router.get("/flag", (req, res) => {
+  // console.log("getting read");
+  // TODO: use the userID to narrow in on the find
+  FlagEmail.find({ userID: req.query.userID })
+    .then((emailsFlagged) => {
+      // console.log(emailsRead);
+      let flaggedEmails = emailsFlagged.map((emails) => emails.emailID);
+      res.send(flaggedEmails);
+    })
+    .catch((err) => {
+      res.send({ success: false });
+    });
 });
 
 // DON'T NEED ANYMORE BUT JUST IN CASE NEED IN THE FUTURE!
