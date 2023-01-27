@@ -28,7 +28,8 @@ const Feed = (props) => {
 
   useEffect(() => {
     console.log("triggering use effect");
-    get("/api/read").then((readEmails) => {
+    get("/api/read", { userID: props.userID }).then((readEmails) => {
+      console.log(readEmails);
       emailsReadSetter(readEmails);
     });
     get("/api/emails").then((emailObjs) => {
@@ -43,7 +44,6 @@ const Feed = (props) => {
   // also try and avoid updating realtime synchronously after DB entry in case of a slow DB
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
-      // emailsReadSetter(readEmailIDs);
       setTriggerReload(triggerReload + 1);
     });
   };

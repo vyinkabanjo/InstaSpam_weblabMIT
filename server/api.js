@@ -69,11 +69,13 @@ router.post("/flag", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/read", (req, res) => {
-  console.log("getting read");
+  // console.log("getting read");
   // TODO: use the userID to narrow in on the find
-  ReadEmail.find({})
+  // ReadEmail.find({})
+  //   .then((emailsRead) => {
+  ReadEmail.find({ userID: req.query.userID })
     .then((emailsRead) => {
-      // ReadEmail.find({ userID: req.query.userID }).then((emailsRead) => {
+      // console.log(emailsRead);
       let excludedEmails = emailsRead.map((emails) => emails.emailID);
       res.send(excludedEmails);
     })
@@ -84,13 +86,15 @@ router.get("/read", (req, res) => {
 
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
   // router.post("/read", (req, res) => {
-  console.log("posting read");
+  // console.log("posting read");
   const readEmail = new ReadEmail({
     userID: req.body.userID,
     subject: req.body.subject,
     emailID: req.body.emailID,
   });
-  readEmail.save().then(res.send(readEmail));
+  readEmail.save().then(() => {
+    res.send(readEmail);
+  });
 });
 
 // DON'T NEED ANYMORE BUT JUST IN CASE NEED IN THE FUTURE!
