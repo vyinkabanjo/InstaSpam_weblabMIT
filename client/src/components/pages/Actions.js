@@ -24,6 +24,8 @@ const Actions = (props) => {
     setFlagged(true);
   }
 
+  // const unFlagEmail
+
   return (
     <div className="u-flexColumn u-flex-alignCenter">
       <button
@@ -36,16 +38,15 @@ const Actions = (props) => {
         <img src={MailIcon} alt="Mail Icon" className="Actions-icon" />
       </button>
       <button
-        // TODO: add code to delete the flagged status of the email from the database once it is "re-flagged"
         className="Actions-button"
         type="button"
         onClick={() => {
+          // TODO: add code to delete the flagged status of the email from the database once it is "re-flagged"
+
           setFlagged(!flagged);
           props.FlagEmail(props.emailID, props.subject);
         }}
       >
-        {/* if (props.flaggedEmailIDs.includes(props.emailID)) {setFlagged(true)} */}
-        {/* {props.flaggedEmailIDs.includes(props.emailID) ? setFlagged(true) : setFlagged(flagged)} */}
         {flagged ? (
           <img src={RedFlagIcon} alt="Flag Icon" className="Actions-icon" />
         ) : (

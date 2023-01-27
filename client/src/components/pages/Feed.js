@@ -28,8 +28,6 @@ const Feed = (props) => {
   const [triggerRead, setTriggerRead] = useState(0);
   const [triggerFlagged, setTriggerFlagged] = useState(0);
 
-  // console.log(flaggedEmailIDs);
-
   useEffect(() => {
     console.log("triggering use effect");
     get("/api/read", { userID: props.userID }).then((readEmails) => {
@@ -52,10 +50,15 @@ const Feed = (props) => {
 
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
-      setTriggerRead(triggerRead);
+      setTriggerRead(triggerRead + 1);
     });
   };
   const FlagEmail = (email_ID, subject) => {
+    post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
+      setTriggerFlagged(triggerFlagged + 1);
+    });
+  
+  const unflagEmail = (email_ID, subject) => {
     post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
       setTriggerFlagged(triggerFlagged + 1);
     });
