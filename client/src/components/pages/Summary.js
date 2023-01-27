@@ -16,10 +16,19 @@ const Summary = (props) => {
     return (
       <div className="u-flexColumn">
         <h1>{props.subject}</h1>
-        {props.dates !== "null" ? <span>Date(s): {props.dates}</span> : <span></span>}
-        {/* <span>Date(s): {props.dates}</span> */}
+        {props.dates !== "null" ? (
+          <span>
+            <strong>Date(s):</strong> {props.dates}
+          </span>
+        ) : (
+          <span></span>
+        )}
         <span>
-          Relevant Links: <a href={props.links.join(", ")}>here</a>
+          {/* TODO: Add support for more than one link */}
+          <strong>Relevant Links:</strong>{" "}
+          <a href={props.links[0]} target="_blank">
+            here
+          </a>
         </span>
         {/* <span>Time(s): {props.times.join(", ")}</span> */}
       </div>
