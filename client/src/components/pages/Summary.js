@@ -26,7 +26,7 @@ const Summary = (props) => {
         <span>
           {/* TODO: Add support for more than one link */}
           <strong>Relevant Links:</strong>{" "}
-          <a href={props.links[0]} target="_blank">
+          <a href={props.links[0]} target="_blank" className="u-link">
             here
           </a>
         </span>
