@@ -20,8 +20,7 @@ const Actions = (props) => {
     window.location.href = props.emailURL;
   }
 
-  // why is this causing too may re-renders??
-  if (props.flaggedEmailIDs.includes(props.emailID)) {
+  if (props.flaggedEmailIDs.includes(props.emailID) && !flagged) {
     setFlagged(true);
   }
 
