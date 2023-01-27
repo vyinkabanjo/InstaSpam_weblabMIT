@@ -24,8 +24,10 @@ const getLinks = (email_content) => {
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
   const [readEmailIDs, emailsReadSetter] = useState([]);
+  const [triggerReload, setTriggerReload] = useState(0);
 
   useEffect(() => {
+    console.log("triggering use effect");
     get("/api/read").then((readEmails) => {
       emailsReadSetter(readEmails);
     });
@@ -34,14 +36,15 @@ const Feed = (props) => {
       emailSetter(emailObjs);
     });
     //TODO: get flagged emails to display on the user's profile
-  }, [readEmailIDs]);
+  }, [triggerReload]);
 
   // Functions for changing emails
   //TODO: Standardize "userId" to be "userID",
   // also try and avoid updating realtime synchronously after DB entry in case of a slow DB
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
-      emailsReadSetter(readEmailIDs);
+      // emailsReadSetter(readEmailIDs);
+      setTriggerReload(triggerReload + 1);
     });
   };
   const FlagEmail = (email_ID, subject) => {

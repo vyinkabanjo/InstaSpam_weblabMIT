@@ -50,8 +50,12 @@ router.post("/initsocket", (req, res) => {
 
 // get data from database
 router.get("/emails", (req, res) => {
+  console.log("got here");
   // empty selector means get all documents
-  Email.find({}).then((emails) => res.send(emails));
+  Email.find({}).then((emails) => {
+    // console.log("hello");
+    res.send(emails);
+  });
 });
 
 // flag email on feed
@@ -65,16 +69,22 @@ router.post("/flag", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/read", (req, res) => {
+  console.log("getting read");
   // TODO: use the userID to narrow in on the find
-  ReadEmail.find({}).then((emailsRead) => {
-    // ReadEmail.find({ userID: req.query.userID }).then((emailsRead) => {
-    let excludedEmails = emailsRead.map((emails) => emails.emailID);
-    res.send(excludedEmails);
-  });
+  ReadEmail.find({})
+    .then((emailsRead) => {
+      // ReadEmail.find({ userID: req.query.userID }).then((emailsRead) => {
+      let excludedEmails = emailsRead.map((emails) => emails.emailID);
+      res.send(excludedEmails);
+    })
+    .catch((err) => {
+      res.send({ success: false });
+    });
 });
 
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
   // router.post("/read", (req, res) => {
+  console.log("posting read");
   const readEmail = new ReadEmail({
     userID: req.body.userID,
     subject: req.body.subject,
