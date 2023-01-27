@@ -40,12 +40,12 @@ const Feed = (props) => {
   //TODO: Standardize "userId" to be "userID",
   // also try and avoid updating realtime synchronously after DB entry in case of a slow DB
   const ReadEmail = (email_ID, subject) => {
-    post("/api/read", { userID: props.userId, emailID: email_ID, subject: subject }).then(() => {
+    post("/api/read", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
       emailsReadSetter(readEmailIDs);
     });
   };
   const FlagEmail = (email_ID, subject) => {
-    post("/api/flag", { userID: props.userId, emailID: email_ID, subject: subject });
+    post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject });
   };
 
   let emailsList = null;

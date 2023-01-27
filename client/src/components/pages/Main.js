@@ -20,7 +20,7 @@ const Main = (props) => {
         handleLogout={props.handleLogout}
       />
       {/* implemented so that feed only shows up when logged in */}
-      {props.userId ? <Feed userId={props.userId} /> : <></>}
+      {props.userId ? <Feed userID={props.userID} /> : <></>}
       <div className="Main-RightSidebar"></div>
     </>
   );

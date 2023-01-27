@@ -16,13 +16,13 @@ import { get, post } from "../utilities";
  * The main component that renders our web application
  */
 const App = () => {
-  const [userId, setUserId] = useState(undefined);
+  const [userID, setUserID] = useState(undefined);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
-        setUserId(user._id);
+        setUserID(user._id);
       }
     });
   }, []);
@@ -45,7 +45,7 @@ const App = () => {
   return (
     <>
       <Router>
-        <Main path="/" userId={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
+        <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
         {/* <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
         <NotFound default />
       </Router>
