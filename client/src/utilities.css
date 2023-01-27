@@ -99,12 +99,12 @@ form {
 
 /* TODO: Change Styling of .u-link to reflect wireframe*/
 .u-link {
-  color: var(--primary);
-  text-decoration: none;
+  color: black;
   cursor: pointer;
+  text-underline-offset: 10%;
 }
 
 /* TODO: Add slight grayed background on hover */
 .u-link:hover {
-  color: var(--primary--dim);
+  text-decoration: none;
 }
