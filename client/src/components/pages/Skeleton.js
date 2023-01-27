@@ -7,10 +7,10 @@ import "./Skeleton.css";
 //TODO: REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "711219562850-kft2385qcmndjq2p9dviq87fv5dao8er.apps.googleusercontent.com";
 
-const Skeleton = ({ userId, handleLogin, handleLogout }) => {
+const Skeleton = ({ userID, handleLogin, handleLogout }) => {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      {userId ? (
+      {userID ? (
         <button
           onClick={() => {
             googleLogout();

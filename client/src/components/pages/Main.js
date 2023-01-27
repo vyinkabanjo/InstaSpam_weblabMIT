@@ -15,12 +15,12 @@ const Main = (props) => {
   return (
     <>
       <NavBar
-        userId={props.userId}
+        userID={props.userID}
         handleLogin={props.handleLogin}
         handleLogout={props.handleLogout}
       />
       {/* implemented so that feed only shows up when logged in */}
-      {props.userId ? <Feed userID={props.userID} /> : <></>}
+      {props.userID !== null ? <Feed userID={props.userID} /> : <></>}
       <div className="Main-RightSidebar"></div>
     </>
   );

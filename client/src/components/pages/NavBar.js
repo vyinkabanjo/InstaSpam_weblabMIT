@@ -49,7 +49,7 @@ const NavBar = (props) => {
           <p>Outlook</p>
         </button>
 
-        {props.userId ? (
+        {props.userID ? (
           <span className="NavBar-headerItem NavBar-active-icon u-flex-alignCenter">
             <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
             <p>Home</p>
@@ -61,7 +61,7 @@ const NavBar = (props) => {
           </span>
         )}
 
-        {props.userId ? (
+        {props.userID ? (
           <span className="NavBar-headerItem u-flex-alignCenter">
             <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
             <p>Profile</p>
@@ -74,7 +74,7 @@ const NavBar = (props) => {
         )}
 
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          {props.userId ? (
+          {props.userID ? (
             <button
               onClick={() => {
                 googleLogout();
