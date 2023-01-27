@@ -24,20 +24,24 @@ const getLinks = (email_content) => {
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
   const [readEmailIDs, emailsReadSetter] = useState([]);
-  const [triggerReload, setTriggerReload] = useState(0);
+  const [flaggedEmailIDs, emailsFlaggedSetter] = useState([]);
+  const [triggerEmails, setTriggerEmails] = useState(0);
+  const [triggerFlagged, setTriggerFlagged] = useState(0);
 
   useEffect(() => {
     console.log("triggering use effect");
     get("/api/read", { userID: props.userID }).then((readEmails) => {
-      console.log(readEmails);
       emailsReadSetter(readEmails);
     });
-    // get("/api/emails").then((emailObjs) => {
-    //   // apply a filter here for things in the api/read!
-    //   emailSetter(emailObjs);
-    // });
     //TODO: get flagged emails to display on the user's profile
-  }, [triggerReload]);
+  }, [triggerEmails]);
+
+  useEffect(() => {
+    get("/api/flag", { userID: props.userID }).then((flaggedEmails) => {
+      emailsFlaggedSetter(flaggedEmails);
+    });
+    //TODO: get flagged emails to display on the user's profile
+  }, [triggerFlagged]);
 
   useEffect(() => {
     get("/api/emails").then((emailObjs) => {
@@ -47,16 +51,15 @@ const Feed = (props) => {
     //TODO: get flagged emails to display on the user's profile
   }, []);
 
-  // Functions for changing emails
-  //TODO: Standardize "userId" to be "userID",
-  // also try and avoid updating realtime synchronously after DB entry in case of a slow DB
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
-      setTriggerReload(triggerReload + 1);
+      setTriggerEmails(triggerEmails);
     });
   };
   const FlagEmail = (email_ID, subject) => {
-    post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject });
+    post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
+      setTriggerFlagged(triggerFlagged);
+    });
   };
 
   let emailsList = null;
@@ -66,7 +69,15 @@ const Feed = (props) => {
     emailsList = emails.filter((email) => !readEmailIDs.includes(email.emailID));
     emailsList = emailsList.map((emailObj, id) => {
       emailObj.links = getLinks(emailObj.content);
-      return <Post key={id} emailData={emailObj} readEmail={ReadEmail} flagEmail={FlagEmail} />;
+      return (
+        <Post
+          key={id}
+          emailData={emailObj}
+          readEmail={ReadEmail}
+          flagEmail={FlagEmail}
+          flaggedEmailIDs={flaggedEmailIDs}
+        />
+      );
     });
   }
 
