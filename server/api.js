@@ -76,7 +76,7 @@ router.get("/read", (req, res) => {
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
   // router.post("/read", (req, res) => {
   const readEmail = new ReadEmail({
-    userID: req.body.userId,
+    userID: req.body.userID,
     subject: req.body.subject,
     emailID: req.body.emailID,
   });
