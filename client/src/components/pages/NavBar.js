@@ -2,8 +2,7 @@ import React from "react";
 import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
 import HomeIcon from "../../public/icons/Home Icon.png";
 import ProfileIcon from "../../public/icons/Profile Icon.png";
-import { get } from "../../utilities";
-import { post } from "../../utilities";
+import { get, post } from "../../utilities";
 import * as chrono from "chrono-node";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 import "./Actions.css";
@@ -36,6 +35,11 @@ const parseDateTime = () => {
 function outlookOpen() {
   window.location.href = "https://outlook.office.com/mail/";
 }
+
+const login = () => {
+  console.log("Signing In");
+  window.location.href = "/auth/signin"; //TODO: Is this the best way to do this?
+};
 
 const NavBar = (props) => {
   return (
@@ -87,6 +91,8 @@ const NavBar = (props) => {
             <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
           )}
         </GoogleOAuthProvider>
+
+        <button onClick={login}>MSAL Login</button>
       </div>
     </nav>
   );

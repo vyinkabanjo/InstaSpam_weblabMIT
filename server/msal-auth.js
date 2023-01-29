@@ -70,6 +70,10 @@ async function redirectToAuthCodeUrl(
 
 router.get("/signin", async function (req, res, next) {
   // create a GUID for crsf
+  const host = req.headers.host;
+  const extension = ""; // page on the host site to redirect back to, blank for now
+
+  console.log("Accsessing end point from HOST:", host); // prints host field from the header
   req.session.csrfToken = cryptoProvider.createNewGuid();
 
   /**
@@ -80,7 +84,7 @@ router.get("/signin", async function (req, res, next) {
   const state = cryptoProvider.base64Encode(
     JSON.stringify({
       csrfToken: req.session.csrfToken,
-      redirectTo: "/auth/loginSuccess", // Redirect URL after filling out login form
+      redirectTo: "http://" + host + extension, // Redirect URL after filling out login form
     })
   );
 
@@ -134,6 +138,7 @@ router.get("/acquireToken", async function (req, res, next) {
     scopes: ["User.Read", "Mail.ReadWrite"],
   };
 
+  // Get token silently
   msalInstance
     .acquireTokenSilent(silentRequest)
     .then((tokenResponse) => {
@@ -145,7 +150,11 @@ router.get("/acquireToken", async function (req, res, next) {
       req.session.idToken = tokenResponse.idToken;
       req.session.account = tokenResponse.account;
 
-      res.send(tokenResponse);
+      // If we specify a "redir" field in the query parameters,
+      // we'll redirect to that redirect url after getting the token
+      redirect_url = req.query.redir;
+      console.log("REDIRECT URL: ", redirect_url);
+      redirect_url ? res.redirect(redirect_url) : res.send(tokenResponse);
     })
     .catch((error) => {
       res.status(500); // Internal server error
@@ -158,7 +167,6 @@ router.get("/acquireToken", async function (req, res, next) {
 });
 
 router.post("/redirect", async function (req, res, next) {
-  console.log("Request Body:", req.body);
   if (req.body.state) {
     const state = JSON.parse(cryptoProvider.base64Decode(req.body.state));
 
@@ -172,9 +180,16 @@ router.post("/redirect", async function (req, res, next) {
         req.session.accessToken = tokenResponse.accessToken;
         req.session.idToken = tokenResponse.idToken;
         req.session.account = tokenResponse.account; // We use the account for silent token requests
-        req.session.isAuthenticated = true;
 
-        res.redirect(state.redirectTo);
+        // This section controls whether we go to the "acquireToken" endpoint to get a token for calling the graph API
+        // TODO: This may not be needed since our original sign in token already gives us permissions.
+        if (req.session.isAuthenticated) {
+          // If the user's already been authenticated, just redirect back to the original site
+          res.redirect(state.redirectTo);
+        } else {
+          req.session.isAuthenticated = true;
+          res.redirect("/auth/acquireToken?redir=" + encodeURIComponent(state.redirectTo));
+        }
       } catch (error) {
         next(error);
       }
@@ -206,6 +221,6 @@ router.get("/signout", function (req, res) {
 //TODO: define functions for login, logout, than can be used in the frontend like in "auth.js"
 // Login function would need to close the browser window or redirect back to main application: https://stackoverflow.com/questions/19583328/close-browser-tab-nodejs
 // Okay so the best way to do this might be to have the redirect URL be sent by the request body and get them from the header or body
-// Can try console.log(req.headers);
+// Need to populate userID fields and all that
 
 module.exports = router;
