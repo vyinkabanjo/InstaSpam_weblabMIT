@@ -20,11 +20,26 @@ const chrono = require("chrono-node");
 // import authentication library
 const auth = require("./auth");
 
+// Import fetch function for use when fetching (get requests) from the Microsoft Graph API
+const fetch = require("./fetch");
+
+// Import MS Graph Endpoint from authConfig
+const { GRAPH_ME_ENDPOINT } = require("./authConfig");
+
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
+
+// custom middleware to check auth state
+function isAuthenticated(req, res, next) {
+  if (!req.session.isAuthenticated) {
+    return res.redirect("/auth/signin"); // redirect to sign-in route
+  }
+
+  next();
+}
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -49,13 +64,15 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 // get data from database
-router.get("/emails", (req, res) => {
+router.get("/emails", isAuthenticated, async (req, res) => {
   console.log("Getting Emails");
-  // empty selector means get all documents
-  Email.find({}).then((emails) => {
-    // console.log("hello");
-    res.send(emails);
-  });
+  try {
+    const graphResponse = await fetch(GRAPH_ME_ENDPOINT + "/messages/", req.session.accessToken);
+    res.send(graphResponse);
+  } catch (error) {
+    res.status(500);
+    next(error);
+  }
 });
 
 // flag email on feed
