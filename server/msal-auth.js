@@ -1,6 +1,7 @@
 /*
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Part of this code is adapted from Microsoft's "MS-Identity-Node" example
+ * for working with the MSAL library. Find more here:
+ * https://github.com/Azure-Samples/ms-identity-node
  */
 
 const express = require("express");
@@ -52,8 +53,6 @@ async function redirectToAuthCodeUrl(
     ...authCodeUrlRequestParams,
   };
 
-  console.log(req.session.authCodeUrlRequest);
-
   req.session.authCodeRequest = {
     redirectUri: REDIRECT_URI,
     code: "",
@@ -81,7 +80,7 @@ router.get("/signin", async function (req, res, next) {
   const state = cryptoProvider.base64Encode(
     JSON.stringify({
       csrfToken: req.session.csrfToken,
-      redirectTo: "/",
+      redirectTo: "/", // Redirect URL after filling out login form
     })
   );
 
@@ -92,7 +91,7 @@ router.get("/signin", async function (req, res, next) {
      * By default, MSAL Node will add OIDC scopes to the auth code url request. For more information, visit:
      * https://docs.microsoft.com/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
      */
-    scopes: [],
+    scopes: ["Mail.ReadWrite"], // Allows us to get silent tokens later for the Graph API
   };
 
   const authCodeRequestParams = {
@@ -100,36 +99,62 @@ router.get("/signin", async function (req, res, next) {
      * By default, MSAL Node will add OIDC scopes to the auth code request. For more information, visit:
      * https://docs.microsoft.com/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
      */
-    scopes: [],
+    scopes: ["Mail.ReadWrite"],
   };
 
   // trigger the first leg of auth code flow
   return redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams);
 });
 
+// Gets all accounts stored in the MSAL token cache
+router.get("/getAccounts", async function (req, res, next) {
+  const msalTokenCache = msalInstance.getTokenCache();
+  const cachedAccounts = await msalTokenCache.getAllAccounts();
+  console.log("Accounts:", cachedAccounts);
+  res.send(cachedAccounts);
+});
+
+// Gets microsoft access token (used for testing)
+router.get("/accessToken", async function (req, res, next) {
+  res.send(req.session.accessToken);
+});
+
 router.get("/acquireToken", async function (req, res, next) {
-  // create a GUID for csrf
-  req.session.csrfToken = cryptoProvider.createNewGuid();
+  // Can't get an access token for Graph API if we haven't authenticated ourselves
+  if (!req.session.isAuthenticated) {
+    res.status(401); // unauthorized error code
+    res.send({
+      status: 401,
+      message: "Must first sign in via /auth/signin endpoint before getting access token.",
+    });
+  }
 
-  // encode the state param
-  const state = cryptoProvider.base64Encode(
-    JSON.stringify({
-      csrfToken: req.session.csrfToken,
-      redirectTo: "/users/profile",
+  const silentRequest = {
+    account: req.session.account,
+    scopes: ["User.Read", "Mail.ReadWrite"],
+  };
+
+  msalInstance
+    .acquireTokenSilent(silentRequest)
+    .then((tokenResponse) => {
+      // tokenResponse has a lot of fields, but we only need a few
+      console.log("SILENT TOKEN RESPONSE:", tokenResponse);
+
+      // Update Session with new access tokens/id tokens
+      req.session.accessToken = tokenResponse.accessToken;
+      req.session.idToken = tokenResponse.idToken;
+      req.session.account = tokenResponse.account;
+
+      res.send(tokenResponse);
     })
-  );
-  // CHANGE SCOPES HERE:
-  const authCodeUrlRequestParams = {
-    state: state,
-    scopes: ["User.Read", "Mail.ReadWrite"],
-  };
-
-  const authCodeRequestParams = {
-    scopes: ["User.Read", "Mail.ReadWrite"],
-  };
-
-  // trigger the first leg of auth code flow
-  return redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams);
+    .catch((error) => {
+      res.status(500); // Internal server error
+      res.send({
+        status: 500,
+        message:
+          "Internal server error. Somehow you're authenticated yet a silent request to get an API access token failed.",
+      });
+    });
 });
 
 router.post("/redirect", async function (req, res, next) {
@@ -146,7 +171,7 @@ router.post("/redirect", async function (req, res, next) {
         const tokenResponse = await msalInstance.acquireTokenByCode(req.session.authCodeRequest);
         req.session.accessToken = tokenResponse.accessToken;
         req.session.idToken = tokenResponse.idToken;
-        req.session.account = tokenResponse.account;
+        req.session.account = tokenResponse.account; // We use the account for silent token requests
         req.session.isAuthenticated = true;
 
         res.redirect(state.redirectTo);
@@ -173,5 +198,7 @@ router.get("/signout", function (req, res) {
     res.redirect(logoutUri);
   });
 });
+
+//TODO: define functions for login, logout, than can be used in the frontend like in "auth.js"
 
 module.exports = router;
