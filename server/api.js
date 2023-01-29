@@ -50,7 +50,7 @@ router.post("/initsocket", (req, res) => {
 
 // get data from database
 router.get("/emails", (req, res) => {
-  console.log("got here");
+  console.log("Getting Emails");
   // empty selector means get all documents
   Email.find({}).then((emails) => {
     // console.log("hello");

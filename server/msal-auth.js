@@ -52,6 +52,8 @@ async function redirectToAuthCodeUrl(
     ...authCodeUrlRequestParams,
   };
 
+  console.log(req.session.authCodeUrlRequest);
+
   req.session.authCodeRequest = {
     redirectUri: REDIRECT_URI,
     code: "",
