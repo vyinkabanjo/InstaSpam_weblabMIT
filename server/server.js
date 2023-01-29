@@ -24,6 +24,7 @@ const express = require("express"); // backend framework for our node server.
 const session = require("express-session"); // library that stores info about each connected user
 const mongoose = require("mongoose"); // library to connect to MongoDB
 const path = require("path"); // provide utilities for working with file and directory paths
+const cookieParser = require("cookie-parser"); // for parsing cookies
 
 const api = require("./api");
 const auth = require("./auth");
@@ -65,8 +66,17 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: false, // Set to true on production
+    },
   })
 );
+
+app.use(cookieParser());
+
+// Not sure exactly why we needed this, but without it I don't think the
+// server can process the encoded token responses from microsoft?
+app.use(express.urlencoded({ extended: false }));
 
 // this checks if the user is logged in, and populates "req.user"
 app.use(auth.populateCurrentUser);

@@ -133,6 +133,7 @@ router.get("/acquireToken", async function (req, res, next) {
 });
 
 router.post("/redirect", async function (req, res, next) {
+  console.log("Request Body:", req.body);
   if (req.body.state) {
     const state = JSON.parse(cryptoProvider.base64Decode(req.body.state));
 
