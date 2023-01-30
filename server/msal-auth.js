@@ -22,13 +22,7 @@ const cryptoProvider = new msal.CryptoProvider();
  * @param authCodeUrlRequestParams: parameters for requesting an auth code url
  * @param authCodeRequestParams: parameters for requesting tokens using auth code
  */
-async function redirectToAuthCodeUrl(
-  req,
-  res,
-  next,
-  authCodeUrlRequestParams,
-  authCodeRequestParams
-) {
+async function getAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams) {
   // Generate PKCE Codes before starting the authorization flow
   const { verifier, challenge } = await cryptoProvider.generatePkceCodes();
 
@@ -63,7 +57,7 @@ async function redirectToAuthCodeUrl(
   // Get url to sign user in and consent to scopes needed for application
   try {
     const authCodeUrlResponse = await msalInstance.getAuthCodeUrl(req.session.authCodeUrlRequest);
-    res.redirect(authCodeUrlResponse);
+    res.send({ authCodeUrl: authCodeUrlResponse });
   } catch (error) {
     next(error);
   }
@@ -108,7 +102,7 @@ router.get("/signin", async function (req, res, next) {
   };
 
   // trigger the first leg of auth code flow
-  return redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams);
+  return getAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams);
 });
 
 // Gets all accounts stored in the MSAL token cache
