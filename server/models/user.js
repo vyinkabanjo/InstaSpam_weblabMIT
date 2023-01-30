@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   name: String,
-  microsoftid: String, // this will be the "homeid" of a microsoft account
+  microsoftid: String,
 });
 
 // compile model from schema

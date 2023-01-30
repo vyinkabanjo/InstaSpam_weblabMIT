@@ -42,6 +42,11 @@ const login = () => {
   window.location.href = "/auth/signin"; //TODO: Is this the best way to do this?
 };
 
+const logout = () => {
+  console.log("Logging Out");
+  window.location.href = "/auth/signout";
+};
+
 const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
@@ -92,8 +97,11 @@ const NavBar = (props) => {
             <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
           )}
         </GoogleOAuthProvider>
-
-        <button onClick={login}>MSAL Login</button>
+        {props.userID ? (
+          <button onClick={logout}>MSAL Logout</button>
+        ) : (
+          <button onClick={login}>MSAL Login</button>
+        )}
       </div>
     </nav>
   );

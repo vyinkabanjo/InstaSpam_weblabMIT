@@ -18,7 +18,7 @@ const FlagEmail = require("./models/flagged");
 const chrono = require("chrono-node");
 
 // import authentication library
-const auth = require("./auth");
+const auth = require("./authFunctions");
 
 // Import fetch function for use when fetching (get requests) from the Microsoft Graph API
 const fetch = require("./fetch");
@@ -32,16 +32,10 @@ const router = express.Router();
 //initialize socket
 const socketManager = require("./server-socket");
 
-// custom middleware to check auth state
-function isAuthenticated(req, res, next) {
-  if (!req.session.isAuthenticated) {
-    return res.redirect("/auth/signin"); // redirect to sign-in route
-  }
+const { isAuthenticated } = require("./authFunctions");
 
-  next();
-}
 // Replaced by /auth/signin and /auth/signout for now
-// router.post("/login", auth.login);
+// router.post("/login", auth.loginFromDB);
 // router.post("/logout", auth.logout);
 
 router.get("/whoami", (req, res) => {
@@ -69,7 +63,32 @@ router.get("/emails", isAuthenticated, async (req, res) => {
   console.log("Getting Emails");
   try {
     const graphResponse = await fetch(GRAPH_ME_ENDPOINT + "/messages/", req.session.accessToken);
-    res.send(graphResponse);
+
+    //TODO: Basic data transformation for now, do more with this
+    res.send(
+      graphResponse.value.map((email) => {
+        const newEmail = new Email({
+          senderEmail: email.from.emailAddress.address,
+          senderName: email.from.emailAddress.name,
+          header: email.subject,
+          hasAttachment: email.hasAttachments,
+          attachments: [],
+          emailID: email.id,
+          content: email.body.content,
+          links: [],
+          // links: getLinks(email.body.content),
+          times: [],
+          relevantDates: String(chrono.parseDate(email.body.content)),
+          venue: "",
+          emailURL: email.webLink,
+          isRead: email.isRead,
+          isFlagged: email.flag.flagStatus,
+          timeReceived: email.receivedDateTime,
+        });
+
+        return newEmail;
+      })
+    );
   } catch (error) {
     res.status(500);
     next(error);

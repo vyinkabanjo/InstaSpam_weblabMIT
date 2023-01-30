@@ -8,6 +8,8 @@ const express = require("express");
 const msal = require("@azure/msal-node");
 
 const { msalConfig, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } = require("./authConfig");
+const authFunctions = require("./authFunctions");
+const { auth } = require("google-auth-library");
 
 const router = express.Router();
 const msalInstance = new msal.ConfidentialClientApplication(msalConfig);
@@ -182,13 +184,26 @@ router.post("/redirect", async function (req, res, next) {
         req.session.account = tokenResponse.account; // We use the account for silent token requests
 
         // This section controls whether we go to the "acquireToken" endpoint to get a token for calling the graph API
-        // TODO: This may not be needed since our original sign in token already gives us permissions.
+        // This may not be needed since our original sign in token already gives us permissions.
         if (req.session.isAuthenticated) {
           // If the user's already been authenticated, just redirect back to the original site
           res.redirect(state.redirectTo);
         } else {
           req.session.isAuthenticated = true;
-          res.redirect("/auth/acquireToken?redir=" + encodeURIComponent(state.redirectTo));
+
+          //Get the user from the database
+          authFunctions
+            .getOrCreateUser(req.session.account)
+            .then((user) => {
+              // persist user in the session
+              req.session.user = user;
+              // redirect to get an access token
+              res.redirect("/auth/acquireToken?redir=" + encodeURIComponent(state.redirectTo));
+            })
+            .catch((err) => {
+              console.log(`Failed to log in: ${err}`);
+              res.status(401).send({ err });
+            });
         }
       } catch (error) {
         next(error);
@@ -199,10 +214,6 @@ router.post("/redirect", async function (req, res, next) {
   } else {
     next(new Error("state is missing"));
   }
-});
-
-router.get("/loginSuccess", function (req, res) {
-  res.status(200).send("<p>Success! Redirecting...</p>");
 });
 
 router.get("/signout", function (req, res) {

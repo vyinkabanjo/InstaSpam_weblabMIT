@@ -1,42 +1,25 @@
-const { OAuth2Client } = require("google-auth-library");
 const User = require("./models/user");
 const socketManager = require("./server-socket");
-
-// create a new OAuth client used to verify google sign-in
-//    TODO: replace with your own CLIENT_ID
-const CLIENT_ID = "711219562850-kft2385qcmndjq2p9dviq87fv5dao8er.apps.googleusercontent.com";
-const client = new OAuth2Client(CLIENT_ID);
-
-// accepts a login token from the frontend, and verifies that it's legit
-function verify(token) {
-  return client
-    .verifyIdToken({
-      idToken: token,
-      audience: CLIENT_ID,
-    })
-    .then((ticket) => ticket.getPayload());
-}
 
 // gets user from DB, or makes a new account if it doesn't exist yet
 // TODO: move to msal-auth signin (do it on signin)
 function getOrCreateUser(user) {
   // the "sub" field means "subject", which is a unique identifier for each user
-  return User.findOne({ googleid: user.sub }).then((existingUser) => {
+  return User.findOne({ microsoftid: user.homeAccountId }).then((existingUser) => {
     if (existingUser) return existingUser;
 
     const newUser = new User({
       name: user.name,
-      googleid: user.sub,
+      microsoftid: user.homeAccountId,
     });
 
     return newUser.save();
   });
 }
 
-// TODO: Also move to msal-auth.js
-function login(req, res) {
-  verify(req.body.token)
-    .then((user) => getOrCreateUser(user))
+// Populates req.session.user with database information based on the "account" field in req.
+function loginFromDB(req, res) {
+  return getOrCreateUser(req.session.account)
     .then((user) => {
       // persist user in the session
       req.session.user = user;
@@ -67,9 +50,20 @@ function ensureLoggedIn(req, res, next) {
   next();
 }
 
+// custom middleware to check auth state
+function isAuthenticated(req, res, next) {
+  if (!req.session.isAuthenticated) {
+    return res.redirect("/auth/signin"); // redirect to sign-in route
+  }
+
+  next();
+}
+
 module.exports = {
-  login,
+  loginFromDB,
   logout,
+  getOrCreateUser,
   populateCurrentUser,
   ensureLoggedIn,
+  isAuthenticated,
 };
