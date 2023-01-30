@@ -32,7 +32,7 @@ const router = express.Router();
 //initialize socket
 const socketManager = require("./server-socket");
 
-const { isAuthenticated } = require("./authFunctions");
+const { ensureLoggedIn } = require("./authFunctions");
 
 const getLinks = (email_content) => {
   const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
@@ -69,7 +69,7 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 // get emails using Microsoft Graph API
-router.get("/emails", isAuthenticated, async (req, res) => {
+router.get("/emails", ensureLoggedIn, async (req, res) => {
   console.log("Getting Emails");
   try {
     const graphResponse = await fetch(GRAPH_ME_ENDPOINT + "/messages/", req.session.accessToken);

@@ -53,9 +53,9 @@ const Actions = (props) => {
           <img src={FlagIcon} alt="Flag Icon" className="Actions-icon" />
         )}
       </button>
-      <button className="Actions-button">
+      <a className="Actions-button" href={props.emailURL} target="_blank">
         <img src={OutlookIcon} alt="Outlook Icon" className="Actions-icon" />
-      </button>
+      </a>
     </div>
   );
 };
