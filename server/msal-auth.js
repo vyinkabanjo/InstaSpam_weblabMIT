@@ -217,7 +217,7 @@ router.post("/signout", function (req, res) {
    */
   const logoutUri = `${msalConfig.auth.authority}/oauth2/v2.0/logout?post_logout_redirect_uri=${POST_LOGOUT_REDIRECT_URI}`;
 
-  req.user = null;
+  req.user = null; // might not be needed
   req.session.destroy(() => {
     // res.redirect(logoutUri); // No reason to redirect user to sign out of their microsoft account imo
   });
