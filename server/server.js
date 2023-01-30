@@ -27,7 +27,7 @@ const path = require("path"); // provide utilities for working with file and dir
 const cookieParser = require("cookie-parser"); // for parsing cookies
 
 const api = require("./api");
-const auth = require("./auth");
+const auth = require("./authFunctions");
 const msal_auth = require("./msal-auth");
 
 // socket stuff

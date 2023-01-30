@@ -34,6 +34,10 @@ const socketManager = require("./server-socket");
 
 const { ensureLoggedIn } = require("./authFunctions");
 
+/**
+ * Parses links from `email_content`, returning an array of strings
+ * @param {String} email_content the email's HTML content
+ */
 const getLinks = (email_content) => {
   const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
   const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
@@ -43,6 +47,31 @@ const getLinks = (email_content) => {
   // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
   return unfiltered_links;
 };
+
+/**
+ * Returns a new Email object that condenses information from the Microsoft Graph API
+ * @param {Object} email email object from Microsoft Graph API
+ * @returns
+ */
+function parseEmail(email) {
+  return new Email({
+    senderEmail: email.from.emailAddress.address,
+    senderName: email.from.emailAddress.name,
+    header: email.subject,
+    hasAttachment: email.hasAttachments,
+    attachments: [],
+    emailID: email.id,
+    content: email.body.content,
+    links: getLinks(email.body.content),
+    times: [],
+    relevantDates: String(chrono.parseDate(email.body.content)),
+    venue: "",
+    emailURL: email.webLink,
+    isRead: email.isRead,
+    isFlagged: email.flag.flagStatus,
+    timeReceived: email.receivedDateTime,
+  });
+}
 
 // Replaced by /auth/signin and /auth/signout for now
 // router.post("/login", auth.loginFromDB);
@@ -69,35 +98,13 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 // get emails using Microsoft Graph API
-router.get("/emails", ensureLoggedIn, async (req, res) => {
+router.get("/emails", ensureLoggedIn, async (req, res, next) => {
   console.log("Getting Emails");
   try {
     const graphResponse = await fetch(GRAPH_ME_ENDPOINT + "/messages/", req.session.accessToken);
 
     //TODO: Basic data transformation for now, do more with this
-    res.send(
-      graphResponse.value.map((email) => {
-        const newEmail = new Email({
-          senderEmail: email.from.emailAddress.address,
-          senderName: email.from.emailAddress.name,
-          header: email.subject,
-          hasAttachment: email.hasAttachments,
-          attachments: [],
-          emailID: email.id,
-          content: email.body.content,
-          links: getLinks(email.body.content),
-          times: [],
-          relevantDates: String(chrono.parseDate(email.body.content)),
-          venue: "",
-          emailURL: email.webLink,
-          isRead: email.isRead,
-          isFlagged: email.flag.flagStatus,
-          timeReceived: email.receivedDateTime,
-        });
-
-        return newEmail;
-      })
-    );
+    res.send(graphResponse.value.map((email) => parseEmail(email)));
   } catch (error) {
     res.status(500);
     next(error);
