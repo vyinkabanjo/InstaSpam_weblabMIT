@@ -27,6 +27,7 @@ const App = () => {
     });
   }, []);
 
+  // TODO: Delete this if we're not using Google Auth
   const handleLogin = (credentialResponse) => {
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken);

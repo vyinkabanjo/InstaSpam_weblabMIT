@@ -82,7 +82,7 @@ const NavBar = (props) => {
             <p>Profile</p>
           </span>
         )}
-
+        {/* 
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           {props.userID ? (
             <button
@@ -96,7 +96,8 @@ const NavBar = (props) => {
           ) : (
             <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
           )}
-        </GoogleOAuthProvider>
+        </GoogleOAuthProvider> */}
+
         {props.userID ? (
           <button onClick={logout}>MSAL Logout</button>
         ) : (
