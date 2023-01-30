@@ -220,7 +220,7 @@ router.get("/signout", function (req, res) {
 
 //TODO: define functions for login, logout, than can be used in the frontend like in "auth.js"
 // Login function would need to close the browser window or redirect back to main application: https://stackoverflow.com/questions/19583328/close-browser-tab-nodejs
-// Okay so the best way to do this might be to have the redirect URL be sent by the request body and get them from the header or body
+// Maybe think about using middleware?
 // Need to populate userID fields and all that
 
 module.exports = router;

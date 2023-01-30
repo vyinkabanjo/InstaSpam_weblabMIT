@@ -40,9 +40,10 @@ function isAuthenticated(req, res, next) {
 
   next();
 }
+// Replaced by /auth/signin and /auth/signout for now
+// router.post("/login", auth.login);
+// router.post("/logout", auth.logout);
 
-router.post("/login", auth.login);
-router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in

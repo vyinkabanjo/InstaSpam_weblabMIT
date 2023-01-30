@@ -38,6 +38,7 @@ function outlookOpen() {
 
 const login = () => {
   console.log("Signing In");
+  // get("auth/signin").then((response) => console.log(response));
   window.location.href = "/auth/signin"; //TODO: Is this the best way to do this?
 };
 

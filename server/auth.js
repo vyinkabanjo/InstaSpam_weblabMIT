@@ -18,6 +18,7 @@ function verify(token) {
 }
 
 // gets user from DB, or makes a new account if it doesn't exist yet
+// TODO: move to msal-auth signin (do it on signin)
 function getOrCreateUser(user) {
   // the "sub" field means "subject", which is a unique identifier for each user
   return User.findOne({ googleid: user.sub }).then((existingUser) => {
@@ -32,6 +33,7 @@ function getOrCreateUser(user) {
   });
 }
 
+// TODO: Also move to msal-auth.js
 function login(req, res) {
   verify(req.body.token)
     .then((user) => getOrCreateUser(user))
@@ -51,9 +53,11 @@ function logout(req, res) {
   res.send({});
 }
 
+// Modified to work with MSAL
+// TODO: change back
 function populateCurrentUser(req, res, next) {
   // simply populate "req.user" for convenience
-  req.user = req.session.user;
+  req.user = req.session.account || req.session.user;
   next();
 }
 
