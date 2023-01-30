@@ -44,7 +44,7 @@ const login = () => {
 
 const logout = () => {
   console.log("Logging Out");
-  window.location.href = "/auth/signout";
+  post("/auth/signout").then(window.location.reload());
 };
 
 const NavBar = (props) => {

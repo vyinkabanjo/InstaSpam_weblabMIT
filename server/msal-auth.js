@@ -215,7 +215,7 @@ router.post("/redirect", async function (req, res, next) {
   }
 });
 
-router.get("/signout", function (req, res) {
+router.post("/signout", function (req, res) {
   /**
    * Construct a logout URI and redirect the user to end the
    * session with Azure AD. For more information, visit:
@@ -224,7 +224,7 @@ router.get("/signout", function (req, res) {
   const logoutUri = `${msalConfig.auth.authority}/oauth2/v2.0/logout?post_logout_redirect_uri=${POST_LOGOUT_REDIRECT_URI}`;
 
   req.session.destroy(() => {
-    res.redirect(logoutUri);
+    // res.redirect(logoutUri); // No reason to redirect user to sign out of their microsoft account imo
   });
 });
 
