@@ -34,6 +34,16 @@ const socketManager = require("./server-socket");
 
 const { isAuthenticated } = require("./authFunctions");
 
+const getLinks = (email_content) => {
+  const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
+  const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
+
+  // TODO: Filter links (remove "mailto:" links, or format them differently on the frontend) (can be done with .filter() method)
+  // Also add "https://" to links that don't have them, and maybe also move to backend
+  // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
+  return unfiltered_links;
+};
+
 // Replaced by /auth/signin and /auth/signout for now
 // router.post("/login", auth.loginFromDB);
 // router.post("/logout", auth.logout);
@@ -58,7 +68,7 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-// get data from database
+// get emails using Microsoft Graph API
 router.get("/emails", isAuthenticated, async (req, res) => {
   console.log("Getting Emails");
   try {
@@ -75,8 +85,7 @@ router.get("/emails", isAuthenticated, async (req, res) => {
           attachments: [],
           emailID: email.id,
           content: email.body.content,
-          links: [],
-          // links: getLinks(email.body.content),
+          links: getLinks(email.body.content),
           times: [],
           relevantDates: String(chrono.parseDate(email.body.content)),
           venue: "",

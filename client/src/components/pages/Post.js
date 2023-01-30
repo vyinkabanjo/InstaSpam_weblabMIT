@@ -17,6 +17,7 @@ import "./Post.css";
  * @param {object} emailData object containing email data
  */
 const parseDateTime = (dateTime) => {
+  // TODO: make the format more readable
   const chronoVal = chrono.parse(dateTime)[0].start;
   const result =
     String(chronoVal.get("month")) +

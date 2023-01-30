@@ -9,7 +9,6 @@ const msal = require("@azure/msal-node");
 
 const { msalConfig, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } = require("./authConfig");
 const authFunctions = require("./authFunctions");
-const { auth } = require("google-auth-library");
 
 const router = express.Router();
 const msalInstance = new msal.ConfidentialClientApplication(msalConfig);

@@ -11,15 +11,6 @@ import { get, post } from "../../utilities";
  * @param {string} user_id user id of the client
  */
 
-const getLinks = (email_content) => {
-  const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
-  const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
-
-  // TODO: Filter links (remove "mailto:" links, or format them differently on the frontend) (can be done with .filter() method)
-  // Also add "https://" to links that don't have them, and maybe also move to backend
-  // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
-  return unfiltered_links;
-};
 // TODO: Add date indicators between posts
 const Feed = (props) => {
   const [emails, emailSetter] = useState([]);
@@ -70,7 +61,6 @@ const Feed = (props) => {
   if (hasEmails) {
     emailsList = emails.filter((email) => !readEmailIDs.includes(email.emailID));
     emailsList = emailsList.map((emailObj, id) => {
-      emailObj.links = getLinks(emailObj.content);
       return (
         <Post
           key={id}
