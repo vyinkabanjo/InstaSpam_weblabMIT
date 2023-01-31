@@ -29,7 +29,7 @@ const Feed = (props) => {
 
   useEffect(() => {
     get("/api/flag", { userID: props.userID }).then((flaggedEmails) => {
-      console.log(flaggedEmails);
+      // console.log(flaggedEmails);
       emailsFlaggedSetter(flaggedEmails);
     });
   }, [triggerFlagged, props.userID]);
