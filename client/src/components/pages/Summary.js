@@ -37,8 +37,13 @@ const Summary = (props) => {
     return (
       <div className="u-flexColumn">
         <h1>{props.subject}</h1>
-        <span>Date(s): {props.dates}</span>
-        {/* <span>Time(s): {props.times.join(", ")}</span> */}
+        {props.dates !== "null" ? (
+          <span>
+            <strong>Date(s):</strong> {props.dates}
+          </span>
+        ) : (
+          <span></span>
+        )}
       </div>
     );
   }

@@ -164,17 +164,15 @@ router.post("/read", auth.ensureLoggedIn, (req, res) => {
   // TODO: uncomment this code later so that the posting to DB still works
   // OR only return unread emails from user's email
 
-  // router.post("/read", (req, res) => {
-  // console.log("posting read");
-  // const readEmail = new ReadEmail({
-  //   userID: req.body.userID,
-  //   subject: req.body.subject,
-  //   emailID: req.body.emailID,
-  // });
+  const readEmail = new ReadEmail({
+    userID: req.body.userID,
+    subject: req.body.subject,
+    emailID: req.body.emailID,
+  });
 
-  // readEmail.save().then(() => {
-  //   res.send(readEmail);
-  // });
+  readEmail.save().then(() => {
+    res.send(readEmail);
+  });
 
   try {
     updateRead(
