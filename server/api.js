@@ -41,6 +41,7 @@ const router = express.Router();
 const socketManager = require("./server-socket");
 
 const { ensureLoggedIn } = require("./authFunctions");
+const { LibraryTemplatePlugin } = require("webpack");
 
 /**
  * Parses links from `email_content`, returning an array of strings
@@ -49,11 +50,25 @@ const { ensureLoggedIn } = require("./authFunctions");
 const getLinks = (email_content) => {
   const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
   const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
-
+  const mailto = /mailto:\S+/gm;
+  const filtered_links = unfiltered_links.filter((link) => {
+    return !mailto.test(link);
+  });
   // TODO: Filter links (remove "mailto:" links, or format them differently on the frontend) (can be done with .filter() method)
   // Also add "https://" to links that don't have them, and maybe also move to backend
   // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
-  return unfiltered_links;
+  // console.log("filtered links", filtered_links);
+  return filtered_links;
+};
+
+const getImages = (email_content) => {
+  // const imageExp = /<img\s*\S+\s\S+\s\S+\ssrc=(\\"\S+)/gm;
+  // const imageExp = /<img.*src=(\\"\S+)/gm;
+  const imageExp = /<img[[:print:]]*src=\\"(\S+)\\"/gm;
+  const inlineImages = Array.from(email_content.matchAll(imageExp)); //uses the regex capturing group to get the actual image src
+
+  console.log("inline image", inlineImages);
+  return inlineImages;
 };
 
 /**
@@ -67,7 +82,7 @@ function parseEmail(email) {
     senderName: email.from.emailAddress.name,
     header: email.subject,
     hasAttachment: email.hasAttachments,
-    attachments: [],
+    attachments: getImages(email.body.content),
     emailID: email.id,
     content: email.body.content,
     links: getLinks(email.body.content),

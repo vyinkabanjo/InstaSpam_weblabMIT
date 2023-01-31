@@ -40,6 +40,7 @@ const Post = (props) => {
     senderEmail,
     timeReceived,
     header,
+    attachments,
     relevantDates,
     links,
     times,
@@ -53,7 +54,14 @@ const Post = (props) => {
       <SenderInfo name={senderName} email={senderEmail} time={parseDateTime(timeReceived)} />
       {/* <Attachments media={props.attachments} /> */}
       <div className="u-flex u-flex-alignCenter Post-info">
-        <Summary subject={header} dates={relevantDates} links={links} times={times} venue={venue} />
+        <Summary
+          subject={header}
+          dates={relevantDates}
+          links={links}
+          times={times}
+          venue={venue}
+          attachments={attachments}
+        />
         <Actions
           subject={header}
           emailID={emailID}

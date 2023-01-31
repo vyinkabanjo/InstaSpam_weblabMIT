@@ -12,17 +12,53 @@ import "./Attachments.css";
  * @param {string[]} venues event venues
  */
 const Summary = (props) => {
-  if (props.links.length !== 0) {
-    return (
-      <div className="u-flexColumn">
-        <h1>{props.subject}</h1>
-        {props.dates !== "null" ? (
-          <span>
-            <strong>Date(s):</strong> {props.dates}
-          </span>
-        ) : (
-          <span></span>
-        )}
+  // if (props.links.length !== 0) {
+  //   return (
+  //     <div className="u-flexColumn">
+  //       <h1>{props.subject}</h1>
+  //       {props.dates !== "null" ? (
+  //         <span>
+  //           <strong>Date(s):</strong> {props.dates}
+  //         </span>
+  //       ) : (
+  //         <span></span>
+  //       )}
+  //       <span>
+  //         {/* TODO: Add support for more than one link */}
+  //         <strong>Relevant Links:</strong>{" "}
+  //         <a href={props.links[0]} target="_blank" className="u-link">
+  //           here
+  //         </a>
+  //       </span>
+  //       {/* <span>Time(s): {props.times.join(", ")}</span> */}
+  //     </div>
+  //   );
+  // } else {
+  //   return (
+  //     <div className="u-flexColumn">
+  //       <h1>{props.subject}</h1>
+  //       {props.dates !== "null" ? (
+  //         <span>
+  //           <strong>Date(s):</strong> {props.dates}
+  //         </span>
+  //       ) : (
+  //         <span></span>
+  //       )}
+  //     </div>
+  //   );
+  // }
+  return (
+    <div className="u-flexColumn">
+      {props.attachments.length !== 0 ? <img src={props.attachments[0]}></img> : <></>}
+      <h1>{props.subject}</h1>
+      {props.dates !== "null" ? (
+        <span>
+          <strong>Date(s):</strong> {props.dates}
+        </span>
+      ) : (
+        <span></span>
+      )}
+      {props.links.length !== 0 ? (
         <span>
           {/* TODO: Add support for more than one link */}
           <strong>Relevant Links:</strong>{" "}
@@ -30,23 +66,12 @@ const Summary = (props) => {
             here
           </a>
         </span>
-        {/* <span>Time(s): {props.times.join(", ")}</span> */}
-      </div>
-    );
-  } else {
-    return (
-      <div className="u-flexColumn">
-        <h1>{props.subject}</h1>
-        {props.dates !== "null" ? (
-          <span>
-            <strong>Date(s):</strong> {props.dates}
-          </span>
-        ) : (
-          <span></span>
-        )}
-      </div>
-    );
-  }
+      ) : (
+        <span></span>
+      )}
+      {/* <span>Time(s): {props.times.join(", ")}</span> */}
+    </div>
+  );
 };
 
 export default Summary;
