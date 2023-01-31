@@ -28,7 +28,7 @@ const parseDateTime = () => {
 };
 
 function outlookOpen() {
-  window.location.href = "https://outlook.office.com/mail/";
+  window.open("https://outlook.office.com/mail/");
 }
 
 const logout = () => {
