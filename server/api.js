@@ -104,6 +104,7 @@ router.get("/emails", ensureLoggedIn, async (req, res, next) => {
     const graphResponse = await fetch(GRAPH_ME_ENDPOINT + "/messages/", req.session.accessToken);
 
     //TODO: Basic data transformation for now, do more with this
+    // TODO: Do something if "@odata.nextLink" property exists in the graphResponse
     res.send(graphResponse.value.map((email) => parseEmail(email)));
   } catch (error) {
     res.status(500);

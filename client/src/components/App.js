@@ -50,7 +50,7 @@ const App = () => {
     <>
       <Router>
         <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
-        <Login path="/login" />
+        <Login path="/login" userID={userID} />
         {/* {userID ? <></> : <Redirect to="/login" from="/" />} */}
         <NotFound default />
       </Router>
