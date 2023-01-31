@@ -31,6 +31,7 @@ const msalConfig = {
   },
 };
 
+const TOKEN_SCOPES = ["User.Read", "Mail.ReadWrite"];
 const REDIRECT_URI = process.env.REDIRECT_URI;
 const DORM_SPAM_FILTER = process.env.DORM_SPAM_FILTER;
 const POST_LOGOUT_REDIRECT_URI = process.env.POST_LOGOUT_REDIRECT_URI;
@@ -42,4 +43,5 @@ module.exports = {
   POST_LOGOUT_REDIRECT_URI,
   GRAPH_ME_ENDPOINT,
   DORM_SPAM_FILTER,
+  TOKEN_SCOPES,
 };
