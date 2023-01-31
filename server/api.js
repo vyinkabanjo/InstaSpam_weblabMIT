@@ -156,7 +156,9 @@ router.get("/read", (req, res) => {
 });
 
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
-  // TODO: uncomment this code later so that the posting still works
+  // TODO: uncomment this code later so that the posting to DB still works
+  // OR only return unread emails from user's email
+
   // router.post("/read", (req, res) => {
   // console.log("posting read");
   // const readEmail = new ReadEmail({
@@ -176,8 +178,6 @@ router.post("/read", auth.ensureLoggedIn, (req, res) => {
       req.session.accessToken,
       req.body.emailID
     );
-
-    //TODO: Basic data transformation for now, do more with this
   } catch (error) {
     res.status(500);
     next(error);
@@ -188,49 +188,12 @@ router.post("/read", auth.ensureLoggedIn, (req, res) => {
 router.get("/flag", (req, res) => {
   FlagEmail.find({ userID: req.query.userID })
     .then((emailsFlagged) => {
-      // console.log(emailsRead);
       let flaggedEmails = emailsFlagged.map((emails) => emails.emailID);
       res.send(flaggedEmails);
     })
     .catch((err) => {
       res.send({ success: false });
     });
-});
-
-// DON'T NEED ANYMORE BUT JUST IN CASE NEED IN THE FUTURE!
-
-const writeToDB = (email) => {
-  const newEmail = new Email({
-    senderEmail: email.from.emailAddress.address,
-    senderName: email.from.emailAddress.name,
-    header: email.subject,
-    hasAttachment: email.hasAttachments,
-    attachments: [],
-    emailID: email.id,
-    content: email.body.content,
-    links: [],
-    // links: getLinks(email.body.content),
-    times: [],
-    relevantDates: String(chrono.parseDate(email.body.content)),
-    venue: "",
-    emailURL: email.webLink,
-    isRead: email.isRead,
-    isFlagged: email.flag.flagStatus,
-    timeReceived: email.receivedDateTime,
-  });
-  newEmail.save();
-  return newEmail;
-};
-// function to return the
-const parsedRawEmails = (rawEmailData) => {
-  const parsedEmails = rawEmailData.map((email) => writeToDB(email));
-  return parsedEmails;
-};
-
-// send dummy data to database
-router.post("/emails", (req, res) => {
-  const rawEmailData = GENERIC_EMAILS.value;
-  parsedRawEmails(rawEmailData);
 });
 
 // anything else falls to this "not found" case
