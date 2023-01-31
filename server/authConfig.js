@@ -32,6 +32,7 @@ const msalConfig = {
 };
 
 const REDIRECT_URI = process.env.REDIRECT_URI;
+const DORM_SPAM_FILTER = process.env.DORM_SPAM_FILTER;
 const POST_LOGOUT_REDIRECT_URI = process.env.POST_LOGOUT_REDIRECT_URI;
 const GRAPH_ME_ENDPOINT = process.env.GRAPH_API_ENDPOINT + "v1.0/me/mailFolders/inbox";
 
@@ -40,4 +41,5 @@ module.exports = {
   REDIRECT_URI,
   POST_LOGOUT_REDIRECT_URI,
   GRAPH_ME_ENDPOINT,
+  DORM_SPAM_FILTER,
 };

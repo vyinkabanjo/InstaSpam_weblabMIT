@@ -32,6 +32,8 @@ const { updateFlagged } = require("./fetch");
 // Import MS Graph Endpoint for current user from authConfig
 const { GRAPH_ME_ENDPOINT } = require("./authConfig");
 
+const { DORM_SPAM_FILTER } = require("./authConfig");
+
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
@@ -107,7 +109,10 @@ router.post("/initsocket", (req, res) => {
 router.get("/emails", ensureLoggedIn, async (req, res, next) => {
   console.log("Getting Emails");
   try {
-    const graphResponse = await fetch(GRAPH_ME_ENDPOINT + "/messages/", req.session.accessToken);
+    const graphResponse = await fetch(
+      GRAPH_ME_ENDPOINT + "/messages/" + DORM_SPAM_FILTER,
+      req.session.accessToken
+    );
 
     //TODO: Basic data transformation for now, do more with this
     res.send(graphResponse.value.map((email) => parseEmail(email)));
