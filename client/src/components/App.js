@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Router } from "@reach/router";
+import { Router, Redirect } from "@reach/router";
 import jwt_decode from "jwt-decode";
 
 import NotFound from "./pages/NotFound.js";
-import Skeleton from "./pages/Skeleton.js";
+import Login from "./pages/Login.js";
 import Main from "./pages/Main.js";
 
 import "../utilities.css";
@@ -11,6 +11,7 @@ import "../utilities.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+import { navigate } from "@reach/router";
 
 /**
  * The main component that renders our web application
@@ -23,6 +24,8 @@ const App = () => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         setUserID(user._id);
+      } else {
+        navigate("/login");
       }
     });
   }, []);
@@ -47,6 +50,8 @@ const App = () => {
     <>
       <Router>
         <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
+        <Login path="/login" />
+        {/* {userID ? <></> : <Redirect to="/login" from="/" />} */}
         <NotFound default />
       </Router>
     </>
