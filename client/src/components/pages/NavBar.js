@@ -36,15 +36,6 @@ function outlookOpen() {
   window.location.href = "https://outlook.office.com/mail/";
 }
 
-const login = () => {
-  console.log("Signing In");
-  get("auth/signin").then((response) => {
-    console.log(response);
-    //TODO: Is there a better way to do this other than just going to the URL?
-    window.location.href = response.authCodeUrl;
-  });
-};
-
 const logout = () => {
   console.log("Logging Out");
   post("/auth/signout").then(window.location.reload());
@@ -101,11 +92,7 @@ const NavBar = (props) => {
           )}
         </GoogleOAuthProvider> */}
 
-        {props.userID ? (
-          <button onClick={logout}>MSAL Logout</button>
-        ) : (
-          <button onClick={login}>MSAL Login</button>
-        )}
+        <button onClick={logout}>MSAL Logout</button>
       </div>
     </nav>
   );
