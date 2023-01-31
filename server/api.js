@@ -21,9 +21,12 @@ const chrono = require("chrono-node");
 const auth = require("./authFunctions");
 
 // Import fetch function for use when fetching (get requests) from the Microsoft Graph API
-const fetch = require("./fetch");
+const { fetch } = require("./fetch");
 
-// Import MS Graph Endpoint from authConfig
+// Import update read function
+const { updateRead } = require("./fetch");
+
+// Import MS Graph Endpoint for current user from authConfig
 const { GRAPH_ME_ENDPOINT } = require("./authConfig");
 
 // api endpoints: all these paths will be prefixed with "/api/"
@@ -140,19 +143,35 @@ router.get("/read", (req, res) => {
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
   // router.post("/read", (req, res) => {
   // console.log("posting read");
-  const readEmail = new ReadEmail({
-    userID: req.body.userID,
-    subject: req.body.subject,
-    emailID: req.body.emailID,
-  });
-  readEmail.save().then(() => {
-    res.send(readEmail);
-  });
+  // const readEmail = new ReadEmail({
+  //   userID: req.body.userID,
+  //   subject: req.body.subject,
+  //   emailID: req.body.emailID,
+  // });
+
+  try {
+    // updateRead(GRAPH_ME_ENDPOINT + "/messages/", req.body.emailID);
+    console.log("got to post request");
+    updateRead(
+      GRAPH_ME_ENDPOINT + "/messages/",
+      req.session.csrfToken,
+      req.session.accessToken,
+      req.body.emailID
+    );
+
+    //TODO: Basic data transformation for now, do more with this
+  } catch (error) {
+    res.status(500);
+    next(error);
+    console.log("error");
+  }
+
+  // readEmail.save().then(() => {
+  //   res.send(readEmail);
+  // });
 });
 
 router.get("/flag", (req, res) => {
-  // console.log("getting read");
-  // TODO: use the userID to narrow in on the find
   FlagEmail.find({ userID: req.query.userID })
     .then((emailsFlagged) => {
       // console.log(emailsRead);
