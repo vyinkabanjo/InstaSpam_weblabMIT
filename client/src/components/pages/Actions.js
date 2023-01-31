@@ -20,9 +20,11 @@ const Actions = (props) => {
     window.location.href = props.emailURL;
   }
 
-  if (props.flaggedEmailIDs.includes(props.emailID) && !flagged) {
-    setFlagged(true);
-  }
+  useEffect(() => {
+    if (props.flaggedEmailIDs.includes(props.emailID)) {
+      setFlagged(true);
+    }
+  }, [props.flaggedEmailIDs]);
 
   // const unFlagEmail
 

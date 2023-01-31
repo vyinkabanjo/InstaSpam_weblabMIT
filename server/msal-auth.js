@@ -7,7 +7,12 @@
 const express = require("express");
 const msal = require("@azure/msal-node");
 
-const { msalConfig, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } = require("./authConfig");
+const {
+  msalConfig,
+  REDIRECT_URI,
+  POST_LOGOUT_REDIRECT_URI,
+  TOKEN_SCOPES,
+} = require("./authConfig");
 const authFunctions = require("./authFunctions");
 
 const router = express.Router();
@@ -61,6 +66,31 @@ async function getAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCode
   } catch (error) {
     next(error);
   }
+}
+
+async function refreshToken(req, res, next) {
+  const silentRequest = {
+    account: req.session.account,
+    scopes: TOKEN_SCOPES,
+  };
+
+  // Get token silently
+  msalInstance
+    .acquireTokenSilent(silentRequest)
+    .then((tokenResponse) => {
+      // tokenResponse has a lot of fields, but we only need a few
+      console.log("SILENT TOKEN RESPONSE:", tokenResponse);
+
+      // Update Session with new access tokens/id tokens
+      req.session.accessToken = tokenResponse.accessToken;
+      req.session.idToken = tokenResponse.idToken;
+      req.session.account = tokenResponse.account;
+
+      next();
+    })
+    .catch((error) => {
+      next(error);
+    });
 }
 
 router.get("/signin", async function (req, res, next) {
@@ -130,7 +160,7 @@ router.get("/acquireToken", async function (req, res, next) {
 
   const silentRequest = {
     account: req.session.account,
-    scopes: ["User.Read", "Mail.ReadWrite"],
+    scopes: TOKEN_SCOPES,
   };
 
   // Get token silently
@@ -228,4 +258,4 @@ router.post("/signout", function (req, res) {
 // Maybe think about using middleware?
 // Need to populate userID fields and all that
 
-module.exports = router;
+module.exports = { router, refreshToken };

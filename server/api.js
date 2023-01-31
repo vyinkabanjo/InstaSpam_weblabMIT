@@ -41,7 +41,7 @@ const router = express.Router();
 const socketManager = require("./server-socket");
 
 const { ensureLoggedIn } = require("./authFunctions");
-const { LibraryTemplatePlugin } = require("webpack");
+const { refreshToken } = require("./msal-auth");
 
 /**
  * Parses links from `email_content`, returning an array of strings
@@ -121,7 +121,7 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 
 // get emails using Microsoft Graph API
-router.get("/emails", ensureLoggedIn, async (req, res, next) => {
+router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
   console.log("Getting Emails");
   try {
     const graphResponse = await fetch(
@@ -139,7 +139,7 @@ router.get("/emails", ensureLoggedIn, async (req, res, next) => {
 });
 
 // flag email on feed
-router.post("/flag", ensureLoggedIn, (req, res) => {
+router.post("/flag", ensureLoggedIn, refreshToken, (req, res, next) => {
   // store flagged email in database
   const flagEmail = new FlagEmail({
     userID: req.body.userID,
@@ -170,7 +170,7 @@ router.post("/flag", ensureLoggedIn, (req, res) => {
   }
 });
 
-router.post("/unflag", ensureLoggedIn, (req, res) => {
+router.post("/unflag", ensureLoggedIn, refreshToken, (req, res, next) => {
   FlagEmail.deleteOne({ emailID: req.body.emailID }).then(() => {
     res.send({ success: true });
   });
