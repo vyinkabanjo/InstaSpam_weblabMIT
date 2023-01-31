@@ -27,15 +27,19 @@ const logout = () => {
   post("/auth/signout").then(window.location.reload());
 };
 
+/**
+ * Login is the component responsible for displaying the login page for the user
+ */
 const Login = (props) => {
   return (
     <>
       <p>Login Page!</p>
-      {props.userID ? (
+      <button onClick={login}>MSAL Login</button>
+      {/* {props.userID ? (
         <button onClick={logout}>MSAL Logout</button>
       ) : (
         <button onClick={login}>MSAL Login</button>
-      )}
+      )} */}
     </>
   );
 };
