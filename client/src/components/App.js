@@ -3,7 +3,7 @@ import { Router } from "@reach/router";
 import jwt_decode from "jwt-decode";
 
 import NotFound from "./pages/NotFound.js";
-import Skeleton from "./pages/Skeleton.js";
+import Login from "./pages/Login.js";
 import Main from "./pages/Main.js";
 
 import "../utilities.css";
@@ -47,6 +47,7 @@ const App = () => {
     <>
       <Router>
         <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
+        <Login path="/login" />
         <NotFound default />
       </Router>
     </>
