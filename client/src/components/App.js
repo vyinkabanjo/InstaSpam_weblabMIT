@@ -16,6 +16,11 @@ import { navigate } from "@reach/router";
 /**
  * The main component that renders our web application
  */
+
+const refreshToken = async () => {
+  await get("/auth/acquireToken");
+};
+
 const App = () => {
   const [userID, setUserID] = useState(undefined);
   const [isLoaded, setLoaded] = useState(false); // controls whether we show a page
@@ -23,8 +28,8 @@ const App = () => {
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
+        refreshToken().then(setUserID(user._id));
         // they are registed in the database, and currently logged in.
-        setUserID(user._id);
       }
       setLoaded(true); // now that we've made the original API request, we're good to show the page
     });
