@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import NotFound from "./pages/NotFound.js";
 import Login from "./pages/Login.js";
 import Main from "./pages/Main.js";
+import Profile from "./pages/Profile.js";
 
 import "../utilities.css";
 
@@ -52,6 +53,7 @@ const App = () => {
       {isLoaded && (
         <Router>
           <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
+          <Profile path="/profile" userID={userID} />
           {/* {userID ? <></> : <Redirect to="/login" from="/" />} */}
           <NotFound default />
         </Router>

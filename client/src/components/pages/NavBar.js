@@ -4,6 +4,7 @@ import HomeIcon from "../../public/icons/House Icon.svg";
 import ProfileIcon from "../../public/icons/Profile Icon Big.svg";
 import LogoutIcon from "../../public/icons/Logout Icon.svg";
 import { get, post } from "../../utilities";
+import { navigate } from "@reach/router";
 import * as chrono from "chrono-node";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 
@@ -36,6 +37,10 @@ const logout = () => {
   post("/auth/signout").then(window.location.reload());
 };
 
+const gotoProfile = () => {
+  navigate("/profile");
+};
+
 const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
@@ -51,10 +56,10 @@ const NavBar = (props) => {
             <strong className="NavBar-strong">Home</strong>
           </span>
 
-          <span className="NavBar-headerItem u-flex-alignCenter">
+          <button onClick={gotoProfile} className="NavBar-headerItem u-flex-alignCenter">
             <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
             <p>Profile</p>
-          </span>
+          </button>
         </div>
         {/* 
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
