@@ -40,7 +40,7 @@ const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="u-flexColumn NavBar-headers">
-        <div className="u-flexColumn">
+        <div className="u-flexColumn NavBar-headerGroup">
           <button onClick={outlookOpen} className="NavBar-headerItem u-flex-alignCenter">
             <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
             <p>Outlook</p>
@@ -72,7 +72,10 @@ const NavBar = (props) => {
           )}
         </GoogleOAuthProvider> */}
 
-        <button onClick={logout} className="NavBar-headerItem u-flex-alignCenter">
+        <button
+          onClick={logout}
+          className="NavBar-headerItem u-flex-alignCenter NavBar-headerGroup"
+        >
           <img src={LogoutIcon} alt="Logout Icon" className="NavBar-icon" />
           <p>Logout</p>
         </button>
