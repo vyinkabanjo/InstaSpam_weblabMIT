@@ -123,7 +123,7 @@ router.get("/emails", ensureLoggedIn, async (req, res, next) => {
 });
 
 // flag email on feed
-router.post("/flag", auth.ensureLoggedIn, (req, res) => {
+router.post("/flag", ensureLoggedIn, (req, res) => {
   // store flagged email in database
   const flagEmail = new FlagEmail({
     userID: req.body.userID,
@@ -160,7 +160,7 @@ router.get("/read", (req, res) => {
     });
 });
 
-router.post("/read", auth.ensureLoggedIn, (req, res) => {
+router.post("/read", ensureLoggedIn, (req, res) => {
   // TODO: uncomment this code later so that the posting to DB still works
   // OR only return unread emails from user's email
 
