@@ -77,4 +77,4 @@ const updateFlagged = (endpoint, csrfToken, accessToken, id) => {
     });
 };
 
-module.exports = { fetch, updateRead };
+module.exports = { fetch, updateRead, updateFlagged };

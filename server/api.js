@@ -26,6 +26,9 @@ const { fetch } = require("./fetch");
 // Import update read function
 const { updateRead } = require("./fetch");
 
+// Import flagging function
+const { updateFlagged } = require("./fetch");
+
 // Import MS Graph Endpoint for current user from authConfig
 const { GRAPH_ME_ENDPOINT } = require("./authConfig");
 
@@ -116,6 +119,7 @@ router.get("/emails", ensureLoggedIn, async (req, res, next) => {
 
 // flag email on feed
 router.post("/flag", auth.ensureLoggedIn, (req, res) => {
+  // store flagged email in database
   const flagEmail = new FlagEmail({
     userID: req.body.userID,
     subject: req.body.subject,
@@ -124,11 +128,22 @@ router.post("/flag", auth.ensureLoggedIn, (req, res) => {
   flagEmail.save().then(() => {
     res.send(flagEmail);
   });
+  // update flagged email on Outlook itself
+  try {
+    updateFlagged(
+      GRAPH_ME_ENDPOINT + "/messages/",
+      req.session.csrfToken,
+      req.session.accessToken,
+      req.body.emailID
+    );
+
+    //TODO: Basic data transformation for now, do more with this
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.get("/read", (req, res) => {
-  // console.log("getting read");
-  // TODO: use the userID to narrow in on the find
   ReadEmail.find({ userID: req.query.userID })
     .then((emailsRead) => {
       // console.log(emailsRead);
@@ -141,6 +156,7 @@ router.get("/read", (req, res) => {
 });
 
 router.post("/read", auth.ensureLoggedIn, (req, res) => {
+  // TODO: uncomment this code later so that the posting still works
   // router.post("/read", (req, res) => {
   // console.log("posting read");
   // const readEmail = new ReadEmail({
@@ -149,9 +165,11 @@ router.post("/read", auth.ensureLoggedIn, (req, res) => {
   //   emailID: req.body.emailID,
   // });
 
+  // readEmail.save().then(() => {
+  //   res.send(readEmail);
+  // });
+
   try {
-    // updateRead(GRAPH_ME_ENDPOINT + "/messages/", req.body.emailID);
-    console.log("got to post request");
     updateRead(
       GRAPH_ME_ENDPOINT + "/messages/",
       req.session.csrfToken,
@@ -165,10 +183,6 @@ router.post("/read", auth.ensureLoggedIn, (req, res) => {
     next(error);
     console.log("error");
   }
-
-  // readEmail.save().then(() => {
-  //   res.send(readEmail);
-  // });
 });
 
 router.get("/flag", (req, res) => {
