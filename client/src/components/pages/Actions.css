@@ -1,21 +1,17 @@
 .Actions-icon {
-  padding: 4px;
+  height: var(--l);
+  width: var(--l);
+  padding: var(--xs);
+  transition: transform 0.15s, background-color 0.6s;
 }
 .Actions-button {
   background-color: transparent;
   border-color: transparent;
 }
 
-/* .Actions-button:hover {
-  transition: transform 0.5s, background-color 0.6s;
-  transition-timing-function: cubic-bezier(0, 0.81, 0, 1.01);
-  transform: scale(1.1);
-  background-color: rgba(233, 233, 233, 0.3);
-} */
-
 .Actions-icon:hover {
   transition: transform 0.3s, background-color 0.6s;
-  /* transition-timing-function: cubic-bezier(0, 0.81, 0, 1.01); */
+  transition-timing-function: cubic-bezier(0, 0.81, 0, 1.01);
   transform: scale(1.2);
   background-color: rgba(233, 233, 233, 0.3);
 }

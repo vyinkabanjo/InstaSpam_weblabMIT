@@ -1,11 +1,11 @@
 import React from "react";
-import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
+import OutlookIcon from "../../public/icons/Outlook Icon.svg";
 import HomeIcon from "../../public/icons/House Icon.svg";
 import ProfileIcon from "../../public/icons/Profile Icon Big.svg";
+import LogoutIcon from "../../public/icons/Logout Icon.svg";
 import { get, post } from "../../utilities";
 import * as chrono from "chrono-node";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
-import "./Actions.css";
 
 const GOOGLE_CLIENT_ID = "711219562850-kft2385qcmndjq2p9dviq87fv5dao8er.apps.googleusercontent.com";
 
@@ -40,37 +40,22 @@ const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="u-flexColumn NavBar-headers">
-        <button
-          onClick={outlookOpen}
-          className="Actions-button NavBar-headerItem u-flex-alignCenter"
-        >
-          <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
-          <p>Outlook</p>
-        </button>
+        <div className="u-flexColumn">
+          <button onClick={outlookOpen} className="NavBar-headerItem u-flex-alignCenter">
+            <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
+            <p>Outlook</p>
+          </button>
 
-        {props.userID ? (
-          <span className="NavBar-headerItem NavBar-active-icon u-flex-alignCenter">
-            <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
-            <p>Home</p>
-          </span>
-        ) : (
           <span className="NavBar-headerItem u-flex-alignCenter">
             <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
-            <p>Home</p>
+            <strong className="NavBar-strong">Home</strong>
           </span>
-        )}
 
-        {props.userID ? (
           <span className="NavBar-headerItem u-flex-alignCenter">
             <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
             <p>Profile</p>
           </span>
-        ) : (
-          <span className="NavBar-headerItem NavBar-active-icon u-flex-alignCenter">
-            <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
-            <p>Profile</p>
-          </span>
-        )}
+        </div>
         {/* 
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           {props.userID ? (
@@ -87,7 +72,10 @@ const NavBar = (props) => {
           )}
         </GoogleOAuthProvider> */}
 
-        <button onClick={logout}>MSAL Logout</button>
+        <button onClick={logout} className="NavBar-headerItem u-flex-alignCenter">
+          <img src={LogoutIcon} alt="Logout Icon" className="NavBar-icon" />
+          <p>Logout</p>
+        </button>
       </div>
     </nav>
   );

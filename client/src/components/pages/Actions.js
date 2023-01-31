@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../utilities.css";
 import "./Actions.css";
 
-import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
+import OutlookIcon from "../../public/icons/Outlook Icon.svg";
 import PinIcon from "../../public/icons/Pin Icon.png";
 import MailIcon from "../../public/icons/Mail Icon.svg";
 import FlagIcon from "../../public/icons/Flag Icon.svg";

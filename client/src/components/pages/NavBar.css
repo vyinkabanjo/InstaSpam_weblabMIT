@@ -1,4 +1,8 @@
 .NavBar-container {
+  /* Define Variables */
+  --icon-size: 1.45em;
+
+
   height: 100%;
   width: var(--navBarWidth);
   border-right: var(--xxs) solid var(--transparent-gray);
@@ -14,14 +18,12 @@
   /* margin-right: 15%; */
   margin-top: 30%;
   overflow: hidden;
-}
-
-/* TODO: Should we move this to utilities? */
-button {
-  font-family: Inter;
+  height: 90vh;
+  justify-content: space-between;
 }
 
 .NavBar-headerItem {
+  will-change: transform;
   cursor: pointer;
 
   padding-left: 20%;
@@ -29,10 +31,13 @@ button {
   column-gap: 15%;
   height: 6.5vh;
 
+  background-color: transparent;
+  border-color: transparent;
+
   font-weight: 300;
   text-align: left;
   font-size: 18px;
-  color: #262626;
+  color: var(--darkgrey);
   transition: transform 0.3s, font-weight 0.2s, font-size 0.2s, color 0.2s, background 0.4s;
 }
 
@@ -48,23 +53,12 @@ button {
 }
 
 .NavBar-icon {
-  width: var(--xl);
-  height: var(--xl);
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 /* TODO: More effective way to display "active icon?" */
-.NavBar-active-icon {
+strong.NavBar-strong {
   color: var(--primary);
   font-weight: bold;
-}
-
-.NavBar-active-icon:hover {
-  transition: transform 0.3s, font-weight 1s, font-size 0.5s, color 1s, background 0.6s;
-  transition-timing-function: cubic-bezier(0, 0.81, 0, 1.01);
-  font-weight: 700;
-  font-size: 20px;
-  /* height: 7vh; */
-  transform: scale(1.02);
-  background: rgba(233, 233, 233, 0.3);
-  color: var(--primary);
 }
