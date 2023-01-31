@@ -4,6 +4,7 @@
  */
 
 var axios = require("axios");
+// const { Client } = require("@microsoft/microsoft-graph-client");
 
 /**
  * Attaches a given access token to a MS Graph API call
@@ -27,4 +28,53 @@ async function fetch(endpoint, accessToken) {
   }
 }
 
-module.exports = fetch;
+// async function updateRead(endpoint, crsfToken, id) {
+const updateRead = (endpoint, csrfToken, accessToken, id) => {
+  // const client = Client.init(options);
+  const message = {
+    isRead: true,
+  };
+  axios
+    .patch(endpoint + String(id), message, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "X-CSRF-TOKEN": csrfToken,
+      },
+    })
+    .then((response) => {})
+    .catch((error) => {
+      console.log(error);
+      {
+        success: false;
+      }
+    });
+};
+
+const updateFlagged = (endpoint, csrfToken, accessToken, id) => {
+  // const client = Client.init(options);
+  const message = {
+    flag: {
+      flagStatus: "Flagged",
+    },
+  };
+  axios
+    .patch(endpoint + String(id), message, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "X-CSRF-TOKEN": csrfToken,
+      },
+    })
+    .then((response) => {})
+    .catch((error) => {
+      console.log(error);
+      {
+        success: false;
+      }
+    });
+};
+
+module.exports = { fetch, updateRead };
