@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./NavBar";
 import Feed from "./Feed";
+import Login from "./Login";
 
 import "../../utilities.css";
 import "./Main.css";
@@ -25,7 +26,7 @@ const Main = (props) => {
       <div className="Main-RightSidebar"></div>
     </>
   ) : (
-    <></>
+    <Login />
   );
 };
 

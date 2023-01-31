@@ -18,15 +18,15 @@ import { navigate } from "@reach/router";
  */
 const App = () => {
   const [userID, setUserID] = useState(undefined);
+  const [isLoaded, setLoaded] = useState(false); // controls whether we show a page
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         setUserID(user._id);
-      } else {
-        navigate("/login");
       }
+      setLoaded(true); // now that we've made the original API request, we're good to show the page
     });
   }, []);
 
@@ -48,12 +48,13 @@ const App = () => {
 
   return (
     <>
-      <Router>
-        <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
-        <Login path="/login" userID={userID} />
-        {/* {userID ? <></> : <Redirect to="/login" from="/" />} */}
-        <NotFound default />
-      </Router>
+      {isLoaded && (
+        <Router>
+          <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
+          {/* {userID ? <></> : <Redirect to="/login" from="/" />} */}
+          <NotFound default />
+        </Router>
+      )}
     </>
   );
 };
