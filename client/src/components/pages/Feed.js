@@ -18,6 +18,7 @@ const Feed = (props) => {
   const [flaggedEmailIDs, emailsFlaggedSetter] = useState([]);
   const [triggerRead, setTriggerRead] = useState(0);
   const [triggerFlagged, setTriggerFlagged] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log("triggering use effect");
@@ -36,6 +37,7 @@ const Feed = (props) => {
   useEffect(() => {
     get("/api/emails").then((emailObjs) => {
       emailSetter(emailObjs);
+      setIsLoading(false);
     });
   }, []);
 
@@ -57,6 +59,10 @@ const Feed = (props) => {
 
   let emailsList = null;
   const hasEmails = emails.length !== 0;
+
+  if (isLoading) {
+    return <div className="u-flexColumn Feed-container">Loading</div>;
+  }
 
   if (hasEmails) {
     emailsList = emails.filter((email) => !readEmailIDs.includes(email.emailID));
