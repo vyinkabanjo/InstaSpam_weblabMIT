@@ -4,9 +4,9 @@ import "./Actions.css";
 
 import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
 import PinIcon from "../../public/icons/Pin Icon.png";
-import MailIcon from "../../public/icons/Mail Icon.png";
-import FlagIcon from "../../public/icons/Flag Icon.png";
-import RedFlagIcon from "../../public/icons/RedFlag Icon.png";
+import MailIcon from "../../public/icons/Mail Icon.svg";
+import FlagIcon from "../../public/icons/Flag Icon.svg";
+import RedFlagIcon from "../../public/icons/Flag Icon Filled.svg";
 
 /**
  * Displays Action information for a specific email Post

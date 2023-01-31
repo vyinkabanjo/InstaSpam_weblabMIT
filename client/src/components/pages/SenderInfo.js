@@ -2,7 +2,7 @@ import React from "react";
 import "../../utilities.css";
 import "./SenderInfo.css";
 
-import ProfileIcon from "../../public/icons/Profile Icon.png";
+import ProfileIcon from "../../public/icons/Profile Icon.svg";
 /**
  * Displays Sender Information for a specific post
  *

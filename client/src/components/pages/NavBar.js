@@ -1,7 +1,7 @@
 import React from "react";
 import OutlookIcon from "../../public/icons/Outlook_Icon.svg";
-import HomeIcon from "../../public/icons/Home Icon.png";
-import ProfileIcon from "../../public/icons/Profile Icon.png";
+import HomeIcon from "../../public/icons/House Icon.svg";
+import ProfileIcon from "../../public/icons/Profile Icon Big.svg";
 import { get, post } from "../../utilities";
 import * as chrono from "chrono-node";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
@@ -20,11 +20,6 @@ const TEST_CONTENT =
  * Proptypes
  * @param {string} user_id user id of the client
  */
-const writetoDB = () => {
-  post("/api/emails", {}).then((response) => {
-    console.log(response);
-  });
-};
 
 const parseDateTime = () => {
   const result = chrono.parse(TEST_CONTENT);
