@@ -32,7 +32,7 @@ const Feed = (props) => {
       console.log(flaggedEmails);
       emailsFlaggedSetter(flaggedEmails);
     });
-  }, [triggerFlagged]);
+  }, [triggerFlagged, props.userID]);
 
   useEffect(() => {
     get("/api/emails").then((emailObjs) => {
