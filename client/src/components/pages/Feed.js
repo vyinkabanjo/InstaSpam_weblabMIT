@@ -52,7 +52,7 @@ const Feed = (props) => {
     });
   };
   const unflagEmail = (email_ID, subject) => {
-    post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
+    post("/api/unflag", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
       setTriggerFlagged(triggerFlagged + 1);
     });
   };
@@ -73,6 +73,7 @@ const Feed = (props) => {
           emailData={emailObj}
           readEmail={ReadEmail}
           flagEmail={FlagEmail}
+          unflagEmail={unflagEmail}
           flaggedEmailIDs={flaggedEmailIDs}
         />
       );

@@ -42,9 +42,12 @@ const Actions = (props) => {
         type="button"
         onClick={() => {
           // TODO: add code to delete the flagged status of the email from the database once it is "re-flagged"
-
+          if (flagged) {
+            props.unflagEmail(props.emailID, props.subject);
+          } else {
+            props.FlagEmail(props.emailID, props.subject);
+          }
           setFlagged(!flagged);
-          props.FlagEmail(props.emailID, props.subject);
         }}
       >
         {flagged ? (

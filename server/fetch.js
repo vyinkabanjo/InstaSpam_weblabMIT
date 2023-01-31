@@ -52,13 +52,8 @@ const updateRead = (endpoint, csrfToken, accessToken, id) => {
     });
 };
 
-const updateFlagged = (endpoint, csrfToken, accessToken, id) => {
+const updateFlagged = (endpoint, csrfToken, accessToken, message, id) => {
   // const client = Client.init(options);
-  const message = {
-    flag: {
-      flagStatus: "Flagged",
-    },
-  };
   axios
     .patch(endpoint + String(id), message, {
       headers: {

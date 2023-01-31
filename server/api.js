@@ -135,14 +135,44 @@ router.post("/flag", ensureLoggedIn, (req, res) => {
     res.send(flagEmail);
   });
   // update flagged email on Outlook itself
+  const message = {
+    flag: {
+      flagStatus: "Flagged",
+    },
+  };
   try {
     updateFlagged(
       GRAPH_ME_ENDPOINT + "/messages/",
       req.session.csrfToken,
       req.session.accessToken,
+      message,
       req.body.emailID
     );
 
+    //TODO: Basic data transformation for now, do more with this
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/unflag", ensureLoggedIn, (req, res) => {
+  FlagEmail.deleteOne({ emailID: req.body.emailID }).then(() => {
+    res.send({ success: true });
+  });
+  // update flagged email on Outlook itself
+  const message = {
+    flag: {
+      flagStatus: "notFlagged",
+    },
+  };
+  try {
+    updateFlagged(
+      GRAPH_ME_ENDPOINT + "/messages/",
+      req.session.csrfToken,
+      req.session.accessToken,
+      message,
+      req.body.emailID
+    );
     //TODO: Basic data transformation for now, do more with this
   } catch (error) {
     console.log(error);
