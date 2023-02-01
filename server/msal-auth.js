@@ -79,7 +79,7 @@ async function refreshToken(req, res, next) {
     .acquireTokenSilent(silentRequest)
     .then((tokenResponse) => {
       // tokenResponse has a lot of fields, but we only need a few
-      console.log("SILENT TOKEN RESPONSE:", tokenResponse);
+      // console.log("SILENT TOKEN RESPONSE:", tokenResponse);
 
       // Update Session with new access tokens/id tokens
       req.session.accessToken = tokenResponse.accessToken;
@@ -98,7 +98,7 @@ router.get("/signin", async function (req, res, next) {
   const host = req.headers.host;
   const extension = ""; // page on the host site to redirect back to, blank for now
 
-  console.log("Accsessing end point from HOST:", host); // prints host field from the header
+  // console.log("Accsessing end point from HOST:", host); // prints host field from the header
   req.session.csrfToken = cryptoProvider.createNewGuid();
 
   /**
@@ -139,7 +139,7 @@ router.get("/signin", async function (req, res, next) {
 router.get("/getAccounts", async function (req, res, next) {
   const msalTokenCache = msalInstance.getTokenCache();
   const cachedAccounts = await msalTokenCache.getAllAccounts();
-  console.log("Accounts:", cachedAccounts);
+  // console.log("Accounts:", cachedAccounts);
   res.send(cachedAccounts);
 });
 
@@ -168,7 +168,7 @@ router.get("/acquireToken", async function (req, res, next) {
     .acquireTokenSilent(silentRequest)
     .then((tokenResponse) => {
       // tokenResponse has a lot of fields, but we only need a few
-      console.log("SILENT TOKEN RESPONSE:", tokenResponse);
+      // console.log("SILENT TOKEN RESPONSE:", tokenResponse);
 
       // Update Session with new access tokens/id tokens
       req.session.accessToken = tokenResponse.accessToken;
@@ -178,7 +178,7 @@ router.get("/acquireToken", async function (req, res, next) {
       // If we specify a "redir" field in the query parameters,
       // we'll redirect to that redirect url after getting the token
       redirect_url = req.query.redir;
-      console.log("REDIRECT URL: ", redirect_url);
+      // console.log("REDIRECT URL: ", redirect_url);
       redirect_url ? res.redirect(redirect_url) : res.send(tokenResponse);
     })
     .catch((error) => {
@@ -218,6 +218,7 @@ router.post("/redirect", async function (req, res, next) {
           authFunctions
             .getOrCreateUser(req.session.account)
             .then((user) => {
+              console.log("session account obj", req.session.account);
               // persist user in the session
               req.session.user = user;
               // redirect to get an access token

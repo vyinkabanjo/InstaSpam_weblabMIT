@@ -128,7 +128,7 @@ router.get("/user", (req, res) => {
 
 // get emails using Microsoft Graph API
 router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
-  console.log("Getting Emails");
+  // console.log("Getting Emails");
   try {
     const graphResponse = await fetch(
       GRAPH_ME_ENDPOINT + "/messages/" + DORM_SPAM_FILTER,

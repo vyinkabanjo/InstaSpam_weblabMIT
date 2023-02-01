@@ -10,6 +10,7 @@ function getOrCreateUser(user) {
 
     const newUser = new User({
       name: user.name,
+      email: user.username,
       microsoftid: user.homeAccountId,
     });
 
