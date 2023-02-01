@@ -1,0 +1,19 @@
+.Divider-body-line {
+    border: none;
+    margin: 0;
+    border-top: 1px dotted black;
+}
+
+.Divider-body {
+    margin-left: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--primary--dim);
+}
+
+.Divider-container {
+    height: 60px;
+    justify-content: space-between;
+}
