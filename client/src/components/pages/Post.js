@@ -52,12 +52,7 @@ const Post = (props) => {
   return (
     <article className="Post-container u-flexColumn">
       <SenderInfo name={senderName} email={senderEmail} time={parseDateTime(timeReceived)} />
-      {/* <Attachments media={props.attachments} /> */}
-      {/* {props.attachments.length !== 0 ? (
-        <img src={`${props.attachments[0]}`} className="embeddedImage" />
-      ) : (
-        <></>
-      )} */}
+      <Attachments media={attachments} />
       <div className="u-flex u-flex-alignCenter Post-info">
         <Summary
           subject={header}

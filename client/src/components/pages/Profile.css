@@ -78,7 +78,7 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: 30%;
+  left: 25%;
   transform: translate(-50%, -50%);
   border-radius: 50%; /* i.e, make a circle */
   height: 1rem;
@@ -93,7 +93,7 @@
 
 /* i.e move the (after) circl more to the right */
 .toggle-switch:checked:after {
-  left: 70%;
+  left: 75%;
 }
 
 .Setting-options {
