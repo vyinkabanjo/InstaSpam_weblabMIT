@@ -65,8 +65,8 @@ const Post = (props) => {
         <Actions
           subject={header}
           emailID={emailID}
-          ReadEmail={props.readEmail}
-          FlagEmail={props.flagEmail}
+          ReadEmail={props.ReadEmail}
+          FlagEmail={props.FlagEmail}
           unflagEmail={props.unflagEmail}
           emailURL={String(emailURL)}
           flaggedEmailIDs={props.flaggedEmailIDs}
