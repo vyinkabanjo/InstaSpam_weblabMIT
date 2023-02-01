@@ -10,6 +10,7 @@
   color: gray;
   margin-left: var(--m);
   font-weight: normal;
+  margin-bottom: var(--s);
 }
 
 .Profile-avatarContainer {
