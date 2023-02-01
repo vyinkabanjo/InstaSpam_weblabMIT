@@ -14,6 +14,7 @@ import "./Summary.css";
 
 function makeURLs(links, maxLen) {
   const urlObjs = links.map((link) => {
+    // TODO: trying doing a fetch request on the link to find redirects
     try {
       return new URL(link, "https://example.com"); // catches some badly formed links "i.e. //google.com"
     } catch {
@@ -46,7 +47,7 @@ const Summary = (props) => {
           <strong className="Summary-strong">Relevant Links:</strong>{" "}
           {urls.map((url, index) => (
             <>
-              <a href={url} target="_blank" className="u-link">
+              <a href={url} key={index} target="_blank" className="u-link">
                 {/* Display URL host name */}
                 {url.hostname}
                 {/* Removes last comma */}
@@ -56,7 +57,7 @@ const Summary = (props) => {
           ))}
         </span>
       ) : (
-        <span></span>
+        <></>
       )}
       {/* <span>Time(s): {props.times.join(", ")}</span> */}
     </div>
