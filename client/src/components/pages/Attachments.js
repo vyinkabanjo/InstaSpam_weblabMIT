@@ -14,7 +14,7 @@ const Attachments = (props) => {
   return useableImages ? (
     <div className="u-flex u-flex-justifyCenter u-flex-alignCenter Attachment-container">
       {useableImages.map((attachment, id) => (
-        <img className="Attachment-image" src={attachment} alt="Email Attachment" key={id} />
+        <img className="Attachment-image" src={attachment} alt="" key={id} />
       ))}
     </div>
   ) : (
