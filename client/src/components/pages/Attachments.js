@@ -13,16 +13,10 @@ const Attachments = (props) => {
   );
   console.log(useableImages);
   return useableImages ? (
-    <div className="u-flex u-flex-justifyCenter">
+    <div className="u-flex u-flex-justifyCenter u-flex-alignCenter Attachment-container">
       {useableImages.map((attachment, id) => (
-        <img
-          // src={"data:image/png;base64,".concat({ attachment })}
-          src={attachment}
-          alt="Email Attachment"
-          key={id}
-          className="embeddedImage"
-        />
-        // <img src={attachment} alt="Email Attachment" key={id} className="embeddedImage" />
+        // src={"data:image/png;base64,".concat({ attachment })}
+        <img className="Attachment-image" src={attachment} alt="" key={id} />
       ))}
     </div>
   ) : (

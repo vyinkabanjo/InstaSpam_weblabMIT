@@ -6,6 +6,7 @@ import { get, post } from "../../utilities";
 import "./Main.css";
 import "./Feed.css";
 import "./Profile.css";
+import StarVector from "../../public/icons/Star Vector.svg";
 
 const Profile = (props) => {
   const [user, setUser] = useState();
@@ -58,23 +59,15 @@ const Profile = (props) => {
         handleLogout={props.handleLogout}
       />
       <div className="ProfileInfo-container">
-        {/* <div className="Profile-avatarContainer u-flex-justifyCenter">
-          <img src={ProfilePageIcon} />
-        </div> */}
         <div className="Profile-text">
-          <div>
+          <div className="u-flexColumn">
             <h1 className="ProfileInfo-name">{user.name}</h1>
-            <p className="ProfileInfo-email">{user.email ? user.email : "placheolder@mit.edu"}</p>
+            <p className="ProfileInfo-email">
+              {user.email ? user.email.toLowerCase() : "placheolder@mit.edu"}
+            </p>
           </div>
-          {/* <div className="Profile-name u-textCenter">
-            <h3 className="ProfileInfo-header">Name</h3>
-            <p>{user.name}</p>
-          </div>
-          <div className=" u-textCenter">
-            <h3 className="ProfileInfo-header">Email</h3>
-            <p>{user.email ? user.email : "placheolder@mit.edu"}</p>
-          </div> */}
         </div>
+        <img src={StarVector} id="Profile-star-topRight" />
       </div>
 
       <section className="u-flexColumn Settings-container">

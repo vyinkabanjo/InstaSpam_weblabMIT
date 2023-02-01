@@ -1,4 +1,16 @@
+<<<<<<< HEAD
 .embeddedImage {
   width: 50%;
   height: 50%;
 }
+=======
+.Attachment-image {
+    max-height: 344px;
+    border-radius: 5px;
+}
+
+.Attachment-container {
+    width: 100%;
+    overflow: scroll;   
+}
+>>>>>>> c9f2e0a1771f2e75edb2102c2fc40f1b6ca671e7
