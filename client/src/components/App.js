@@ -27,6 +27,7 @@ const App = () => {
   const [triggerRead, setTriggerRead] = useState(0);
   const [triggerFlagged, setTriggerFlagged] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [skip, setSkip] = useState(0);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -69,7 +70,8 @@ const App = () => {
   }, [triggerFlagged, userID]);
 
   useEffect(() => {
-    get("/api/emails").then((emailObjs) => {
+    get("/api/emails", { skip: skip }).then((emailObjs) => {
+      setSkip(skip + 10);
       emailSetter(emailObjs);
       setIsLoading(false);
     });
@@ -91,6 +93,18 @@ const App = () => {
     });
   };
 
+  const loadMore = () => {
+    const prevEmailData = emails;
+    setSkip(skip + 10);
+    console.log("new skip is", skip);
+    get("/api/emails", { skip: skip }).then((emailObjs) => {
+      console.log(prevEmailData.concat(emailObjs));
+      emailSetter(prevEmailData.concat(emailObjs));
+      setIsLoading(false);
+    });
+    console.log("new skip after get req is", skip);
+  };
+
   return (
     <>
       {isLoaded && (
@@ -107,6 +121,7 @@ const App = () => {
             flaggedEmailIDs={flaggedEmailIDs}
             readEmailIDs={readEmailIDs}
             isLoading={isLoading}
+            loadMore={loadMore}
           />
           <Profile
             path="/profile"

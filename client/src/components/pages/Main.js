@@ -30,6 +30,7 @@ const Main = (props) => {
         flaggedEmailIDs={props.flaggedEmailIDs}
         readEmailIDs={props.readEmailIDs}
         isLoading={props.isLoading}
+        loadMore={props.loadMore}
       />
       <div className="Main-RightSidebar"></div>
     </>

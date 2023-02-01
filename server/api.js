@@ -138,7 +138,7 @@ router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
   // console.log("Getting Emails");
   try {
     const graphResponse = await fetch(
-      GRAPH_ME_ENDPOINT + "/messages/" + DORM_SPAM_FILTER,
+      GRAPH_ME_ENDPOINT + "/messages/" + DORM_SPAM_FILTER + "&$skip=" + String(req.query.skip),
       req.session.accessToken
     );
 

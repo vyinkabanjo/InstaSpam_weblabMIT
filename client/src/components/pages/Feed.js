@@ -41,7 +41,18 @@ const Feed = (props) => {
     });
   }
 
-  return <section className="u-flexColumn Feed-container">{emailsList}</section>;
+  return (
+    <>
+      <section className="u-flexColumn Feed-container">
+        {emailsList}
+        <div className="Feed-loadMore-container">
+          <button onClick={props.loadMore} className="Feed-loadMore-button">
+            Load more
+          </button>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Feed;

@@ -1,30 +1,56 @@
 /* TODO: Make right border a static div */
 .Feed-container {
-    margin-left: var(--navBarWidth);
-    margin-right: var(--rightBarWidth);
+  margin-left: var(--navBarWidth);
+  margin-right: var(--rightBarWidth);
 }
 
 .Feed-loadingContainer {
-    height: 100vh;
-    margin:auto;
-    width:fit-content;
-    overflow: hidden;
+  height: 100vh;
+  margin: auto;
+  width: fit-content;
+  overflow: hidden;
 }
 
-
 @keyframes rotation_anim {
-    0%   {transform: rotate(0deg);}
-    80%   {transform: rotate(380deg);}
-    93%   {transform: rotate(340deg);}
-    96% {transform: rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
   }
+  80% {
+    transform: rotate(380deg);
+  }
+  93% {
+    transform: rotate(340deg);
+  }
+  96% {
+    transform: rotate(360deg);
+  }
+}
 
 .Feed-loading {
-    height: 30vmin;
-    will-change: transform;
-    /* height: 100%; */
-    animation-name: rotation_anim;
-    animation-timing-function: cubic-bezier(.04,.33,.19,.8);
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
+  height: 30vmin;
+  will-change: transform;
+  /* height: 100%; */
+  animation-name: rotation_anim;
+  animation-timing-function: cubic-bezier(0.04, 0.33, 0.19, 0.8);
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.Feed-loadMore-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Feed-loadMore-button {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--primary--dim);
+  border: none;
+  border-radius: var(--s);
+  color: #ffffff;
+  margin: var(--l);
+  width: fit-content;
+  font-size: 16px;
+  padding: var(--s);
 }
