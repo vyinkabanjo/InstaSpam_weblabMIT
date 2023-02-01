@@ -9,3 +9,7 @@
   line-height: 22px;
   color: var(--primary);
 }
+
+.Summary-container {
+  gap: 2px;
+}
