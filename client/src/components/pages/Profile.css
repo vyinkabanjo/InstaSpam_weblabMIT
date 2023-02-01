@@ -20,8 +20,8 @@
 .ProfileInfo-container {
   display: flex;
   flex-direction: column;
-  position:relative;
-  margin-right:  var(--rightBarWidth);
+  position: relative;
+  margin-right: var(--rightBarWidth);
   overflow-x: hidden;
 }
 
@@ -34,12 +34,7 @@
 
 .ProfileInfo-email {
   color: #000;
-<<<<<<< HEAD
-  margin-top: 8px;
-  padding-left: 10px;
-=======
   margin-top: 0;
->>>>>>> c9f2e0a1771f2e75edb2102c2fc40f1b6ca671e7
   font-size: var(--l);
 }
 
@@ -50,8 +45,6 @@
   margin-left: var(--navBarWidth);
   /* justify-content: space-around; */
 }
-
-
 
 .horizontal-line {
   height: 2px;
