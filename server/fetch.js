@@ -72,4 +72,26 @@ const updateFlagged = (endpoint, csrfToken, accessToken, message, id) => {
     });
 };
 
+// const getOutlookImage = (endpoint, accessToken, csrfToken) => {
+//   axios
+//     .get(endpoint, {
+//       headers: {
+//         // "Content-Type": "application/json",
+//         // Accept: "application/json",
+//         Authorization: `Bearer ${accessToken}`,
+//         // "X-CSRF-TOKEN": csrfToken,
+//       },
+//     })
+//     .then((response) => {
+//       console.log("response value", response);
+//       return response;
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       {
+//         success: false;
+//       }
+//     });
+// };
+
 module.exports = { fetch, updateRead, updateFlagged };

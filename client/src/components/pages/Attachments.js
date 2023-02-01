@@ -8,11 +8,21 @@ import "./Attachments.css";
  * @param {Array} media list of attachements
  */
 const Attachments = (props) => {
-  const useableImages = props.media.filter((imglink) => !imglink.startsWith("cid"));
+  const useableImages = props.media.filter(
+    (imglink) => !imglink.startsWith("cid") && !imglink.startsWith("https://mailfoogae.appspot.com")
+  );
+  console.log(useableImages);
   return useableImages ? (
     <div className="u-flex u-flex-justifyCenter">
       {useableImages.map((attachment, id) => (
-        <img src={attachment} alt="Email Attachment" key={id} />
+        <img
+          // src={"data:image/png;base64,".concat({ attachment })}
+          src={attachment}
+          alt="Email Attachment"
+          key={id}
+          className="embeddedImage"
+        />
+        // <img src={attachment} alt="Email Attachment" key={id} className="embeddedImage" />
       ))}
     </div>
   ) : (
