@@ -83,3 +83,10 @@
   transition-timing-function: ease;
   cursor: pointer;
 }
+
+@media screen and (max-width:800px) {
+    .Feed-container {
+        margin: 0;
+        margin-top: var(--navBarResponsiveHeight);
+      }
+}

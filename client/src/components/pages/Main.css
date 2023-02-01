@@ -8,3 +8,9 @@
     top: 0; /* Stay at the top */
     right: 0;
 }
+
+@media screen and (max-width:800px) {
+    .Main-RightSidebar {
+        display: none;
+    }
+}

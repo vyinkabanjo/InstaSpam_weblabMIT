@@ -40,19 +40,19 @@ const NavBar = (props) => {
   const onHome = pathname === "/";
   return (
     <nav className="NavBar-container">
-      <div className="u-flexColumn NavBar-headers">
-        <div className="u-flexColumn NavBar-headerGroup">
-          <button onClick={outlookOpen} className="NavBar-headerItem u-flex-alignCenter">
+      <div className="NavBar-headers">
+        <div className=" NavBar-headerGroup">
+          <button onClick={outlookOpen} className="NavBar-headerItem">
             <img src={OutlookIcon} alt="Outlook Icon" className="NavBar-icon" />
             <p>Outlook</p>
           </button>
 
-          <button onClick={goHome} className="NavBar-headerItem u-flex-alignCenter">
+          <button onClick={goHome} className="NavBar-headerItem">
             <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
             {onHome ? <strong className="NavBar-strong">Home</strong> : <p>Home</p>}
           </button>
 
-          <button onClick={gotoProfile} className="NavBar-headerItem u-flex-alignCenter">
+          <button onClick={gotoProfile} className="NavBar-headerItem">
             <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
             {onHome ? <p>Profile</p> : <strong className="NavBar-strong">Profile</strong>}
           </button>
