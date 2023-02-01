@@ -52,14 +52,27 @@
 }
 
 .Feed-loadMore-button {
-    background-color: var(--primary--dim);
+    background-color: var(--primary--dim); 
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  color: #ffffff;
+  margin: var(--l);
+  width: fit-content;
+  font-weight: 400;
+  font-size: 16px;
+  padding: var(--s);
+  transition: transform .1s, box-shadow .1s;
+}
+
+.Feed-loadMore-button:hover {
     border: none;
     padding: var(--s);
     color: #ffffff;
     width: fit-content;
     font-size: 16px;
-    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 2px;
     transition: transform .1s, box-shadow .1s;
     cursor: pointer;
 }
@@ -67,7 +80,6 @@
 .Feed-loadMore-container > span:hover > .Feed-loadMore-button{
     transform: translate(3px, 3px);
     box-shadow: none;
-    transition: transform .1s, box-shadow .1s;
     transition-timing-function: ease;
     cursor: pointer;
 }
