@@ -8,7 +8,7 @@
 
 .Profile-headers {
   color: gray;
-  margin-left: var(--m);
+  margin-left: var(--l);
   font-weight: normal;
 }
 
@@ -31,27 +31,18 @@
 .ProfileInfo-email {
   color: #000;
   margin-top: 0;
-  padding-left: 10px;
   font-size: var(--l);
 }
 
 .Profile-text {
   display: flex;
-  padding-left: var(--m);
+  padding-left: var(--l);
   /* padding-right: 32%; */
   margin-left: var(--navBarWidth);
   /* justify-content: space-around; */
 }
 
-.Profile-name {
-  display: inline-block;
-  /* justify-content: space-between; */
-}
 
-.Profile-emailAddress {
-  display: inline-block;
-  /* justify-content: space-between; */
-}
 
 .horizontal-line {
   height: 2px;
@@ -71,6 +62,7 @@
 
 .toggle-switch {
   -webkit-appearance: none;
+  appearance: none;
   position: relative;
   width: 40px;
   height: 20px;
@@ -116,4 +108,13 @@
 
 .Settings-rightColumn {
   margin-right: auto;
+}
+
+#Profile-star-topRight {
+  position: absolute;
+  width: 399.35px;
+  left: 650px;
+  top: -200px;
+  transform: rotate(-23.73deg);
+  z-index: -1;
 }
