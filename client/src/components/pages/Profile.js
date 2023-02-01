@@ -33,8 +33,6 @@ const Profile = (props) => {
   // TODO:
   // - make API get request to retrieve current user's email address from Outlook if
   // MS API starts working
-  // - resend data to DB but with user ID and recepient email address included! So can
-  // fetch user's email address using their user ID; not exactly worth doing that now though
 
   let flaggedEmails = null;
   const hasFlagged = props.flaggedEmailIDs.length !== 0;
