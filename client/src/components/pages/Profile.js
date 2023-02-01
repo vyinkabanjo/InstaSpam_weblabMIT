@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import NavBar from "./NavBar";
 import "../../utilities.css";
 import Post from "./Post";
@@ -10,6 +10,7 @@ import StarVector from "../../public/icons/Star Vector.svg";
 
 const Profile = (props) => {
   const [user, setUser] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
   const [readChecked, setReadChecked] = useState(true);
   const [militaryClock, setMilitaryClock] = useState(true);
 
@@ -29,7 +30,10 @@ const Profile = (props) => {
     if (props.userID) {
       get(`/api/user`, { userID: props.userID }).then((userObj) => {
         setUser(userObj);
+        setIsLoaded(true);
       });
+    } else {
+      window.location.href = "/";
     }
   }, [props.userID]);
 
@@ -38,28 +42,27 @@ const Profile = (props) => {
   // MS API starts working
 
   let flaggedEmails = null;
-  const hasFlagged = props.flaggedEmailIDs.length !== 0;
-  console.log(hasFlagged);
 
-  if (hasFlagged) {
-    flaggedEmails = props.emailData.filter((email) =>
-      props.flaggedEmailIDs.includes(email.emailID)
+  flaggedEmails = props.emailData.filter((email) => props.flaggedEmailIDs.includes(email.emailID));
+  flaggedEmails = flaggedEmails.map((emailObj, id) => {
+    return (
+      <Post
+        key={id}
+        emailData={emailObj}
+        readEmail={props.ReadEmail}
+        flagEmail={props.FlagEmail}
+        flaggedEmailIDs={props.flaggedEmailIDs}
+        unflagEmail={props.unflagEmail}
+      />
     );
-    flaggedEmails = flaggedEmails.map((emailObj, id) => {
-      return (
-        <Post
-          key={id}
-          emailData={emailObj}
-          readEmail={props.ReadEmail}
-          flagEmail={props.FlagEmail}
-          flaggedEmailIDs={props.flaggedEmailIDs}
-          unflagEmail={props.unflagEmail}
-        />
-      );
-    });
-  }
-  if (!user) {
-    return <div className="u-textCenter"> Loading! </div>;
+  });
+
+  if (!isLoaded) {
+    return (
+      <div className="Feed-loadingContainer u-flexColumn u-flex-justifyCenter">
+        <img src={StarVector} alt="Loading" className="Feed-loading" />
+      </div>
+    );
   }
   console.log(flaggedEmails);
   return (
