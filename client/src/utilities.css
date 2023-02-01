@@ -85,6 +85,14 @@ form {
   background-size: contain;
 }
 
+.u-hideOverflow {
+  overflow: hidden;
+}
+
+.u-maxHeight {
+  height: 100vh
+}
+
 .u-bold {
   font-weight: 600;
 }

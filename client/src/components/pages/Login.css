@@ -1,3 +1,12 @@
+.Login-container {
+    position: relative;
+}
+
+.Login-textContainer {
+    height: 50vh;
+    justify-content: space-between;
+}
+
 .Login-header {
     gap: 1em
 }
@@ -5,6 +14,13 @@
 .Login-header h1 {
     font-weight: 500;
     font-size: 40px;
+}
+
+h2.Login-prompt {
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 58px;
+    text-align: center;
 }
 
 .Login-header img {
@@ -45,4 +61,32 @@
 
 .Login-buttonContent img {
     height: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+    .Login-buttonContent {
+        width:50vw;
+    }
+
+    .Login-buttonContent p {
+        display: none;
+    }
+}
+
+#Login-star-bottomLeft {
+    overflow: hidden;
+    position: absolute;
+    left: -10vw;
+    top: 65vh;
+    transform: rotate(-31.07deg);
+    z-index: -1;
+}
+
+#Login-star-topRight {
+    position: absolute;
+    width: 444.91px;
+    right: -14vw;
+    top: -10vh;
+    transform: rotate(27.99deg);
+    z-index: -1;
 }
