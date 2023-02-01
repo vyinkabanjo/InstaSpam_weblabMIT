@@ -62,14 +62,8 @@ const getLinks = (email_content) => {
 };
 
 const getImages = (email_content) => {
-  // const imageExp = /<img\s*\S+\s\S+\s\S+\ssrc=(\\"\S+)/gm;
-  // const imageExp = /<img.*src=(\\"\S+)/gm;
-  // const imageExp = /<img[[:print:]]*src=\\"(\S+)\\"/gm;
   const imageExp = /<img.*?src="(\S+)"/gm;
-  // const imageExp = /<img.*\wsrc=\\"(\S+)\\"/gm;
   const inlineImages = Array.from(email_content.matchAll(imageExp), (m) => m[1]); //uses the regex capturing group to get the actual image src
-
-  console.log("inline image", inlineImages);
   return inlineImages;
 };
 
