@@ -11,6 +11,7 @@
 .SenderInfo-name {
   font-size: 1.1em;
   color: black;
+  font-weight: 600;
 }
 
 .SenderInfo-div p {
