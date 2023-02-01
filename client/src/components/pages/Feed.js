@@ -46,7 +46,7 @@ const Feed = (props) => {
       <section className="u-flexColumn Feed-container">
         {emailsList}
         <div className="Feed-loadMore-container">
-          <button onClick={props.loadMore} className="Feed-loadMore-button">
+          <button onClick={props.loadMore} className="Feed-loadMore-button u-pointer">
             Load more
           </button>
         </div>
