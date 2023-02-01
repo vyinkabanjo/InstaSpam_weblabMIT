@@ -1,0 +1,9 @@
+.Attachment-image {
+    max-height: 344px;
+    border-radius: 5px;
+}
+
+.Attachment-container {
+    width: 100%;
+    overflow: scroll;   
+}
