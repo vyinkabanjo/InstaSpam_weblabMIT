@@ -8,7 +8,9 @@ import "./Attachments.css";
  * @param {Array} media list of attachements
  */
 const Attachments = (props) => {
+  // cid images from microsoft are not helpful rn
   const useableImages = props.media.filter((imglink) => !imglink.startsWith("cid"));
+
   return useableImages ? (
     <div className="u-flex u-flex-justifyCenter">
       {useableImages.map((attachment, id) => (

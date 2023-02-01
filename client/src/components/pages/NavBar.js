@@ -46,6 +46,8 @@ const goHome = () => {
 };
 
 const NavBar = (props) => {
+  const pathname = window.location.pathname; //relative location of where we are on the website
+  const onHome = pathname === "/";
   return (
     <nav className="NavBar-container">
       <div className="u-flexColumn NavBar-headers">
@@ -57,12 +59,12 @@ const NavBar = (props) => {
 
           <button onClick={goHome} className="NavBar-headerItem u-flex-alignCenter">
             <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
-            <strong className="NavBar-strong">Home</strong>
+            {onHome ? <strong className="NavBar-strong">Home</strong> : <p>Home</p>}
           </button>
 
           <button onClick={gotoProfile} className="NavBar-headerItem u-flex-alignCenter">
             <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
-            <p>Profile</p>
+            {onHome ? <p>Profile</p> : <strong className="NavBar-strong">Profile</strong>}
           </button>
         </div>
 
