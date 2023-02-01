@@ -12,6 +12,8 @@ function getOrCreateUser(user) {
       name: user.name,
       email: user.username,
       microsoftid: user.homeAccountId,
+      readEmailsDisplay: true,
+      militaryClockDisplay: true,
     });
 
     return newUser.save();

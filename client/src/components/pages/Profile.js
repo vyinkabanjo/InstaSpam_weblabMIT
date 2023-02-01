@@ -10,28 +10,48 @@ import StarVector from "../../public/icons/Star Vector.svg";
 
 const Profile = (props) => {
   const [user, setUser] = useState();
-  const [readChecked, setReadChecked] = useState(true);
-  const [militaryClock, setMilitaryClock] = useState(true);
-
-  const handleReadCheck = (event) => {
-    const value = event.target.checked;
-    setReadChecked(value);
-  };
-
-  const handleMilitaryClock = (event) => {
-    const value = event.target.checked;
-    setMilitaryClock(value);
-  };
+  const [readChecked, setReadChecked] = useState(false);
+  const [militaryClock, setMilitaryClock] = useState(false);
 
   useEffect(() => {
     document.title = "Profile Page";
     // wait for app to get userID back first
     if (props.userID) {
-      get(`/api/user`, { userID: props.userID }).then((userObj) => {
-        setUser(userObj);
+      get(`/api/user`, { userID: props.userID }).then(
+        (userObj) => {
+          setUser(userObj);
+        },
+        [props.userID]
+      );
+    }
+  });
+
+  useEffect(() => {
+    if (props.userID) {
+      get("/api/readEmailSetting", { userID: props.userID }).then((setting) => {
+        console.log("setting", setting);
+        setReadChecked(setting.readEmailsDisplay);
+      });
+      get("/api/militarySetting", { userID: props.userID }).then((setting) => {
+        console.log("setting", setting);
+        setMilitaryClock(setting.militaryClockDisplay);
       });
     }
-  }, [props.userID]);
+  }, []);
+
+  const handleReadCheck = (event) => {
+    const value = event.target.checked;
+    setReadChecked(value);
+    post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
+  };
+
+  const handleMilitaryClock = (event) => {
+    const value = event.target.checked;
+    setMilitaryClock(value);
+    post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {
+      console.log("databse updated on client!");
+    });
+  };
 
   // TODO:
   // - make API get request to retrieve current user's email address from Outlook if
@@ -39,7 +59,7 @@ const Profile = (props) => {
 
   let flaggedEmails = null;
   const hasFlagged = props.flaggedEmailIDs.length !== 0;
-  console.log(hasFlagged);
+  // console.log(hasFlagged);
 
   if (hasFlagged) {
     flaggedEmails = props.emailData.filter((email) =>
@@ -61,7 +81,7 @@ const Profile = (props) => {
   if (!user) {
     return <div className="u-textCenter"> Loading! </div>;
   }
-  console.log(flaggedEmails);
+  // console.log(flaggedEmails);
   return (
     <>
       <NavBar
@@ -99,7 +119,7 @@ const Profile = (props) => {
             <p className="u-inlineBlock">24-hr time format </p>
             <input
               type="checkbox"
-              checked={militaryClock}
+              defaultChecked={!!militaryClock}
               onChange={handleMilitaryClock}
               className="toggle-switch u-inlineBlock"
             />

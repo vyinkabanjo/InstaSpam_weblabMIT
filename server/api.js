@@ -101,10 +101,6 @@ function parseEmail(email, req) {
   });
 }
 
-// Replaced by /auth/signin and /auth/signout for now
-// router.post("/login", auth.loginFromDB);
-// router.post("/logout", auth.logout);
-
 router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
@@ -125,6 +121,7 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 // get user info
+
 router.get("/user", (req, res) => {
   User.findById(req.query.userID)
     .then((user) => {
@@ -254,6 +251,46 @@ router.get("/flag", (req, res) => {
     .then((emailsFlagged) => {
       let flaggedEmails = emailsFlagged.map((emails) => emails.emailID);
       res.send(flaggedEmails);
+    })
+    .catch((err) => {
+      res.send({ success: false });
+    });
+});
+
+router.post("/militarySetting", (req, res) => {
+  User.updateOne({ _id: req.body.userID }, { militaryClockDisplay: req.body.status })
+    .then(() => {
+      console.log("body req status is", req.body.status);
+      console.log("database updated on seerver!");
+    })
+    .catch((err) => {
+      res.send({ success: false });
+    });
+});
+
+router.post("/readEmailSetting", (req, res) => {
+  User.updateOne({ _id: req.body.userID }, { readEmailsDisplay: req.body.status })
+    .then(() => {})
+    .catch((err) => {
+      res.send({ success: false });
+    });
+});
+
+router.get("/militarySetting", (req, res) => {
+  User.find({ _id: req.query.userID })
+    .then((doc) => {
+      console.log("doc is", doc);
+      res.send(doc);
+    })
+    .catch((err) => {
+      res.send({ success: false });
+    });
+});
+
+router.get("/readEmailSetting", (req, res) => {
+  User.find({ _id: req.query.userID })
+    .then((doc) => {
+      res.send(doc);
     })
     .catch((err) => {
       res.send({ success: false });
