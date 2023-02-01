@@ -10,7 +10,18 @@ import StarVector from "../../public/icons/Star Vector.svg";
 
 const Profile = (props) => {
   const [user, setUser] = useState();
-  // const [triggerFlagged, setTriggerFlagged] = useState(0);
+  const [readChecked, setReadChecked] = useState(true);
+  const [militaryClock, setMilitaryClock] = useState(true);
+
+  const handleReadCheck = (event) => {
+    const value = event.target.checked;
+    setReadChecked(value);
+  };
+
+  const handleMilitaryClock = (event) => {
+    const value = event.target.checked;
+    setMilitaryClock(value);
+  };
 
   useEffect(() => {
     document.title = "Profile Page";
@@ -76,12 +87,22 @@ const Profile = (props) => {
         <div className="Setting-options">
           <span className="Settings-leftColumn">
             <p className="u-inlineBlock">Show unread emails ONLY </p>
-            <input type="checkbox" className="toggle-switch u-inlineBlock" />
+            <input
+              type="checkbox"
+              checked={readChecked}
+              onChange={handleReadCheck}
+              className="toggle-switch u-inlineBlock"
+            />
           </span>
           <hr className="vertical-line" />
           <span className="Settings-rightColumn">
             <p className="u-inlineBlock">24-hr time format </p>
-            <input type="checkbox" className="toggle-switch u-inlineBlock" />
+            <input
+              type="checkbox"
+              checked={militaryClock}
+              onChange={handleMilitaryClock}
+              className="toggle-switch u-inlineBlock"
+            />
           </span>
         </div>
       </section>
