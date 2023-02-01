@@ -42,7 +42,17 @@
   justify-content: center;
 }
 
+.Feed-loadMore-container > span {
+    cursor: pointer;
+    height: auto;
+    width: auto;
+    margin: var(--l);
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .Feed-loadMore-button {
+<<<<<<< HEAD
   will-change: transform;
   cursor: pointer;
 
@@ -79,4 +89,36 @@
   height: 1.45em;
   margin-right: 0px;
   padding-right: 0;
+=======
+    background-color: var(--primary--dim); 
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  color: #ffffff;
+  margin: var(--l);
+  width: fit-content;
+  font-weight: 400;
+  font-size: 16px;
+  padding: var(--s);
+  transition: transform .1s, box-shadow .1s;
+}
+
+.Feed-loadMore-button:hover {
+    border: none;
+    padding: var(--s);
+    color: #ffffff;
+    width: fit-content;
+    font-size: 16px;
+    transition: transform .1s, box-shadow .1s;
+    cursor: pointer;
+}
+
+.Feed-loadMore-container > span:hover > .Feed-loadMore-button{
+    transform: translate(3px, 3px);
+    box-shadow: none;
+    transition-timing-function: ease;
+    cursor: pointer;
+>>>>>>> 6613d9ce6bc09c08c2e90cef325d53f5263e48e4
 }

@@ -32,7 +32,7 @@ function makeURLs(links, maxLen) {
 const Summary = (props) => {
   const urls = makeURLs(props.links, 3);
   return (
-    <div className="u-flexColumn">
+    <div className="u-flexColumn Summary-container">
       <h1>{props.subject}</h1>
       {props.dates !== "null" && (
         <span>

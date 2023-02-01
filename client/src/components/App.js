@@ -49,15 +49,20 @@ const App = () => {
   };
 
   const handleLogout = () => {
+<<<<<<< HEAD
     setUserID(null);
     post("/api/logout");
+=======
+    console.log("Logged out successfully!");
+    post("/api/logout").then(setUserID(null));
+>>>>>>> 6613d9ce6bc09c08c2e90cef325d53f5263e48e4
   };
 
   useEffect(() => {
     get("/api/read", { userID: userID }).then((readEmails) => {
       emailsReadSetter(readEmails);
     });
-  }, [triggerRead]);
+  }, [triggerRead, userID]);
 
   useEffect(() => {
     get("/api/flag", { userID: userID }).then((flaggedEmails) => {
@@ -66,12 +71,13 @@ const App = () => {
   }, [triggerFlagged, userID]);
 
   useEffect(() => {
-    get("/api/emails", { skip: skip }).then((emailObjs) => {
-      setSkip(skip + 10);
-      emailSetter(emailObjs);
-      setIsLoading(false);
-    });
-  }, []);
+    if (userID !== undefined)
+      get("/api/emails", { skip: skip }).then((emailObjs) => {
+        setSkip(skip + 10);
+        emailSetter(emailObjs);
+        setIsLoading(false);
+      });
+  }, [userID]);
 
   const ReadEmail = (email_ID, subject) => {
     post("/api/read", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
