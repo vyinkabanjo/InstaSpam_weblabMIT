@@ -5,6 +5,7 @@ import Post from "./Post";
 import Divider from "./Divider";
 import { get, post } from "../../utilities";
 import StarVector from "../../public/icons/Star Vector.svg";
+import LoadingIcon from "../../public/icons/LoadingIcon.png";
 
 /**
  * Feed is the component containing the list of posts

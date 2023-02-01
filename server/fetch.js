@@ -18,8 +18,6 @@ async function fetch(endpoint, accessToken) {
     },
   };
 
-  console.log(`request made to ${endpoint} at: ` + new Date().toString());
-
   try {
     const response = await axios.get(endpoint, options);
     return await response.data;
@@ -45,7 +43,6 @@ const updateRead = (endpoint, csrfToken, accessToken, id) => {
     })
     .then((response) => {})
     .catch((error) => {
-      console.log(error);
       {
         success: false;
       }
@@ -65,33 +62,10 @@ const updateFlagged = (endpoint, csrfToken, accessToken, message, id) => {
     })
     .then((response) => {})
     .catch((error) => {
-      console.log(error);
       {
         success: false;
       }
     });
 };
-
-// const getOutlookImage = (endpoint, accessToken, csrfToken) => {
-//   axios
-//     .get(endpoint, {
-//       headers: {
-//         // "Content-Type": "application/json",
-//         // Accept: "application/json",
-//         Authorization: `Bearer ${accessToken}`,
-//         // "X-CSRF-TOKEN": csrfToken,
-//       },
-//     })
-//     .then((response) => {
-//       console.log("response value", response);
-//       return response;
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//       {
-//         success: false;
-//       }
-//     });
-// };
 
 module.exports = { fetch, updateRead, updateFlagged };

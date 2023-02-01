@@ -28,7 +28,6 @@ const Attachments = (props) => {
   const moveRight = () => {
     setActiveIndex((activeIndex + 1) % useableImages.length);
   };
-  // console.log(useableImages);
   return useableImages.length ? (
     <div className="u-flex Attachment-container">
       {useableImages.length > 1 && (
