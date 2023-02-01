@@ -2,3 +2,10 @@
   width: 200px;
   height: 200px;
 }
+
+.Summary-strong {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--primary);
+}

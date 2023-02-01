@@ -1,6 +1,6 @@
 import React from "react";
 import "../../utilities.css";
-import "./Attachments.css";
+import "./Summary.css";
 /**
  * Displays Summary information for a specific email Post
  *
@@ -17,23 +17,16 @@ const Summary = (props) => {
   // }
   return (
     <div className="u-flexColumn">
-      {props.attachments.length !== 0 ? (
-        <img src={`${props.attachments[0]}`} className="embeddedImage" />
-      ) : (
-        <></>
-      )}
       <h1>{props.subject}</h1>
-      {props.dates !== "null" ? (
+      {props.dates !== "null" && (
         <span>
-          <strong>Date(s):</strong> {props.dates}
+          <strong className="Summary-strong">Date(s):</strong> {props.dates}
         </span>
-      ) : (
-        <span></span>
       )}
       {props.links.length !== 0 ? (
         <span>
           {/* TODO: Add support for more than one link */}
-          <strong>Relevant Links:</strong>{" "}
+          <strong className="Summary-strong">Relevant Links:</strong>{" "}
           <a href={props.links[0]} target="_blank" className="u-link">
             here
           </a>
