@@ -3,6 +3,7 @@ import "../../utilities.css";
 import "./Feed.css";
 import Post from "./Post";
 import { get, post } from "../../utilities";
+import StarVector from "../../public/icons/Star Vector.svg";
 
 /**
  * Feed is the component containing the list of posts
@@ -17,7 +18,11 @@ const Feed = (props) => {
   const hasEmails = props.emailData.length !== 0;
 
   if (props.isLoading) {
-    return <div className="u-flexColumn Feed-container">Loading</div>;
+    return (
+      <div className="Feed-loadingContainer u-flexColumn u-flex-justifyCenter">
+        <img src={StarVector} alt="Loading" className="Feed-loading" />
+      </div>
+    );
   }
 
   if (hasEmails) {

@@ -5,5 +5,5 @@
 
 .Attachment-container {
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
 }

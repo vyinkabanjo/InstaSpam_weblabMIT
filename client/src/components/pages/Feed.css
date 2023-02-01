@@ -3,3 +3,28 @@
     margin-left: var(--navBarWidth);
     margin-right: var(--rightBarWidth);
 }
+
+.Feed-loadingContainer {
+    height: 100vh;
+    margin:auto;
+    width:fit-content;
+    overflow: hidden;
+}
+
+
+@keyframes rotation_anim {
+    0%   {transform: rotate(0deg);}
+    80%   {transform: rotate(380deg);}
+    93%   {transform: rotate(340deg);}
+    96% {transform: rotate(360deg);}
+  }
+
+.Feed-loading {
+    height: 30vmin;
+    will-change: transform;
+    /* height: 100%; */
+    animation-name: rotation_anim;
+    animation-timing-function: cubic-bezier(.04,.33,.19,.8);
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
