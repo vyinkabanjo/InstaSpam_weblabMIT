@@ -278,10 +278,10 @@ router.post("/readEmailSetting", (req, res) => {
 });
 
 router.get("/militarySetting", (req, res) => {
-  User.find({ _id: req.query.userID })
+  User.findOne({ _id: req.query.userID })
     .then((doc) => {
       console.log("doc is", doc);
-      res.send(doc);
+      res.send(doc.militaryClockDisplay);
     })
     .catch((err) => {
       res.send({ success: false });
@@ -289,9 +289,9 @@ router.get("/militarySetting", (req, res) => {
 });
 
 router.get("/readEmailSetting", (req, res) => {
-  User.find({ _id: req.query.userID })
+  User.findOne({ _id: req.query.userID })
     .then((doc) => {
-      res.send(doc);
+      res.send(doc.readEmailsDisplay);
     })
     .catch((err) => {
       res.send({ success: false });

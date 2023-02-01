@@ -43,20 +43,17 @@ const App = () => {
   const handleLogin = (credentialResponse) => {
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken);
-    console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserID(user._id);
     });
   };
 
   const handleLogout = () => {
-    console.log("Logged out successfully!");
     setUserID(null);
     post("/api/logout");
   };
 
   useEffect(() => {
-    console.log("triggering use effect");
     get("/api/read", { userID: userID }).then((readEmails) => {
       emailsReadSetter(readEmails);
     });
@@ -64,7 +61,6 @@ const App = () => {
 
   useEffect(() => {
     get("/api/flag", { userID: userID }).then((flaggedEmails) => {
-      // console.log(flaggedEmails);
       emailsFlaggedSetter(flaggedEmails);
     });
   }, [triggerFlagged, userID]);
@@ -96,13 +92,10 @@ const App = () => {
   const loadMore = () => {
     const prevEmailData = emails;
     setSkip(skip + 10);
-    console.log("new skip is", skip);
     get("/api/emails", { skip: skip }).then((emailObjs) => {
-      console.log(prevEmailData.concat(emailObjs));
       emailSetter(prevEmailData.concat(emailObjs));
       setIsLoading(false);
     });
-    console.log("new skip after get req is", skip);
   };
 
   return (

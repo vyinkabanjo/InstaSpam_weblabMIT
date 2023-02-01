@@ -14,16 +14,6 @@ const Profile = (props) => {
   const [readChecked, setReadChecked] = useState(true);
   const [militaryClock, setMilitaryClock] = useState(true);
 
-  const handleReadCheck = (event) => {
-    const value = event.target.checked;
-    setReadChecked(value);
-  };
-
-  const handleMilitaryClock = (event) => {
-    const value = event.target.checked;
-    setMilitaryClock(value);
-  };
-
   useEffect(() => {
     document.title = "Profile Page";
     // wait for app to get userID back first
@@ -31,25 +21,42 @@ const Profile = (props) => {
       get(`/api/user`, { userID: props.userID }).then((userObj) => {
         setUser(userObj);
         setIsLoaded(true);
+        get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
+          setMilitaryClock(settingObj);
+          setIsLoaded(true);
+        });
+        get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
+          setReadChecked(settingObj);
+          setIsLoaded(true);
+        });
       });
     } else {
       window.location.href = "/";
     }
   }, []);
 
-  // const handleReadCheck = (event) => {
-  //   const value = event.target.checked;
-  //   setReadChecked(value);
-  //   post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
-  // };
+  useEffect(() => {
+    // window.location.reload();
+  }, [readChecked, militaryClock]);
 
-  // const handleMilitaryClock = (event) => {
-  //   const value = event.target.checked;
-  //   setMilitaryClock(value);
-  //   post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {
-  //     console.log("databse updated on client!");
-  //   });
-  // };
+  console.log("Read checked", readChecked);
+  console.log("militrary clock", militaryClock);
+
+  const handleReadCheck = (event) => {
+    const value = !readChecked;
+    // const value = event.target.checked;
+    setReadChecked(value);
+    post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
+  };
+
+  const handleMilitaryClock = (event) => {
+    // const value = event.target.checked;
+    const value = !militaryClock;
+    setMilitaryClock(value);
+    post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {
+      console.log("databse updated on client!");
+    });
+  };
 
   // TODO:
   // - make API get request to retrieve current user's email address from Outlook if
@@ -106,7 +113,7 @@ const Profile = (props) => {
             <p className="u-inlineBlock">Show unread emails ONLY </p>
             <input
               type="checkbox"
-              checked={readChecked}
+              defaultChecked={readChecked}
               onChange={handleReadCheck}
               className="toggle-switch u-inlineBlock"
             />
@@ -116,7 +123,7 @@ const Profile = (props) => {
             <p className="u-inlineBlock">24-hr time format </p>
             <input
               type="checkbox"
-              defaultChecked={!!militaryClock}
+              defaultChecked={militaryClock}
               onChange={handleMilitaryClock}
               className="toggle-switch u-inlineBlock"
             />
