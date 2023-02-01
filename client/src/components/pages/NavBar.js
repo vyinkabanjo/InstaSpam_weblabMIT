@@ -32,6 +32,14 @@ function outlookOpen() {
   window.open("https://outlook.office.com/mail/");
 }
 
+// const logout = () => {
+//   console.log("Logging Out");
+//   post("/auth/signout").then(() => {
+//     window.location.reload();
+//     navigate("/login");
+//   });
+// };
+
 const logout = () => {
   console.log("Logging Out");
   post("/auth/signout").then(window.location.reload());
@@ -39,6 +47,10 @@ const logout = () => {
 
 const gotoProfile = () => {
   navigate("/profile");
+};
+
+const goHome = () => {
+  navigate("/");
 };
 
 const NavBar = (props) => {
@@ -51,31 +63,16 @@ const NavBar = (props) => {
             <p>Outlook</p>
           </button>
 
-          <span className="NavBar-headerItem u-flex-alignCenter">
+          <button onClick={goHome} className="NavBar-headerItem u-flex-alignCenter">
             <img src={HomeIcon} alt="Home Icon" className="NavBar-icon" />
             <strong className="NavBar-strong">Home</strong>
-          </span>
+          </button>
 
           <button onClick={gotoProfile} className="NavBar-headerItem u-flex-alignCenter">
             <img src={ProfileIcon} alt="Profile Icon" className="NavBar-icon" />
             <p>Profile</p>
           </button>
         </div>
-        {/* 
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          {props.userID ? (
-            <button
-              onClick={() => {
-                googleLogout();
-                props.handleLogout();
-              }}
-            >
-              Logout
-            </button>
-          ) : (
-            <GoogleLogin onSuccess={props.handleLogin} onError={(err) => console.log(err)} />
-          )}
-        </GoogleOAuthProvider> */}
 
         <button
           onClick={logout}
