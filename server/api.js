@@ -61,7 +61,6 @@ const getLinks = (email_content) => {
   // TODO: Filter links (remove "mailto:" links, or format them differently on the frontend) (can be done with .filter() method)
   // Also add "https://" to links that don't have them, and maybe also move to backend
   // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
-  // console.log("filtered links", filtered_links);
   return filtered_links;
 };
 
@@ -136,7 +135,6 @@ router.get("/user", (req, res) => {
 
 // get emails using Microsoft Graph API
 router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
-  // console.log("Getting Emails");
   try {
     const graphResponse = await fetch(
       GRAPH_ME_ENDPOINT + "/messages/" + DORM_SPAM_FILTER + "&$skip=" + String(req.query.skip),
@@ -179,9 +177,7 @@ router.post("/flag", ensureLoggedIn, refreshToken, (req, res, next) => {
     );
 
     //TODO: Basic data transformation for now, do more with this
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 });
 
 router.post("/unflag", ensureLoggedIn, refreshToken, (req, res, next) => {
@@ -203,15 +199,12 @@ router.post("/unflag", ensureLoggedIn, refreshToken, (req, res, next) => {
       req.body.emailID
     );
     //TODO: Basic data transformation for now, do more with this
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 });
 
 router.get("/read", (req, res) => {
   ReadEmail.find({ userID: req.query.userID })
     .then((emailsRead) => {
-      // console.log(emailsRead);
       let excludedEmails = emailsRead.map((emails) => emails.emailID);
       res.send(excludedEmails);
     })
@@ -244,7 +237,6 @@ router.post("/read", ensureLoggedIn, (req, res) => {
   } catch (error) {
     res.status(500);
     next(error);
-    console.log("error");
   }
 });
 
@@ -261,10 +253,7 @@ router.get("/flag", (req, res) => {
 
 router.post("/militarySetting", (req, res) => {
   User.updateOne({ _id: req.body.userID }, { militaryClockDisplay: req.body.status })
-    .then(() => {
-      console.log("body req status is", req.body.status);
-      console.log("database updated on seerver!");
-    })
+    .then(() => {})
     .catch((err) => {
       res.send({ success: false });
     });
@@ -281,7 +270,6 @@ router.post("/readEmailSetting", (req, res) => {
 router.get("/militarySetting", (req, res) => {
   User.findOne({ _id: req.query.userID })
     .then((doc) => {
-      console.log("doc is", doc);
       res.send(doc.militaryClockDisplay);
     })
     .catch((err) => {

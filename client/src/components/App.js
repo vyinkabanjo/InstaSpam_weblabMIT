@@ -49,13 +49,7 @@ const App = () => {
   };
 
   const handleLogout = () => {
-<<<<<<< HEAD
-    setUserID(null);
-    post("/api/logout");
-=======
-    console.log("Logged out successfully!");
     post("/api/logout").then(setUserID(null));
->>>>>>> 6613d9ce6bc09c08c2e90cef325d53f5263e48e4
   };
 
   useEffect(() => {
