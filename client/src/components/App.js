@@ -119,6 +119,8 @@ const App = () => {
             unflagEmail={unflagEmail}
             flaggedEmailIDs={flaggedEmailIDs}
           />
+
+          <Login path="/login" />
           {/* {userID ? <></> : <Redirect to="/login" from="/" />} */}
           <NotFound default />
         </Router>
