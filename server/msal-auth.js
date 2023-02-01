@@ -191,43 +191,40 @@ router.post("/redirect", async function (req, res, next) {
     const state = JSON.parse(cryptoProvider.base64Decode(req.body.state));
 
     // check if csrfToken matches
-    if (state.csrfToken === req.session.csrfToken) {
-      req.session.authCodeRequest.code = req.body.code; // authZ code
-      req.session.authCodeRequest.codeVerifier = req.session.pkceCodes.verifier; // PKCE Code Verifier
 
-      try {
-        const tokenResponse = await msalInstance.acquireTokenByCode(req.session.authCodeRequest);
-        req.session.accessToken = tokenResponse.accessToken;
-        req.session.idToken = tokenResponse.idToken;
-        req.session.account = tokenResponse.account; // We use the account for silent token requests
+    req.session.authCodeRequest.code = req.body.code; // authZ code
+    req.session.authCodeRequest.codeVerifier = req.session.pkceCodes.verifier; // PKCE Code Verifier
 
-        // This section controls whether we go to the "acquireToken" endpoint to get a token for calling the graph API
-        // This may not be needed since our original sign in token already gives us permissions.
-        if (req.session.isAuthenticated) {
-          // If the user's already been authenticated, just redirect back to the original site
-          res.redirect(state.redirectTo);
-        } else {
-          req.session.isAuthenticated = true;
+    try {
+      const tokenResponse = await msalInstance.acquireTokenByCode(req.session.authCodeRequest);
+      req.session.accessToken = tokenResponse.accessToken;
+      req.session.idToken = tokenResponse.idToken;
+      req.session.account = tokenResponse.account; // We use the account for silent token requests
 
-          //Get the user from the database
-          authFunctions
-            .getOrCreateUser(req.session.account)
-            .then((user) => {
-              // persist user in the session
-              req.session.user = user;
-              // redirect to get an access token
-              res.redirect("/auth/acquireToken?redir=" + encodeURIComponent(state.redirectTo));
-            })
-            .catch((err) => {
-              console.log(`Failed to log in: ${err}`);
-              res.status(401).send({ err });
-            });
-        }
-      } catch (error) {
-        next(error);
+      // This section controls whether we go to the "acquireToken" endpoint to get a token for calling the graph API
+      // This may not be needed since our original sign in token already gives us permissions.
+      if (req.session.isAuthenticated) {
+        // If the user's already been authenticated, just redirect back to the original site
+        res.redirect(state.redirectTo);
+      } else {
+        req.session.isAuthenticated = true;
+
+        //Get the user from the database
+        authFunctions
+          .getOrCreateUser(req.session.account)
+          .then((user) => {
+            // persist user in the session
+            req.session.user = user;
+            // redirect to get an access token
+            res.redirect("/auth/acquireToken?redir=" + encodeURIComponent(state.redirectTo));
+          })
+          .catch((err) => {
+            console.log(`Failed to log in: ${err}`);
+            res.status(401).send({ err });
+          });
       }
-    } else {
-      next(new Error("csrf token does not match"));
+    } catch (error) {
+      next(error);
     }
   } else {
     next(new Error("state is missing"));
