@@ -19,6 +19,9 @@
 .ProfileInfo-container {
   display: flex;
   flex-direction: column;
+  position:relative;
+  margin-right:  var(--rightBarWidth);
+  overflow-x: hidden;
 }
 
 .ProfileInfo-name {

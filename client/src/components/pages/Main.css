@@ -3,7 +3,6 @@
     width: var(--rightBarWidth);
     border-left: var(--xxs) solid var(--transparent-gray);
     z-index: 1;
-    background-color: white;
 
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     top: 0; /* Stay at the top */
