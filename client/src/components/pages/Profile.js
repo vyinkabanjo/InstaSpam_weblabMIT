@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import NavBar from "./NavBar";
+import NavBar from "./NavBar";
 import "../../utilities.css";
 import Post from "./Post";
 import { get, post } from "../../utilities";
 import "./Feed.css";
 import "./Profile.css";
-
-const getLinks = (email_content) => {
-  const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
-  const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
-
-  // TODO: Filter links (remove "mailto:" links, or format them differently on the frontend) (can be done with .filter() method)
-  // Also add "https://" to links that don't have them, and maybe also move to backend
-  // Potentially also generate "short" domain names here? (i.e. "https://google.com/..." ==> "google.com")
-  return unfiltered_links;
-};
 
 const Profile = (props) => {
   const [user, setUser] = useState();
@@ -59,6 +49,11 @@ const Profile = (props) => {
   console.log(flaggedEmails);
   return (
     <>
+      <NavBar
+        userID={props.userID}
+        handleLogin={props.handleLogin}
+        handleLogout={props.handleLogout}
+      />
       <div className="ProfileInfo-container">
         {/* <div className="Profile-avatarContainer u-flex-justifyCenter">
           <img src={ProfilePageIcon} />
