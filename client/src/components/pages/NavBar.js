@@ -32,17 +32,9 @@ function outlookOpen() {
   window.open("https://outlook.office.com/mail/");
 }
 
-// const logout = () => {
-//   console.log("Logging Out");
-//   post("/auth/signout").then(() => {
-//     window.location.reload();
-//     navigate("/login");
-//   });
-// };
-
 const logout = () => {
   console.log("Logging Out");
-  post("/auth/signout").then(window.location.reload());
+  post("/auth/signout").then((window.location.href = "/"));
 };
 
 const gotoProfile = () => {
