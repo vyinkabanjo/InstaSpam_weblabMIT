@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import "../../utilities.css";
 import Post from "./Post";
 import { get, post } from "../../utilities";
+import "./Main.css";
 import "./Feed.css";
 import "./Profile.css";
 
@@ -93,6 +94,7 @@ const Profile = (props) => {
         <h2 className="Profile-headers">Flagged</h2>
         {flaggedEmails}
       </section>
+      <div className="Main-RightSidebar"></div>
     </>
   );
 };
