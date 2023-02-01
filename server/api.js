@@ -54,8 +54,9 @@ const getLinks = (email_content) => {
   const linkExp = /<a\s*href=\s*\"(\S+)"/gm; // debug here: https://regex101.com/r/w86CWw/1
   const unfiltered_links = Array.from(email_content.matchAll(linkExp), (m) => m[1]); //uses the regex capturing group to get the actual link value
   const mailto = /mailto:\S+/gm;
-  const filtered_links = unfiltered_links.filter((link) => {
-    return !mailto.test(link);
+  const filtered_links = unfiltered_links.filter((link, index) => {
+    //remove duplicate links and mailto links
+    return !mailto.test(link) && unfiltered_links.indexOf(link) === index;
   });
   // TODO: Filter links (remove "mailto:" links, or format them differently on the frontend) (can be done with .filter() method)
   // Also add "https://" to links that don't have them, and maybe also move to backend
