@@ -8,9 +8,10 @@ import "./Attachments.css";
  * @param {Array} media list of attachements
  */
 const Attachments = (props) => {
-  return props.media ? (
+  const useableImages = props.media.filter((imglink) => !imglink.startsWith("cid"));
+  return useableImages ? (
     <div className="u-flex u-flex-justifyCenter">
-      {props.media.map((attachment, id) => (
+      {useableImages.map((attachment, id) => (
         <img src={attachment} alt="Email Attachment" key={id} />
       ))}
     </div>
