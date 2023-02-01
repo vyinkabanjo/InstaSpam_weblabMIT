@@ -62,16 +62,18 @@ const Profile = (props) => {
           <img src={ProfilePageIcon} />
         </div> */}
         <div className="Profile-text">
-          <div className="Profile-name u-textCenter">
+          <div>
+            <h1 className="ProfileInfo-name">{user.name}</h1>
+            <p className="ProfileInfo-email">{user.email ? user.email : "placheolder@mit.edu"}</p>
+          </div>
+          {/* <div className="Profile-name u-textCenter">
             <h3 className="ProfileInfo-header">Name</h3>
             <p>{user.name}</p>
           </div>
           <div className=" u-textCenter">
             <h3 className="ProfileInfo-header">Email</h3>
-            {/* QUICK FIX FOR EMAIL FOR NOW SINCE PREVIOUSLY SIGNED IN USERS DON'T HAVE
-            THEIR EMAILS PASSED IN WITH USER OBJ */}
             <p>{user.email ? user.email : "placheolder@mit.edu"}</p>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -92,6 +94,7 @@ const Profile = (props) => {
       </section>
       <section className="u-flexColumn Feed-container">
         <h2 className="Profile-headers">Flagged</h2>
+        <hr className="horizontal-line" />
         {flaggedEmails}
       </section>
       <div className="Main-RightSidebar"></div>

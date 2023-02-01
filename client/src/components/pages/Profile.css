@@ -8,7 +8,7 @@
 
 .Profile-headers {
   color: gray;
-  margin-left: var(--s);
+  margin-left: var(--m);
   font-weight: normal;
 }
 
@@ -21,16 +21,26 @@
   flex-direction: column;
 }
 
-.ProfileInfo-header {
-  color: var(--primary);
-  font-weight: normal;
+.ProfileInfo-name {
+  color: #000;
+  font-weight: bold;
+  font-size: 56px;
+  margin-bottom: 0;
+}
+
+.ProfileInfo-email {
+  color: #000;
+  margin-top: 0;
+  padding-left: 10px;
+  font-size: var(--l);
 }
 
 .Profile-text {
   display: flex;
-  padding-left: 32%;
-  padding-right: 32%;
-  justify-content: space-around;
+  padding-left: var(--m);
+  /* padding-right: 32%; */
+  margin-left: var(--navBarWidth);
+  /* justify-content: space-around; */
 }
 
 .Profile-name {

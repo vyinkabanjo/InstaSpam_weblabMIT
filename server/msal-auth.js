@@ -218,7 +218,6 @@ router.post("/redirect", async function (req, res, next) {
           authFunctions
             .getOrCreateUser(req.session.account)
             .then((user) => {
-              console.log("session account obj", req.session.account);
               // persist user in the session
               req.session.user = user;
               // redirect to get an access token
