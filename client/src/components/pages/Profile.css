@@ -23,6 +23,7 @@
   position: relative;
   margin-right: var(--rightBarWidth);
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .ProfileInfo-name {

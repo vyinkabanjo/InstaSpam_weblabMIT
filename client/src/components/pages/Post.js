@@ -51,7 +51,7 @@ const Post = (props) => {
 
   return (
     <article className="Post-container u-flexColumn">
-      <SenderInfo name={senderName} email={senderEmail} time={parseDateTime(timeReceived)} />
+      <SenderInfo name={senderName} email={senderEmail} time={timeReceived} />
       <Attachments media={attachments} />
       <div className="u-flex u-flex-alignCenter Post-info">
         <Summary

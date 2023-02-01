@@ -44,6 +44,7 @@ const socketManager = require("./server-socket");
 
 const { ensureLoggedIn } = require("./authFunctions");
 const { refreshToken } = require("./msal-auth");
+const { UrlString } = require("@azure/msal-common");
 
 /**
  * Parses links from `email_content`, returning an array of strings

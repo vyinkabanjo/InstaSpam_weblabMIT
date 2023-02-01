@@ -11,7 +11,7 @@ const Attachments = (props) => {
   const useableImages = props.media.filter(
     (imglink) => !imglink.startsWith("cid") && !imglink.startsWith("https://mailfoogae.appspot.com")
   );
-  console.log(useableImages);
+  // console.log(useableImages);
   return useableImages ? (
     <div className="u-flex u-flex-justifyCenter u-flex-alignCenter Attachment-container">
       {useableImages.map((attachment, id) => (

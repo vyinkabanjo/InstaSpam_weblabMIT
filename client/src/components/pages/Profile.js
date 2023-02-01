@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import NavBar from "./NavBar";
 import "../../utilities.css";
 import Post from "./Post";
@@ -10,76 +10,73 @@ import StarVector from "../../public/icons/Star Vector.svg";
 
 const Profile = (props) => {
   const [user, setUser] = useState();
-  const [readChecked, setReadChecked] = useState(false);
-  const [militaryClock, setMilitaryClock] = useState(false);
-
-  useEffect(() => {
-    document.title = "Profile Page";
-    // wait for app to get userID back first
-    if (props.userID) {
-      get(`/api/user`, { userID: props.userID }).then(
-        (userObj) => {
-          setUser(userObj);
-        },
-        [props.userID]
-      );
-    }
-  });
-
-  useEffect(() => {
-    if (props.userID) {
-      get("/api/readEmailSetting", { userID: props.userID }).then((setting) => {
-        console.log("setting", setting);
-        setReadChecked(setting.readEmailsDisplay);
-      });
-      get("/api/militarySetting", { userID: props.userID }).then((setting) => {
-        console.log("setting", setting);
-        setMilitaryClock(setting.militaryClockDisplay);
-      });
-    }
-  }, []);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [readChecked, setReadChecked] = useState(true);
+  const [militaryClock, setMilitaryClock] = useState(true);
 
   const handleReadCheck = (event) => {
     const value = event.target.checked;
     setReadChecked(value);
-    post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
   };
 
   const handleMilitaryClock = (event) => {
     const value = event.target.checked;
     setMilitaryClock(value);
-    post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {
-      console.log("databse updated on client!");
-    });
   };
+
+  useEffect(() => {
+    document.title = "Profile Page";
+    // wait for app to get userID back first
+    if (props.userID) {
+      get(`/api/user`, { userID: props.userID }).then((userObj) => {
+        setUser(userObj);
+        setIsLoaded(true);
+      });
+    } else {
+      window.location.href = "/";
+    }
+  }, []);
+
+  // const handleReadCheck = (event) => {
+  //   const value = event.target.checked;
+  //   setReadChecked(value);
+  //   post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
+  // };
+
+  // const handleMilitaryClock = (event) => {
+  //   const value = event.target.checked;
+  //   setMilitaryClock(value);
+  //   post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {
+  //     console.log("databse updated on client!");
+  //   });
+  // };
 
   // TODO:
   // - make API get request to retrieve current user's email address from Outlook if
   // MS API starts working
 
   let flaggedEmails = null;
-  const hasFlagged = props.flaggedEmailIDs.length !== 0;
-  // console.log(hasFlagged);
 
-  if (hasFlagged) {
-    flaggedEmails = props.emailData.filter((email) =>
-      props.flaggedEmailIDs.includes(email.emailID)
+  flaggedEmails = props.emailData.filter((email) => props.flaggedEmailIDs.includes(email.emailID));
+  flaggedEmails = flaggedEmails.map((emailObj, id) => {
+    return (
+      <Post
+        key={id}
+        emailData={emailObj}
+        readEmail={props.ReadEmail}
+        flagEmail={props.FlagEmail}
+        flaggedEmailIDs={props.flaggedEmailIDs}
+        unflagEmail={props.unflagEmail}
+      />
     );
-    flaggedEmails = flaggedEmails.map((emailObj, id) => {
-      return (
-        <Post
-          key={id}
-          emailData={emailObj}
-          readEmail={props.ReadEmail}
-          flagEmail={props.FlagEmail}
-          flaggedEmailIDs={props.flaggedEmailIDs}
-          unflagEmail={props.unflagEmail}
-        />
-      );
-    });
-  }
-  if (!user) {
-    return <div className="u-textCenter"> Loading! </div>;
+  });
+
+  if (!isLoaded) {
+    return (
+      <div className="Feed-loadingContainer u-flexColumn u-flex-justifyCenter">
+        <img src={StarVector} alt="Loading" className="Feed-loading" />
+      </div>
+    );
   }
   // console.log(flaggedEmails);
   return (

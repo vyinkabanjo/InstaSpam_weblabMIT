@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../utilities.css";
 import "./Summary.css";
 /**
@@ -11,10 +11,29 @@ import "./Summary.css";
  * @param {string[]} times event times
  * @param {string[]} venues event venues
  */
+
+function makeURLs(links, maxLen) {
+  const urlObjs = links.map((link) => {
+    // TODO: trying doing a fetch request on the link to find redirects
+    try {
+      return new URL(link, "https://example.com"); // catches some badly formed links "i.e. //google.com"
+    } catch {
+      return new URL("https://" + link, "https://example.com"); // try and catch the rest
+    }
+  });
+
+  if (urlObjs.length > maxLen) {
+    urlObjs.length = maxLen;
+  }
+
+  return urlObjs;
+}
+
 const Summary = (props) => {
   // const tempImage =
   // console.log(JSON.stringify(props.attachments[0]));
   // }
+  const urls = makeURLs(props.links, 3);
   return (
     <div className="u-flexColumn">
       <h1>{props.subject}</h1>
@@ -23,16 +42,22 @@ const Summary = (props) => {
           <strong className="Summary-strong">Date(s):</strong> {props.dates}
         </span>
       )}
-      {props.links.length !== 0 ? (
+      {urls.length ? (
         <span>
-          {/* TODO: Add support for more than one link */}
           <strong className="Summary-strong">Relevant Links:</strong>{" "}
-          <a href={props.links[0]} target="_blank" className="u-link">
-            here
-          </a>
+          {urls.map((url, index) => (
+            <span key={index + url.href}>
+              <a href={url} target="_blank" className="u-link">
+                {/* Display URL host name */}
+                {url.hostname}
+                {/* Removes last comma */}
+                {index != urls.length - 1 && ","}
+              </a>{" "}
+            </span>
+          ))}
         </span>
       ) : (
-        <span></span>
+        <></>
       )}
       {/* <span>Time(s): {props.times.join(", ")}</span> */}
     </div>
