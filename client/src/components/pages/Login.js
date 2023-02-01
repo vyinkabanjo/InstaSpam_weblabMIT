@@ -18,9 +18,7 @@ import "./Login.css";
  */
 
 const login = () => {
-  console.log("Signing In");
   get("auth/signin").then((response) => {
-    console.log(response);
     //TODO: Is there a better way to do this other than just going to the URL?
     window.location.href = response.authCodeUrl;
   });
