@@ -21,7 +21,16 @@ const Main = (props) => {
         handleLogin={props.handleLogin}
         handleLogout={props.handleLogout}
       />
-      <Feed userID={props.userID} />
+      <Feed
+        userID={props.userID}
+        emailData={props.emailData}
+        ReadEmail={props.ReadEmail}
+        FlagEmail={props.FlagEmail}
+        unflagEmail={props.unflagEmail}
+        flaggedEmailIDs={props.flaggedEmailIDs}
+        readEmailIDs={props.readEmailIDs}
+        isLoading={props.isLoading}
+      />
       <div className="Main-RightSidebar"></div>
     </>
   ) : (

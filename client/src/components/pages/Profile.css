@@ -1,0 +1,109 @@
+.Settings-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--navBarWidth);
+  margin-right: var(--rightBarWidth);
+  /* border-top: 2px solid var(--primary); */
+}
+
+.Profile-headers {
+  color: gray;
+  margin-left: var(--s);
+  font-weight: normal;
+}
+
+.Profile-avatarContainer {
+  margin-left: auto;
+  margin-right: auto;
+}
+.ProfileInfo-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.ProfileInfo-header {
+  color: var(--primary);
+  font-weight: normal;
+}
+
+.Profile-text {
+  display: flex;
+  padding-left: 32%;
+  padding-right: 32%;
+  justify-content: space-around;
+}
+
+.Profile-name {
+  display: inline-block;
+  /* justify-content: space-between; */
+}
+
+.Profile-emailAddress {
+  display: inline-block;
+  /* justify-content: space-between; */
+}
+
+.horizontal-line {
+  height: 2px;
+  width: 100%;
+  background-color: var(--primary);
+  border: 0;
+  margin-top: 0;
+}
+
+.vertical-line {
+  height: 56px;
+  width: 1.5px;
+  background-color: var(--transparent-gray);
+  border: 0;
+  margin-top: 0;
+}
+
+.toggle-switch {
+  -webkit-appearance: none;
+  position: relative;
+  width: 40px;
+  height: 20px;
+  border-radius: 25px;
+  background-color: #ccc;
+  transform: translate(30%, 30%);
+  transition: background 0.3s; /* time we want bg transition to take */
+  outline: none;
+  cursor: pointer;
+}
+
+/* i.e something we want positioned on top of another element */
+/* basically causes something to appear in the DOM w/o actually being in it */
+.toggle-switch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%; /* i.e, make a circle */
+  height: 1rem;
+  width: 1rem;
+  background-color: rgb(255, 255, 255);
+  transition: left 0.3s;
+}
+
+.toggle-switch:checked {
+  background-color: var(--primary);
+}
+
+/* i.e move the (after) circl more to the right */
+.toggle-switch:checked:after {
+  left: 70%;
+}
+
+.Setting-options {
+  display: flex;
+}
+
+.Settings-leftColumn {
+  margin-left: auto;
+}
+
+.Settings-rightColumn {
+  margin-right: auto;
+}

@@ -115,6 +115,16 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+// get user info
+router.get("/user", (req, res) => {
+  User.findById(req.query.userID)
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      res.send({ error: err });
+    });
+});
 
 // get emails using Microsoft Graph API
 router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {

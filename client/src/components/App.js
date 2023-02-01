@@ -21,6 +21,12 @@ import { navigate } from "@reach/router";
 const App = () => {
   const [userID, setUserID] = useState(undefined);
   const [isLoaded, setLoaded] = useState(false); // controls whether we show a page
+  const [emails, emailSetter] = useState([]);
+  const [readEmailIDs, emailsReadSetter] = useState([]);
+  const [flaggedEmailIDs, emailsFlaggedSetter] = useState([]);
+  const [triggerRead, setTriggerRead] = useState(0);
+  const [triggerFlagged, setTriggerFlagged] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -48,12 +54,71 @@ const App = () => {
     post("/api/logout");
   };
 
+  useEffect(() => {
+    console.log("triggering use effect");
+    get("/api/read", { userID: userID }).then((readEmails) => {
+      emailsReadSetter(readEmails);
+    });
+  }, [triggerRead]);
+
+  useEffect(() => {
+    get("/api/flag", { userID: userID }).then((flaggedEmails) => {
+      // console.log(flaggedEmails);
+      emailsFlaggedSetter(flaggedEmails);
+    });
+  }, [triggerFlagged, userID]);
+
+  useEffect(() => {
+    get("/api/emails").then((emailObjs) => {
+      emailSetter(emailObjs);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const ReadEmail = (email_ID, subject) => {
+    post("/api/read", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
+      setTriggerRead(triggerRead + 1);
+    });
+  };
+  const FlagEmail = (email_ID, subject) => {
+    post("/api/flag", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
+      setTriggerFlagged(triggerFlagged + 1);
+    });
+  };
+  const unflagEmail = (email_ID, subject) => {
+    post("/api/unflag", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
+      setTriggerFlagged(triggerFlagged + 1);
+    });
+  };
+
   return (
     <>
       {isLoaded && (
         <Router>
-          <Main path="/" userID={userID} handleLogin={handleLogin} handleLogout={handleLogout} />
-          <Profile path="/profile" userID={userID} />
+          <Main
+            path="/"
+            userID={userID}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+            emailData={emails}
+            ReadEmail={ReadEmail}
+            FlagEmail={FlagEmail}
+            unflagEmail={unflagEmail}
+            flaggedEmailIDs={flaggedEmailIDs}
+            readEmailIDs={readEmailIDs}
+            isLoading={isLoading}
+          />
+          <Profile
+            path="/profile"
+            userID={userID}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+            emailData={emails}
+            readEmail={ReadEmail}
+            flagEmail={FlagEmail}
+            unflagEmail={unflagEmail}
+            flaggedEmailIDs={flaggedEmailIDs}
+          />
           {/* {userID ? <></> : <Redirect to="/login" from="/" />} */}
           <NotFound default />
         </Router>
