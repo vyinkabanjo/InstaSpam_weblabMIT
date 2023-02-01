@@ -46,14 +46,14 @@ const Summary = (props) => {
         <span>
           <strong className="Summary-strong">Relevant Links:</strong>{" "}
           {urls.map((url, index) => (
-            <>
-              <a href={url} key={index} target="_blank" className="u-link">
+            <span key={index + url.href}>
+              <a href={url} target="_blank" className="u-link">
                 {/* Display URL host name */}
                 {url.hostname}
                 {/* Removes last comma */}
                 {index != urls.length - 1 && ","}
               </a>{" "}
-            </>
+            </span>
           ))}
         </span>
       ) : (

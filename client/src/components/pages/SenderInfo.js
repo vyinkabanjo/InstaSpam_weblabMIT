@@ -13,12 +13,14 @@ import ProfileIcon from "../../public/icons/Profile Icon.svg";
  */
 
 const SenderInfo = (props) => {
+  const time = new Date(props.time);
   return (
     <div className="u-flex u-flex-alignCenter SenderInfo-div">
-      {props.name} | {props.email} | {props.time}{" "}
-      <div>
-        <img className="SenderInfo-icon" src={ProfileIcon} />
-      </div>
+      <p>
+        <strong className="SenderInfo-name">{props.name}</strong> | {props.email}
+      </p>
+      <p>{time.toLocaleDateString() + " | " + time.toLocaleTimeString()}</p>
+      {/* <img src={ProfileIcon} className="SenderInfo-icon"></img> */}
     </div>
   );
 };

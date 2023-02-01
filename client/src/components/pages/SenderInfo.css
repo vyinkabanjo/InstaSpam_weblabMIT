@@ -5,7 +5,15 @@
 }
 
 .SenderInfo-div {
-  display: flex;
-  align-items: flex-start;
-  /* justify-content: space-between; */
+  justify-content: space-between;
+}
+
+.SenderInfo-name {
+  font-size: 1.1em;
+  color: black;
+}
+
+.SenderInfo-div p {
+  font-size: 18px;
+  color: #6B6565;
 }
