@@ -43,28 +43,40 @@
 }
 
 .Feed-loadMore-button {
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #88898b;
-  border: none;
-  border-radius: 12px;
-  color: #ffffff;
-  margin: var(--l);
-  width: fit-content;
-  font-weight: 400;
-  font-size: 16px;
-  padding: var(--s);
+  will-change: transform;
+  cursor: pointer;
+
+  padding: var(--m);
+  /* display: flex; */
+  column-gap: 15%;
+  /* height: 6.5vh; */
+  height: 64px;
+
+  background-color: transparent;
+  border-color: transparent;
+
+  font-weight: 300;
+  text-align: left;
+  font-size: 18px;
+  color: var(--darkgrey);
   transition: transform 0.3s, font-weight 0.2s, font-size 0.2s, color 0.2s, background 0.4s;
+  margin-left: 0px;
+  padding-left: 8px;
 }
 
 .Feed-loadMore-button:hover {
   transition: transform 0.3s, font-weight 1s, font-size 0.5s, color 1s, background 0.6s;
-  background-color: var(--primary--dim);
-  border: none;
-  border-radius: 12px;
-  color: #ffffff;
-  margin: var(--l);
-  width: fit-content;
+  transition-timing-function: cubic-bezier(0, 0.81, 0, 1.01);
+  font-weight: 700;
   font-size: 20px;
-  padding: var(--s);
+  /* height: 7vh; */
+  transform: scale(1.02);
+  color: var(--primary);
+}
+
+.LoadMore-icon {
+  width: 1.45em;
+  height: 1.45em;
+  margin-right: 0px;
+  padding-right: 0;
 }

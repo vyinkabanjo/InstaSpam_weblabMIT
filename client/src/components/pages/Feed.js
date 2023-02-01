@@ -4,6 +4,7 @@ import "./Feed.css";
 import Post from "./Post";
 import { get, post } from "../../utilities";
 import StarVector from "../../public/icons/Star Vector.svg";
+import LoadingIcon from "../../public/icons/LoadingIcon.png";
 
 /**
  * Feed is the component containing the list of posts
@@ -46,6 +47,7 @@ const Feed = (props) => {
       <section className="u-flexColumn Feed-container">
         {emailsList}
         <div className="Feed-loadMore-container">
+          <img src={LoadingIcon} alt="Profile Icon" className="LoadMore-icon" />
           <button onClick={props.loadMore} className="Feed-loadMore-button u-pointer">
             Load more
           </button>
