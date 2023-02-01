@@ -29,6 +29,8 @@ const { updateRead } = require("./fetch");
 // Import flagging function
 const { updateFlagged } = require("./fetch");
 
+const { getOutlookImage } = require("./fetch");
+
 // Import MS Graph Endpoint for current user from authConfig
 const { GRAPH_ME_ENDPOINT } = require("./authConfig");
 
@@ -72,12 +74,19 @@ const getImages = (email_content) => {
  * @param {Object} email email object from Microsoft Graph API
  * @returns
  */
-function parseEmail(email) {
+function parseEmail(email, req) {
   return new Email({
     senderEmail: email.from.emailAddress.address,
     senderName: email.from.emailAddress.name,
     header: email.subject,
     hasAttachment: email.hasAttachments,
+    // attachments: [
+    //   getOutlookImage(
+    //     "https://graph.microsoft.com/v1.0/me/mailFolders/inbox/messages/AAMkAGQ5ZmE1OWRhLWEyZjMtNDdjMy05MDkxLWE5ZDdjYjk5MGYxOQBGAAAAAADUUd0brNnoRIN5P34i1rIFBwB61lxwDLvUQqZrtY0R3GwIAAAAAAEMAAAP9LzBTsYnT6xwROru1J9IAAGMHagnAAA=/attachments",
+    //     req.session.accessToken,
+    //     req.session.csrfToken
+    //   ),
+    // ],
     attachments: getImages(email.body.content),
     emailID: email.id,
     content: email.body.content,
@@ -137,7 +146,7 @@ router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
 
     //TODO: Basic data transformation for now, do more with this
     // TODO: Do something if "@odata.nextLink" property exists in the graphResponse
-    res.send(graphResponse.value.map((email) => parseEmail(email)));
+    res.send(graphResponse.value.map((email) => parseEmail(email, req)));
   } catch (error) {
     res.status(500);
     next(error);

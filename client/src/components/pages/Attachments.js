@@ -8,12 +8,14 @@ import "./Attachments.css";
  * @param {Array} media list of attachements
  */
 const Attachments = (props) => {
-  // cid images from microsoft are not helpful rn
-  const useableImages = props.media.filter((imglink) => !imglink.startsWith("cid"));
-
+  const useableImages = props.media.filter(
+    (imglink) => !imglink.startsWith("cid") && !imglink.startsWith("https://mailfoogae.appspot.com")
+  );
+  console.log(useableImages);
   return useableImages ? (
     <div className="u-flex u-flex-justifyCenter u-flex-alignCenter Attachment-container">
       {useableImages.map((attachment, id) => (
+        // src={"data:image/png;base64,".concat({ attachment })}
         <img className="Attachment-image" src={attachment} alt="" key={id} />
       ))}
     </div>

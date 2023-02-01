@@ -75,7 +75,7 @@ const Profile = (props) => {
         <hr className="horizontal-line" />
         <div className="Setting-options">
           <span className="Settings-leftColumn">
-            <p className="u-inlineBlock">Show unread emails </p>
+            <p className="u-inlineBlock">Show unread emails ONLY </p>
             <input type="checkbox" className="toggle-switch u-inlineBlock" />
           </span>
           <hr className="vertical-line" />

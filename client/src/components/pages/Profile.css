@@ -10,6 +10,7 @@
   color: gray;
   margin-left: var(--l);
   font-weight: normal;
+  margin-bottom: var(--s);
 }
 
 .Profile-avatarContainer {
@@ -19,8 +20,8 @@
 .ProfileInfo-container {
   display: flex;
   flex-direction: column;
-  position:relative;
-  margin-right:  var(--rightBarWidth);
+  position: relative;
+  margin-right: var(--rightBarWidth);
   overflow-x: hidden;
 }
 
@@ -44,8 +45,6 @@
   margin-left: var(--navBarWidth);
   /* justify-content: space-around; */
 }
-
-
 
 .horizontal-line {
   height: 2px;
