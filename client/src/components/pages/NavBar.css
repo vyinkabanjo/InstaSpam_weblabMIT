@@ -75,7 +75,7 @@ strong.NavBar-strong {
 }
 
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:1000px) {
   .NavBar-container {
     /* Define Variables */
     width: 100%;
