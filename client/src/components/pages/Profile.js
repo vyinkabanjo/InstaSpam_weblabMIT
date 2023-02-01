@@ -26,6 +26,7 @@ const Profile = (props) => {
 
   let flaggedEmails = null;
   const hasFlagged = props.flaggedEmailIDs.length !== 0;
+  console.log(hasFlagged);
 
   if (hasFlagged) {
     flaggedEmails = props.emailData.filter((email) =>
@@ -39,6 +40,7 @@ const Profile = (props) => {
           readEmail={props.ReadEmail}
           flagEmail={props.FlagEmail}
           flaggedEmailIDs={props.flaggedEmailIDs}
+          unflagEmail={props.unflagEmail}
         />
       );
     });

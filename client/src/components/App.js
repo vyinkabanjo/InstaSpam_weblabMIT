@@ -81,7 +81,7 @@ const App = () => {
     });
   };
   const FlagEmail = (email_ID, subject) => {
-    post("/api/flag", { userID: props.userID, emailID: email_ID, subject: subject }).then(() => {
+    post("/api/flag", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
       setTriggerFlagged(triggerFlagged + 1);
     });
   };
@@ -111,6 +111,8 @@ const App = () => {
           <Profile
             path="/profile"
             userID={userID}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
             emailData={emails}
             readEmail={ReadEmail}
             flagEmail={FlagEmail}
