@@ -21,35 +21,31 @@ const Profile = (props) => {
       get(`/api/user`, { userID: props.userID }).then((userObj) => {
         setUser(userObj);
         setIsLoaded(true);
-        get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
-          setMilitaryClock(settingObj);
-          setIsLoaded(true);
-        });
-        get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
-          setReadChecked(settingObj);
-          setIsLoaded(true);
-        });
+        // get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
+        //   setMilitaryClock(settingObj);
+        //   setIsLoaded(true);
+        // });
+        // get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
+        //   setReadChecked(settingObj);
+        //   setIsLoaded(true);
+        // });
       });
     } else {
       window.location.href = "/";
     }
   }, []);
 
-  useEffect(() => {
-    // window.location.reload();
-  }, [readChecked, militaryClock]);
+  // const handleReadCheck = (event) => {
+  //   const value = event.target.checked;
+  //   setReadChecked(value);
+  //   post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
+  // };
 
-  const handleReadCheck = (event) => {
-    const value = event.target.checked;
-    setReadChecked(value);
-    post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
-  };
-
-  const handleMilitaryClock = (event) => {
-    const value = event.target.checked;
-    setMilitaryClock(value);
-    post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {});
-  };
+  // const handleMilitaryClock = (event) => {
+  //   const value = event.target.checked;
+  //   setMilitaryClock(value);
+  //   post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {});
+  // };
 
   // TODO:
   // - make API get request to retrieve current user's email address from Outlook if
@@ -97,7 +93,7 @@ const Profile = (props) => {
         <img src={StarVector} id="Profile-star-topRight" />
       </div>
 
-      <section className="u-flexColumn Settings-container">
+      {/* <section className="u-flexColumn Settings-container">
         <h2 className="Profile-headers">Settings</h2>
         <hr className="horizontal-line" />
         <div className="Setting-options">
@@ -121,7 +117,7 @@ const Profile = (props) => {
             />
           </span>
         </div>
-      </section>
+      </section> */}
       <section className="u-flexColumn Feed-container">
         <h2 className="Profile-headers">Flagged</h2>
         <hr className="horizontal-line" />

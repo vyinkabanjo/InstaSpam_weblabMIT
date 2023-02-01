@@ -30,9 +30,6 @@ function makeURLs(links, maxLen) {
 }
 
 const Summary = (props) => {
-  // const tempImage =
-  // console.log(JSON.stringify(props.attachments[0]));
-  // }
   const urls = makeURLs(props.links, 3);
   return (
     <div className="u-flexColumn">
