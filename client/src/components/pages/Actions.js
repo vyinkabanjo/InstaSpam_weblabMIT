@@ -32,7 +32,7 @@ const Actions = (props) => {
   return (
     <div className="u-flexColumn u-flex-alignCenter">
       <button
-        className="Actions-button"
+        className="Actions-button u-pointer"
         type="button"
         onClick={() => {
           if (props.isRead) {
@@ -50,7 +50,7 @@ const Actions = (props) => {
         )}
       </button>
       <button
-        className="Actions-button"
+        className="Actions-button  u-pointer"
         type="button"
         onClick={() => {
           // TODO: add code to delete the flagged status of the email from the database once it is "re-flagged"
