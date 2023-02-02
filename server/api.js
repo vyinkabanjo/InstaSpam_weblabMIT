@@ -110,14 +110,21 @@ function filterDates(dates, strictness) {
       // date.start.isCertain("day")
     );
   });
+  // Function to check redundancy between dates
+  // If they're equal, then they're redundant
+  // If they don't have the same time but the same date and date1 isn't confident about the hour, they're redundant
+  function redundantDates(date1, date2) {
+    return (
+      date1.start.date().getTime() === date2.start.date().getTime() ||
+      (date1.start.date().toLocaleDateString() === date2.start.date().toLocaleDateString() &&
+        !date2.start.isCertain("hour"))
+    );
+  }
 
   // Filter out unique dates using the reduce method
   const uniqueDates = usableDates.reduce((accumulator, current) => {
-    if (
-      !accumulator.find((date) => date.start.date().getTime() === current.start.date().getTime())
-    ) {
-      accumulator.push(current);
-    }
+    accumulator = accumulator.filter((date) => !redundantDates(current, date)); // get rid of elements that have dates redundant to current
+    accumulator.push(current);
     return accumulator;
   }, []);
   return uniqueDates.sort((a, b) => (a.start.date() > b.start.date() ? 1 : -1)); // sort by date ascending
