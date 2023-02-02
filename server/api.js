@@ -262,7 +262,6 @@ router.get("/user", (req, res) => {
 
 // get emails using Microsoft Graph API
 router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
-  console.log("userID is", req.userID);
   const Settings = await getSettings(req);
   let UNREAD = "";
   if (Settings) {
@@ -283,7 +282,14 @@ router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
         req.session.accessToken
       );
 
-      res.send(graphResponse.value.map((email) => parseEmail(email, req)));
+      let graphResponseVALUE = [];
+      {
+        UNREAD === " and isRead eq false"
+          ? (graphResponseVALUE = graphResponse.value.filter((email) => email.isRead === false))
+          : (graphResponseVALUE = graphResponse.value);
+      }
+      res.send(graphResponseVALUE.map((email) => parseEmail(email, req)));
+      // res.send(graphResponse.value.map((email) => parseEmail(email, req)));
     } catch (error) {
       res.status(500);
       next(error);

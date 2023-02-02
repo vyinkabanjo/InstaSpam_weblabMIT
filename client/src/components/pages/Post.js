@@ -48,6 +48,7 @@ const Post = (props) => {
     emailID,
     emailURL,
     isFlagged,
+    isRead,
   } = props.emailData;
 
   return (
@@ -71,6 +72,7 @@ const Post = (props) => {
           unflagEmail={props.unflagEmail}
           emailURL={String(emailURL)}
           flaggedEmailIDs={props.flaggedEmailIDs}
+          isRead={isRead}
         />
       </div>
     </article>

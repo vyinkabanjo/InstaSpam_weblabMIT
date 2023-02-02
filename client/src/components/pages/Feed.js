@@ -39,6 +39,8 @@ const Feed = (props) => {
     );
   }
 
+  // TODO: delete read emails from DB after clearing them from feed
+
   if (hasEmails) {
     emailsList = props.emailData.filter((email) => !props.readEmailIDs.includes(email.emailID));
     startDate = new Date(emailsList[0].timeReceived);
