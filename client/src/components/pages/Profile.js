@@ -9,7 +9,6 @@ import "./Profile.css";
 import StarVector from "../../public/icons/Star Vector.svg";
 
 const Profile = (props) => {
-  console.log("page is rerendering");
   const [user, setUser] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const [readChecked, setReadChecked] = useState(true);

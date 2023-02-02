@@ -84,12 +84,12 @@ const Summary = (props) => {
         <span>
           <strong className="Summary-strong">{venues.length === 1 ? "Venue" : "Venues"}:</strong>{" "}
           {venues.map((venue, index) => (
-            <>
+            <span key={index}>
               <a href={venue[1]} target="_blank" className="u-link">
                 {venue[0]}
               </a>
               {index != venues.length - 1 && ", "}
-            </>
+            </span>
           ))}
         </span>
       ) : (

@@ -110,12 +110,26 @@ function filterDates(dates, strictness) {
       // date.start.isCertain("day")
     );
   });
+  // Function to check redundancy between dates
+  // If they're equal, then they're redundant
+  // If they don't have the same time but the same date and date1 isn't confident about the hour, they're redundant
+  function redundantDates(date1, date2) {
+    return (
+      date1.start.date().getTime() === date2.start.date().getTime() ||
+      (date1.start.date().toLocaleDateString() === date2.start.date().toLocaleDateString() &&
+        !date2.start.isCertain("hour"))
+    );
+  }
 
   // Filter out unique dates using the reduce method
   const uniqueDates = usableDates.reduce((accumulator, current) => {
-    if (
-      !accumulator.find((date) => date.start.date().getTime() === current.start.date().getTime())
-    ) {
+    // Are there any dates in Accumulator that are worse quality than what we have now?
+    if (accumulator.find((date) => redundantDates(current, date))) {
+      accumulator = accumulator.filter((date) => !redundantDates(current, date)); // get rid of elements that have dates redundant to current
+      accumulator.push(current); // Add the better date
+    }
+    // Are there any dates that are better in "Accumulator" that are better than what we have now? If not, add the new one
+    else if (!accumulator.find((date) => redundantDates(date, current))) {
       accumulator.push(current);
     }
     return accumulator;
