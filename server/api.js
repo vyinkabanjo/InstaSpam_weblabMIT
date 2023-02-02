@@ -75,6 +75,28 @@ const getImages = (email_content) => {
   return inlineImages;
 };
 
+const getVenues = (email_content) => {
+  const dom = new JSDOM(email_content);
+  const body = dom.window.document.querySelector("body").textContent; //Strips out HTML content and leaves body text
+  const venueExp = /(?<![\w-])([1-9]\d?)-[0-9]{3,}(?![\w-])/gm; //debug here: https://regex101.com/r/LZ6VmS/1
+
+  // Return list of venues and whereis.mit links to them
+  // i.e [50-100, https://whereis.mit.edu/?go=50]
+  const venues = Array.from(email_content.matchAll(venueExp), (m) => {
+    m[1] = "https://whereis.mit.edu/?go=" + m[1];
+    return m;
+  });
+
+  // Filter out unique venues
+  const uniqueVenues = venues.reduce((accumulator, current) => {
+    if (!accumulator.find((venue) => venue[0] === current[0])) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+  return uniqueVenues;
+};
+
 //Makes dates from chronos "dates" object
 function filterDates(dates, strictness) {
   // When chronos parses dates, it returns fields for "start" and "end",
@@ -94,10 +116,7 @@ function filterDates(dates, strictness) {
     if (
       !accumulator.find((date) => date.start.date().getTime() === current.start.date().getTime())
     ) {
-      // console.log("ACCEPTED DATE", current.start.date());
       accumulator.push(current);
-    } else {
-      // console.log("Duplicate DATE", current.start.date());
     }
     return accumulator;
   }, []);
@@ -167,7 +186,7 @@ function parseEmail(email, req) {
     links: getLinks(email.body.content),
     times: [],
     relevantDates: getDates(email.body.content, email.createdDateTime),
-    venue: "",
+    venues: getVenues(email.body.content),
     emailURL: email.webLink,
     isRead: email.isRead,
     isFlagged: email.flag.flagStatus,

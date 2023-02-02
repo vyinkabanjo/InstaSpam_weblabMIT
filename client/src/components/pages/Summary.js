@@ -61,8 +61,8 @@ function formatDate(date, displayLong) {
   const delimiter = " ";
   const startTokens = startText.replaceAll(",", "").split(delimiter);
   const endTokens = endText.replaceAll(",", "").split(delimiter);
-  console.log("Start Tokens", startTokens);
-  console.log("End Tokens", endTokens);
+  // console.log("Start Tokens", startTokens);
+  // console.log("End Tokens", endTokens);
   const filteredEnd = endTokens
     .filter((word, index) => {
       return startTokens.indexOf(word) !== index || word.includes("AM") || word.includes("PM");
@@ -75,14 +75,29 @@ function formatDate(date, displayLong) {
 const Summary = (props) => {
   const urls = makeURLs(props.links, 3);
   const allDates = JSON.parse(props.dates);
-  console.log(allDates);
+  const venues = props.venues;
   // console.log(filterDates(allDates, 3));
   return (
     <div className="u-flexColumn Summary-container">
       <h1>{props.subject}</h1>
+      {venues.length ? (
+        <span>
+          <strong className="Summary-strong">{venues.length === 1 ? "Venue" : "Venues"}:</strong>{" "}
+          {venues.map((venue, index) => (
+            <>
+              <a href={venue[1]} target="_blank" className="u-link">
+                {venue[0]}
+              </a>
+              {index != venues.length - 1 && ", "}
+            </>
+          ))}
+        </span>
+      ) : (
+        <></>
+      )}
       {allDates.length ? (
         <span>
-          <strong className="Summary-strong">Date(s):</strong>{" "}
+          <strong className="Summary-strong">{allDates.length === 1 ? "Date" : "Dates"}:</strong>{" "}
           {allDates.map((date) => formatDate(date, allDates.length <= 2)).join("  |  ")}
         </span>
       ) : (
@@ -97,8 +112,8 @@ const Summary = (props) => {
                 {/* Display URL host name */}
                 {url.hostname}
                 {/* Removes last comma */}
-                {index != urls.length - 1 && ","}
-              </a>{" "}
+              </a>
+              {index != urls.length - 1 && ", "}
             </span>
           ))}
         </span>

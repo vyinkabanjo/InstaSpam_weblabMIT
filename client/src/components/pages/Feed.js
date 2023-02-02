@@ -17,6 +17,7 @@ import LoadingIcon from "../../public/icons/LoadingIcon.png";
 // TODO: Add date indicators between posts
 const Feed = (props) => {
   let emailsList = null;
+  let startDate = null;
   const hasEmails = props.emailData.length !== 0;
 
   if (props.isLoading) {
@@ -29,6 +30,7 @@ const Feed = (props) => {
 
   if (hasEmails) {
     emailsList = props.emailData.filter((email) => !props.readEmailIDs.includes(email.emailID));
+    startDate = new Date(emailsList[0].timeReceived);
     emailsList = emailsList.map((emailObj, id) => {
       const emailDay = new Date(emailObj.timeReceived).getDate();
       const nextDate =
@@ -44,16 +46,16 @@ const Feed = (props) => {
             unflagEmail={props.unflagEmail}
             flaggedEmailIDs={props.flaggedEmailIDs}
           />
+          {/* If two emails ever have differing dates, put a divider between them */}
           {emailDay !== nextDay && nextDay !== undefined ? <Divider date={nextDate} /> : <></>}
         </div>
       );
     });
   }
-
   return (
     <>
       <section className="u-flexColumn Feed-container">
-        <Divider date={new Date()} />
+        <Divider date={startDate} />
         {emailsList}
         <div className="Feed-loadMore-container">
           <span onClick={props.loadMore}>
