@@ -101,7 +101,7 @@ function filterDates(dates, strictness) {
     }
     return accumulator;
   }, []);
-  return uniqueDates;
+  return uniqueDates.sort((a, b) => (a.start.date() > b.start.date() ? 1 : -1)); // sort by date ascending
 }
 
 // Function to get Dates from email content, with a reference date at "timeSent"
