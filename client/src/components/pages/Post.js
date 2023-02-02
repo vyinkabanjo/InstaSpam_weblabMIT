@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SenderInfo from "./SenderInfo.js";
 import Attachments from "./Attachments.js";
 import Summary from "./Summary.js";
 import Actions from "./Actions.js";
 import * as chrono from "chrono-node";
+import { get, post } from "../../utilities";
 
 import "../../utilities.css";
 import "./Post.css";
@@ -35,6 +36,13 @@ const parseDateTime = (dateTime) => {
   return result;
 };
 const Post = (props) => {
+  const [militarySetting, setMilitarySetting] = useState();
+
+  // const getSettings = (userID) => {
+  get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
+    setMilitarySetting(settingObj);
+  });
+
   const {
     senderName,
     senderEmail,
@@ -53,7 +61,12 @@ const Post = (props) => {
 
   return (
     <article className="Post-container u-flexColumn">
-      <SenderInfo name={senderName} email={senderEmail} time={timeReceived} />
+      <SenderInfo
+        name={senderName}
+        email={senderEmail}
+        time={timeReceived}
+        militarySetting={militarySetting}
+      />
       <Attachments media={attachments} />
       <div className="u-flex u-flex-alignCenter Post-info">
         <Summary
@@ -63,6 +76,8 @@ const Post = (props) => {
           times={times}
           venues={venues}
           attachments={attachments}
+          userID={props.userID}
+          militarySetting={militarySetting}
         />
         <Actions
           subject={header}

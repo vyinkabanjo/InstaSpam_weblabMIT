@@ -54,10 +54,6 @@ const Profile = (props) => {
     post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {});
   };
 
-  // TODO:
-  // - make API get request to retrieve current user's email address from Outlook if
-  // MS API starts working
-
   let flaggedEmails = null;
 
   flaggedEmails = props.emailData.filter((email) => props.flaggedEmailIDs.includes(email.emailID));

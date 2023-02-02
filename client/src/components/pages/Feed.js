@@ -59,6 +59,7 @@ const Feed = (props) => {
             FlagEmail={props.FlagEmail}
             unflagEmail={props.unflagEmail}
             flaggedEmailIDs={props.flaggedEmailIDs}
+            userID={props.userID}
           />
           {/* If two emails ever have differing dates, put a divider between them */}
           {emailDay !== nextDay && nextDay !== undefined ? <Divider date={nextDate} /> : <></>}

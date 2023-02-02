@@ -402,6 +402,7 @@ router.post("/readEmailSetting", (req, res) => {
 router.get("/militarySetting", (req, res) => {
   User.findOne({ _id: req.query.userID })
     .then((doc) => {
+      console.log("military setting doc", doc);
       res.send(doc.militaryClockDisplay);
     })
     .catch((err) => {
