@@ -68,6 +68,7 @@ const App = () => {
     if (userID !== undefined)
       get("/api/emails", { userID: userID, skip: skip }).then((emailObjs) => {
         setSkip(skip + 10);
+        console.log("skip is", skip);
         emailSetter(emailObjs);
         setIsLoading(false);
       });
@@ -96,6 +97,7 @@ const App = () => {
     get("/api/emails", { skip: skip }).then((emailObjs) => {
       emailSetter(prevEmailData.concat(emailObjs));
       setIsLoading(false);
+      console.log("skip in load more is", skip);
     });
   };
 

@@ -25,12 +25,10 @@ const Profile = (props) => {
         get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
           setMilitaryClock(settingObj);
           setIsLoaded(true);
-          console.log("military setting", settingObj);
         });
         get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
           setReadChecked(settingObj);
           setIsLoaded(true);
-          console.log("read Emails setting", settingObj);
         });
       });
     } else {
@@ -101,7 +99,7 @@ const Profile = (props) => {
           <h2 className="Profile-headers">Settings</h2>
           <hr className="horizontal-line" />
           <div className="Setting-options">
-            <span className="Settings-leftColumn">
+            {/* <span className="Settings-leftColumn">
               <p className="u-inlineBlock">Show unread emails ONLY </p>
               <input
                 type="checkbox"
@@ -110,7 +108,7 @@ const Profile = (props) => {
                 className="toggle-switch u-inlineBlock"
               />
             </span>
-            <hr className="vertical-line" />
+            <hr className="vertical-line" /> */}
             <span className="Settings-rightColumn">
               <p className="u-inlineBlock">24-hr time format </p>
               <input

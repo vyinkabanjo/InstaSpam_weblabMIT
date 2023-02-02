@@ -181,8 +181,6 @@ async function getSettings(req) {
     const settings = await User.findById(req.query.userID).select(
       "militaryClockDisplay readEmailsDisplay"
     );
-
-    console.log(await settings);
     return await settings;
   } catch (err) {
     res.status(500).send({ status: 500, error: err });
@@ -214,12 +212,12 @@ function parseEmail(email, req) {
   });
 }
 
+// let userID = "";
 router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
     return res.send({});
   }
-
   res.send(req.user);
 });
 
@@ -247,38 +245,39 @@ router.get("/user", (req, res) => {
 
 // get emails using Microsoft Graph API
 router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
-  const Settings = await getSettings(req);
-  let UNREAD = "";
-  if (Settings) {
-    if (Settings.readEmailsDisplay === true) {
-      UNREAD = " and isRead eq false";
-    } else {
-      UNREAD = "";
-    }
-    console.log("unread is", UNREAD);
-    try {
-      const graphResponse = await fetch(
-        GRAPH_ME_ENDPOINT +
-          "/messages/" +
-          DORM_SPAM_FILTER +
-          UNREAD +
-          "&$skip=" +
-          String(req.query.skip),
-        req.session.accessToken
-      );
+  // console.log("got here");
+  const Settings = getSettings(req);
+  // let UNREAD = "";
 
-      let graphResponseVALUE = [];
-      {
-        UNREAD === " and isRead eq false"
-          ? (graphResponseVALUE = graphResponse.value.filter((email) => email.isRead === false))
-          : (graphResponseVALUE = graphResponse.value);
+  try {
+    if (Settings) {
+      if (Settings.readEmailsDisplay) {
+        UNREAD = " and isRead eq false";
+      } else {
+        UNREAD = "";
       }
-      res.send(graphResponseVALUE.map((email) => parseEmail(email, req)));
-      // res.send(graphResponse.value.map((email) => parseEmail(email, req)));
-    } catch (error) {
-      res.status(500);
-      next(error);
     }
+    const graphResponse = await fetch(
+      GRAPH_ME_ENDPOINT +
+        "/messages/" +
+        DORM_SPAM_FILTER +
+        UNREAD +
+        "&$skip=" +
+        String(req.query.skip),
+      req.session.accessToken
+    );
+    console.log("skip on server", req.query.skip);
+    let graphResponseVALUE = [];
+    {
+      UNREAD === " and isRead eq false"
+        ? (graphResponseVALUE = graphResponse.value.filter((email) => email.isRead === false))
+        : (graphResponseVALUE = graphResponse.value);
+    }
+    res.send(graphResponseVALUE.map((email) => parseEmail(email, req)));
+    // res.send(graphResponse.value.map((email) => parseEmail(email, req)));
+  } catch (error) {
+    res.status(500);
+    next(error);
   }
 });
 
@@ -402,7 +401,6 @@ router.post("/readEmailSetting", (req, res) => {
 router.get("/militarySetting", (req, res) => {
   User.findOne({ _id: req.query.userID })
     .then((doc) => {
-      console.log("military setting doc", doc);
       res.send(doc.militaryClockDisplay);
     })
     .catch((err) => {

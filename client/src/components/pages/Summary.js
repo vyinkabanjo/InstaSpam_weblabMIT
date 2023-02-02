@@ -77,7 +77,6 @@ const Summary = (props) => {
   const urls = makeURLs(props.links, 3);
   const allDates = JSON.parse(props.dates);
   const venues = props.venues;
-  // console.log(filterDates(allDates, 3));
 
   return (
     <div className="u-flexColumn Summary-container">
