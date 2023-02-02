@@ -33,6 +33,7 @@ const gotoProfile = () => {
 
 const goHome = () => {
   navigate("/");
+  window.location.reload();
 };
 
 const NavBar = (props) => {

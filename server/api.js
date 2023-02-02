@@ -189,21 +189,6 @@ async function getSettings(req) {
   }
 }
 
-// async function getSettings (req) {
-//   try {
-//     const settings = User.findById(req.query.userID)
-//     .select("militaryClockDisplay readEmailsDisplay")
-
-//       console.log(settings);
-//       return settings;
-//     })
-//   }
-
-//     .catch((err) => {
-//       res.status(500).send({ status: 500, error: err });
-//     });
-// };
-
 /**
  * Returns a new Email object that condenses information from the Microsoft Graph API
  * @param {Object} email email object from Microsoft Graph API

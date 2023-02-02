@@ -5,6 +5,7 @@ import "./Actions.css";
 import OutlookIcon from "../../public/icons/Outlook Icon.svg";
 import PinIcon from "../../public/icons/Pin Icon.png";
 import MailIcon from "../../public/icons/Mail Icon.svg";
+import MailRead from "../../public/icons/Main Read Icon.svg";
 import FlagIcon from "../../public/icons/Flag Icon.svg";
 import RedFlagIcon from "../../public/icons/Flag Icon Filled.svg";
 
@@ -34,10 +35,19 @@ const Actions = (props) => {
         className="Actions-button"
         type="button"
         onClick={() => {
-          props.ReadEmail(props.emailID, props.subject);
+          if (props.isRead) {
+            // for now do nothing
+            alert("already read in inbox");
+          } else {
+            props.ReadEmail(props.emailID, props.subject);
+          }
         }}
       >
-        <img src={MailIcon} alt="Mail Icon" className="Actions-icon" />
+        {props.isRead ? (
+          <img src={MailRead} alt="MailRead Icon" className="Actions-icon" />
+        ) : (
+          <img src={MailIcon} alt="Mail Icon" className="Actions-icon" />
+        )}
       </button>
       <button
         className="Actions-button"
@@ -52,7 +62,7 @@ const Actions = (props) => {
           setFlagged(!flagged);
         }}
       >
-        {flagged ? (
+        {props.isFlagged === "Flagged" || flagged ? (
           <img src={RedFlagIcon} alt="Flag Icon" className="Actions-icon" />
         ) : (
           <img src={FlagIcon} alt="Flag Icon" className="Actions-icon" />
