@@ -129,7 +129,7 @@ router.get("/user", (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      res.send({ error: err });
+      res.status(500).send({ status: 500, error: err });
     });
 });
 

@@ -18,18 +18,24 @@ const Profile = (props) => {
     document.title = "Profile Page";
     // wait for app to get userID back first
     if (props.userID) {
-      get(`/api/user`, { userID: props.userID }).then((userObj) => {
-        setUser(userObj);
-        setIsLoaded(true);
-        // get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
-        //   setMilitaryClock(settingObj);
-        //   setIsLoaded(true);
-        // });
-        // get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
-        //   setReadChecked(settingObj);
-        //   setIsLoaded(true);
-        // });
-      });
+      get(`/api/user`, { userID: props.userID })
+        .then((userObj) => {
+          setUser(userObj);
+          setIsLoaded(true);
+          // get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
+          //   setMilitaryClock(settingObj);
+          //   setIsLoaded(true);
+          // });
+          // get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
+          //   setReadChecked(settingObj);
+          //   setIsLoaded(true);
+          // });
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoaded(true);
+          window.location.href = "/";
+        });
     } else {
       window.location.href = "/";
     }

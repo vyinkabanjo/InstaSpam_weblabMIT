@@ -1,7 +1,7 @@
 .Divider-body-line {
     border: none;
     margin: 0;
-    border-top: 1px dotted black;
+    border-top: 1px dotted var(--primary--dim);
 }
 
 .Divider-body {
