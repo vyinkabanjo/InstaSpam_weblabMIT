@@ -67,6 +67,9 @@ const App = () => {
   useEffect(() => {
     if (userID !== undefined)
       get("/api/emails", { skip: skip }).then((emailObjs) => {
+        emailObjs.forEach((email) => {
+          console.log(email.isFlagged === "flagged");
+        });
         setSkip(skip + 10);
         emailSetter(emailObjs);
         setIsLoading(false);

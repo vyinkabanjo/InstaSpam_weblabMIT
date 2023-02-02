@@ -17,6 +17,10 @@ const FlagEmail = require("./models/flagged");
 // import chrono library for parsing dates and times
 const chrono = require("chrono-node");
 
+// import JSDOM library for parsing HTML content
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
 // import authentication library
 const auth = require("./authFunctions");
 
@@ -70,6 +74,60 @@ const getImages = (email_content) => {
   return inlineImages;
 };
 
+//Makes dates from chronos "dates" object
+function filterDates(dates, strictness) {
+  // When chronos parses dates, it returns fields for "start" and "end",
+  // Those fields have a "knownValues" component which says the values that chronos is sure about when parsing
+  // We just want to remove dates that Chronos isn't too sure about
+  const usableDates = dates.filter((date) => {
+    return (
+      Object.keys(date.start.knownValues).length >= strictness && date.text !== "now"
+      // date.start.isCertain("year") &&
+      // date.start.isCertain("month") &&
+      // date.start.isCertain("day")
+    );
+  });
+
+  // Filter out unique dates using the reduce method
+  const uniqueDates = usableDates.reduce((accumulator, current) => {
+    if (
+      !accumulator.find((date) => date.start.date().getTime() === current.start.date().getTime())
+    ) {
+      // console.log("ACCEPTED DATE", current.start.date());
+      accumulator.push(current);
+    } else {
+      // console.log("Duplicate DATE", current.start.date());
+    }
+    return accumulator;
+  }, []);
+  return uniqueDates;
+}
+
+// Function to get Dates from email content, with a reference date at "timeSent"
+const getDates = (email_content, timeSent) => {
+  const referenceDate = new Date(timeSent);
+
+  const dom = new JSDOM(email_content);
+  const body = dom.window.document.querySelector("body").textContent; //Strips out HTML content and leaves body text
+
+  // Chrono Documentation: https://github.com/wanasit/chrono
+  const dates = filterDates(chrono.parse(body, referenceDate), 3);
+  return JSON.stringify(
+    dates.map((date) => {
+      return date.end != undefined
+        ? {
+            time: date.start.date().getTime(),
+            end: date.end.date().getTime(),
+            displayTime: date.start.isCertain("hour"),
+          }
+        : {
+            time: date.start.date().getTime(),
+            displayTime: date.start.isCertain("hour"),
+          };
+    })
+  );
+};
+
 /**
  * Returns a new Email object that condenses information from the Microsoft Graph API
  * @param {Object} email email object from Microsoft Graph API
@@ -93,7 +151,7 @@ function parseEmail(email, req) {
     content: email.body.content,
     links: getLinks(email.body.content),
     times: [],
-    relevantDates: String(chrono.parseDate(email.body.content)),
+    relevantDates: getDates(email.body.content, email.createdDateTime),
     venue: "",
     emailURL: email.webLink,
     isRead: email.isRead,

@@ -47,6 +47,7 @@ const Post = (props) => {
     venue,
     emailID,
     emailURL,
+    isFlagged,
   } = props.emailData;
 
   return (
