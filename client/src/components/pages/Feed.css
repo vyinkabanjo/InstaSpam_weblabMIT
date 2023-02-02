@@ -47,6 +47,7 @@
   height: auto;
   width: auto;
   margin: var(--l);
+  padding: var(--s);
   margin-left: auto;
   margin-right: auto;
 }
@@ -59,7 +60,6 @@
   margin-right: auto;
   border: none;
   color: #ffffff;
-  margin: var(--l);
   width: fit-content;
   font-weight: 400;
   font-size: 16px;

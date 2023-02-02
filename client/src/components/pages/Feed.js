@@ -56,10 +56,8 @@ const Feed = (props) => {
         <Divider date={new Date()} />
         {emailsList}
         <div className="Feed-loadMore-container">
-          <span>
-            <button onClick={props.loadMore} className="Feed-loadMore-button">
-              Load more
-            </button>
+          <span onClick={props.loadMore}>
+            <button className="Feed-loadMore-button">Load more</button>
           </span>
         </div>
       </section>
