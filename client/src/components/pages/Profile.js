@@ -20,6 +20,7 @@ const Profile = (props) => {
     document.title = "Profile Page";
     // wait for app to get userID back first
     if (props.userID) {
+<<<<<<< HEAD
       get(`/api/user`, { userID: props.userID }).then((userObj) => {
         setUser(userObj);
         setIsLoaded(true);
@@ -34,6 +35,26 @@ const Profile = (props) => {
           console.log("read Emails setting", settingObj);
         });
       });
+=======
+      get(`/api/user`, { userID: props.userID })
+        .then((userObj) => {
+          setUser(userObj);
+          setIsLoaded(true);
+          // get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
+          //   setMilitaryClock(settingObj);
+          //   setIsLoaded(true);
+          // });
+          // get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
+          //   setReadChecked(settingObj);
+          //   setIsLoaded(true);
+          // });
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoaded(true);
+          window.location.href = "/";
+        });
+>>>>>>> 334a5800f0b1012bea17a57b8b4e8f8df8d65197
     } else {
       window.location.href = "/";
     }

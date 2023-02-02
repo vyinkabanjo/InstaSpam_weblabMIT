@@ -44,9 +44,10 @@ const Post = (props) => {
     relevantDates,
     links,
     times,
-    venue,
+    venues,
     emailID,
     emailURL,
+    isFlagged,
   } = props.emailData;
 
   return (
@@ -59,7 +60,7 @@ const Post = (props) => {
           dates={relevantDates}
           links={links}
           times={times}
-          venue={venue}
+          venues={venues}
           attachments={attachments}
         />
         <Actions

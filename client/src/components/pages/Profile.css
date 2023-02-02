@@ -122,3 +122,20 @@
   transform: rotate(-23.73deg);
   z-index: -1;
 }
+
+@media screen and (max-width:1000px) {
+  .ProfileInfo-container {
+    --navBarWidth: 0;
+    --rightBarWidth: 0;
+    margin-top: var(--navBarResponsiveHeight);
+  }
+
+  #Profile-star-topRight {
+    position: absolute;
+    width: 399.35px;
+    left: 400px;
+    top: -200px;
+    transform: rotate(-23.73deg);
+    z-index: -1;
+  }
+}

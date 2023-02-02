@@ -11,6 +11,15 @@
   overflow: hidden;
 }
 
+.Feed-container-empty {
+    height:100vh;
+    font-size: 1.3em;
+}
+.Feed-container-empty > div {
+    width: 90%;
+    text-align: center;
+}
+
 @keyframes rotation_anim {
   0% {
     transform: rotate(0deg);
@@ -47,6 +56,7 @@
   height: auto;
   width: auto;
   margin: var(--l);
+  padding: var(--s);
   margin-left: auto;
   margin-right: auto;
 }
@@ -59,7 +69,6 @@
   margin-right: auto;
   border: none;
   color: #ffffff;
-  margin: var(--l);
   width: fit-content;
   font-weight: 400;
   font-size: 16px;
@@ -82,4 +91,11 @@
   box-shadow: none;
   transition-timing-function: ease;
   cursor: pointer;
+}
+
+@media screen and (max-width:1000px) {
+    .Feed-container {
+        margin: 0;
+        margin-top: var(--navBarResponsiveHeight);
+      }
 }

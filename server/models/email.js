@@ -12,7 +12,7 @@ const EmailSchema = new mongoose.Schema({
   links: Array,
   times: Array,
   relevantDates: String,
-  venue: String,
+  venues: Array,
   emailURL: String,
   isRead: Boolean,
   isFlagged: String,

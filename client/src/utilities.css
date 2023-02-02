@@ -38,6 +38,8 @@
   /* --navBarWidth: 14vw; */
   --navBarWidth: 250px;
   --rightBarWidth: 250px;
+
+  --navBarResponsiveHeight: 8vh
 }
 
 body {

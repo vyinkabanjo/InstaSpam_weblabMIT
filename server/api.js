@@ -17,6 +17,10 @@ const FlagEmail = require("./models/flagged");
 // import chrono library for parsing dates and times
 const chrono = require("chrono-node");
 
+// import JSDOM library for parsing HTML content
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
 // import authentication library
 const auth = require("./authFunctions");
 
@@ -45,6 +49,7 @@ const socketManager = require("./server-socket");
 const { ensureLoggedIn } = require("./authFunctions");
 const { refreshToken } = require("./msal-auth");
 const { UrlString } = require("@azure/msal-common");
+const { replaceOne } = require("./models/user");
 
 /**
  * Parses links from `email_content`, returning an array of strings
@@ -70,6 +75,93 @@ const getImages = (email_content) => {
   return inlineImages;
 };
 
+const getVenues = (email_content) => {
+  const dom = new JSDOM(email_content);
+  const body = dom.window.document.querySelector("body").textContent; //Strips out HTML content and leaves body text
+  const venueExp = /(?<![\w-])([1-9]\d?)-[0-9]{3,}(?![\w-])/gm; //debug here: https://regex101.com/r/LZ6VmS/1
+
+  // Return list of venues and whereis.mit links to them
+  // i.e [50-100, https://whereis.mit.edu/?go=50]
+  const venues = Array.from(email_content.matchAll(venueExp), (m) => {
+    m[1] = "https://whereis.mit.edu/?go=" + m[1];
+    return m;
+  });
+
+  // Filter out unique venues
+  const uniqueVenues = venues.reduce((accumulator, current) => {
+    if (!accumulator.find((venue) => venue[0] === current[0])) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+  return uniqueVenues;
+};
+
+//Makes dates from chronos "dates" object
+function filterDates(dates, strictness) {
+  // When chronos parses dates, it returns fields for "start" and "end",
+  // Those fields have a "knownValues" component which says the values that chronos is sure about when parsing
+  // We just want to remove dates that Chronos isn't too sure about
+  const usableDates = dates.filter((date) => {
+    return (
+      Object.keys(date.start.knownValues).length >= strictness && date.text.toLowerCase() !== "now"
+      // date.start.isCertain("year") &&
+      // date.start.isCertain("month") &&
+      // date.start.isCertain("day")
+    );
+  });
+
+  // Filter out unique dates using the reduce method
+  const uniqueDates = usableDates.reduce((accumulator, current) => {
+    if (
+      !accumulator.find((date) => date.start.date().getTime() === current.start.date().getTime())
+    ) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+  return uniqueDates.sort((a, b) => (a.start.date() > b.start.date() ? 1 : -1)); // sort by date ascending
+}
+
+// Function to get Dates from email content, with a reference date at "timeSent"
+const getDates = (email_content, timeSent) => {
+  const referenceDate = new Date(timeSent);
+
+  const dom = new JSDOM(email_content);
+  const body = dom.window.document.querySelector("body").textContent; //Strips out HTML content and leaves body text
+
+  // Filter out potential reply content from an email, there are multiple ways this can show up
+  let replyContent = undefined;
+  if (dom.window.document.getElementById("divRplyFwdMsg")) {
+    replyContent = dom.window.document.getElementById("divRplyFwdMsg").textContent;
+  } else {
+    // const replyNodes = dom.window.document.getElementsByClassName("gmail_quote"); //gets ALL reply content so we miss info
+    const replyNodes = dom.window.document.getElementsByClassName("gmail_attr"); //gets ALL reply content so we miss info
+    replyContent = replyNodes.length ? replyNodes.item(0).textContent : "";
+  }
+
+  const filteredBody = body.replace(replyContent, "");
+  // console.log("Reply Content:", replyContent);
+  // Chrono Documentation: https://github.com/wanasit/chrono
+  const dates = filterDates(chrono.parse(filteredBody, referenceDate), 3);
+  return JSON.stringify(
+    dates.map((date) => {
+      return date.end != undefined
+        ? {
+            time: date.start.date().getTime(),
+            text: date.text,
+            end: date.end.date().getTime(),
+            displayTime: date.start.isCertain("hour"),
+          }
+        : {
+            time: date.start.date().getTime(),
+            text: date.text,
+            displayTime: date.start.isCertain("hour"),
+          };
+    })
+  );
+};
+
 /**
  * Returns a new Email object that condenses information from the Microsoft Graph API
  * @param {Object} email email object from Microsoft Graph API
@@ -93,8 +185,8 @@ function parseEmail(email, req) {
     content: email.body.content,
     links: getLinks(email.body.content),
     times: [],
-    relevantDates: String(chrono.parseDate(email.body.content)),
-    venue: "",
+    relevantDates: getDates(email.body.content, email.createdDateTime),
+    venues: getVenues(email.body.content),
     emailURL: email.webLink,
     isRead: email.isRead,
     isFlagged: email.flag.flagStatus,
@@ -129,7 +221,7 @@ router.get("/user", (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      res.send({ error: err });
+      res.status(500).send({ status: 500, error: err });
     });
 });
 
