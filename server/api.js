@@ -247,16 +247,16 @@ router.get("/user", (req, res) => {
 router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
   // console.log("got here");
   const Settings = getSettings(req);
-  // let UNREAD = "";
+  const UNREAD = " and isRead eq false";
 
   try {
-    if (Settings) {
-      if (Settings.readEmailsDisplay) {
-        UNREAD = " and isRead eq false";
-      } else {
-        UNREAD = "";
-      }
-    }
+    // if (Settings) {
+    //   if (Settings.readEmailsDisplay) {
+    //     UNREAD = " and isRead eq false";
+    //   } else {
+    //     UNREAD = "";
+    //   }
+    // }
     const graphResponse = await fetch(
       GRAPH_ME_ENDPOINT +
         "/messages/" +

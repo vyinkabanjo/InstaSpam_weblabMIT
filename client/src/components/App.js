@@ -76,9 +76,9 @@ const App = () => {
 
   const ReadEmail = (email_ID, subject) => {
     setTriggerRead(triggerRead + 1);
-    // post("/api/read", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
-    //   setTriggerRead(triggerRead + 1);
-    // });
+    post("/api/read", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
+      setTriggerRead(triggerRead + 1);
+    });
   };
   const FlagEmail = (email_ID, subject) => {
     post("/api/flag", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
