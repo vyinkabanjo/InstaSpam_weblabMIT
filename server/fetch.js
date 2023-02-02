@@ -39,7 +39,7 @@ const updateRead = (endpoint, csrfToken, accessToken, id) => {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${accessToken}`,
-        // "X-CSRF-TOKEN": csrfToken,
+        "X-CSRF-TOKEN": csrfToken,
       },
     })
     .then((response) => {})

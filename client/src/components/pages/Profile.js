@@ -9,10 +9,12 @@ import "./Profile.css";
 import StarVector from "../../public/icons/Star Vector.svg";
 
 const Profile = (props) => {
+  console.log("page is rerendering");
   const [user, setUser] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const [readChecked, setReadChecked] = useState(true);
   const [militaryClock, setMilitaryClock] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     document.title = "Profile Page";
@@ -21,31 +23,37 @@ const Profile = (props) => {
       get(`/api/user`, { userID: props.userID }).then((userObj) => {
         setUser(userObj);
         setIsLoaded(true);
-        // get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
-        //   setMilitaryClock(settingObj);
-        //   setIsLoaded(true);
-        // });
-        // get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
-        //   setReadChecked(settingObj);
-        //   setIsLoaded(true);
-        // });
+        get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
+          setMilitaryClock(settingObj);
+          setIsLoaded(true);
+          console.log("military setting", settingObj);
+        });
+        get(`/api/readEmailSetting`, { userID: props.userID }).then((settingObj) => {
+          setReadChecked(settingObj);
+          setIsLoaded(true);
+          console.log("read Emails setting", settingObj);
+        });
       });
     } else {
       window.location.href = "/";
     }
   }, []);
 
-  // const handleReadCheck = (event) => {
-  //   const value = event.target.checked;
-  //   setReadChecked(value);
-  //   post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
-  // };
+  useEffect(() => {
+    setShowSettings(true);
+  }, [readChecked, militaryClock]);
 
-  // const handleMilitaryClock = (event) => {
-  //   const value = event.target.checked;
-  //   setMilitaryClock(value);
-  //   post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {});
-  // };
+  const handleReadCheck = (event) => {
+    const value = event.target.checked;
+    setReadChecked(value);
+    post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
+  };
+
+  const handleMilitaryClock = (event) => {
+    const value = event.target.checked;
+    setMilitaryClock(value);
+    post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {});
+  };
 
   // TODO:
   // - make API get request to retrieve current user's email address from Outlook if
@@ -93,31 +101,36 @@ const Profile = (props) => {
         <img src={StarVector} id="Profile-star-topRight" />
       </div>
 
-      {/* <section className="u-flexColumn Settings-container">
-        <h2 className="Profile-headers">Settings</h2>
-        <hr className="horizontal-line" />
-        <div className="Setting-options">
-          <span className="Settings-leftColumn">
-            <p className="u-inlineBlock">Show unread emails ONLY </p>
-            <input
-              type="checkbox"
-              defaultChecked={readChecked}
-              onChange={handleReadCheck}
-              className="toggle-switch u-inlineBlock"
-            />
-          </span>
-          <hr className="vertical-line" />
-          <span className="Settings-rightColumn">
-            <p className="u-inlineBlock">24-hr time format </p>
-            <input
-              type="checkbox"
-              defaultChecked={militaryClock}
-              onChange={handleMilitaryClock}
-              className="toggle-switch u-inlineBlock"
-            />
-          </span>
-        </div>
-      </section> */}
+      {showSettings ? (
+        <section className="u-flexColumn Settings-container">
+          <h2 className="Profile-headers">Settings</h2>
+          <hr className="horizontal-line" />
+          <div className="Setting-options">
+            <span className="Settings-leftColumn">
+              <p className="u-inlineBlock">Show unread emails ONLY </p>
+              <input
+                type="checkbox"
+                checked={readChecked}
+                onChange={handleReadCheck}
+                className="toggle-switch u-inlineBlock"
+              />
+            </span>
+            <hr className="vertical-line" />
+            <span className="Settings-rightColumn">
+              <p className="u-inlineBlock">24-hr time format </p>
+              <input
+                type="checkbox"
+                checked={militaryClock}
+                onChange={handleMilitaryClock}
+                className="toggle-switch u-inlineBlock"
+              />
+            </span>
+          </div>
+        </section>
+      ) : (
+        <></>
+      )}
+
       <section className="u-flexColumn Feed-container">
         <h2 className="Profile-headers">Flagged</h2>
         <hr className="horizontal-line" />
