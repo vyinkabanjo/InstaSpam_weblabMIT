@@ -28,6 +28,7 @@ async function fetch(endpoint, accessToken) {
 
 // async function updateRead(endpoint, crsfToken, id) {
 const updateRead = (endpoint, csrfToken, accessToken, id) => {
+  // const updateRead = (endpoint, accessToken, id) => {
   // const client = Client.init(options);
   const message = {
     isRead: true,
@@ -38,7 +39,7 @@ const updateRead = (endpoint, csrfToken, accessToken, id) => {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${accessToken}`,
-        "X-CSRF-TOKEN": csrfToken,
+        // "X-CSRF-TOKEN": csrfToken,
       },
     })
     .then((response) => {})
