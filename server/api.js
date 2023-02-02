@@ -49,6 +49,7 @@ const socketManager = require("./server-socket");
 const { ensureLoggedIn } = require("./authFunctions");
 const { refreshToken } = require("./msal-auth");
 const { UrlString } = require("@azure/msal-common");
+const { replaceOne } = require("./models/user");
 
 /**
  * Parses links from `email_content`, returning an array of strings
@@ -81,7 +82,7 @@ function filterDates(dates, strictness) {
   // We just want to remove dates that Chronos isn't too sure about
   const usableDates = dates.filter((date) => {
     return (
-      Object.keys(date.start.knownValues).length >= strictness && date.text !== "now"
+      Object.keys(date.start.knownValues).length >= strictness && date.text.toLowerCase() !== "now"
       // date.start.isCertain("year") &&
       // date.start.isCertain("month") &&
       // date.start.isCertain("day")
@@ -110,18 +111,32 @@ const getDates = (email_content, timeSent) => {
   const dom = new JSDOM(email_content);
   const body = dom.window.document.querySelector("body").textContent; //Strips out HTML content and leaves body text
 
+  // Filter out potential reply content from an email, there are multiple ways this can show up
+  let replyContent = undefined;
+  if (dom.window.document.getElementById("divRplyFwdMsg")) {
+    replyContent = dom.window.document.getElementById("divRplyFwdMsg").textContent;
+  } else {
+    // const replyNodes = dom.window.document.getElementsByClassName("gmail_quote"); //gets ALL reply content so we miss info
+    const replyNodes = dom.window.document.getElementsByClassName("gmail_attr"); //gets ALL reply content so we miss info
+    replyContent = replyNodes.length ? replyNodes.item(0).textContent : "";
+  }
+
+  const filteredBody = body.replace(replyContent, "");
+  // console.log("Reply Content:", replyContent);
   // Chrono Documentation: https://github.com/wanasit/chrono
-  const dates = filterDates(chrono.parse(body, referenceDate), 3);
+  const dates = filterDates(chrono.parse(filteredBody, referenceDate), 3);
   return JSON.stringify(
     dates.map((date) => {
       return date.end != undefined
         ? {
             time: date.start.date().getTime(),
+            text: date.text,
             end: date.end.date().getTime(),
             displayTime: date.start.isCertain("hour"),
           }
         : {
             time: date.start.date().getTime(),
+            text: date.text,
             displayTime: date.start.isCertain("hour"),
           };
     })

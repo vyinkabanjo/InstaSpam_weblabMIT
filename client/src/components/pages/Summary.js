@@ -57,12 +57,12 @@ function formatDate(date) {
     minute: "numeric",
   };
 
-  // const endText =
-  //   endDateObj != undefined ? endDateObj.toLocaleString("en-US", endDisplayOptions) : "";
+  const endText =
+    endDateObj != undefined ? endDateObj.toLocaleString("en-US", endDisplayOptions) : "";
 
   return date.displayTime
     ? dateObj.toLocaleString("en-US", fullDisplayOptions)
-    : dateObj.toLocaleDateString("en-US", shortDisplayOptions);
+    : dateObj.toLocaleString("en-US", shortDisplayOptions);
 }
 
 const Summary = (props) => {
