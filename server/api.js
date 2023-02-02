@@ -123,8 +123,15 @@ function filterDates(dates, strictness) {
 
   // Filter out unique dates using the reduce method
   const uniqueDates = usableDates.reduce((accumulator, current) => {
-    accumulator = accumulator.filter((date) => !redundantDates(current, date)); // get rid of elements that have dates redundant to current
-    accumulator.push(current);
+    // Are there any dates in Accumulator that are worse quality than what we have now?
+    if (accumulator.find((date) => redundantDates(current, date))) {
+      accumulator = accumulator.filter((date) => !redundantDates(current, date)); // get rid of elements that have dates redundant to current
+      accumulator.push(current); // Add the better date
+    }
+    // Are there any dates that are better in "Accumulator" that are better than what we have now? If not, add the new one
+    else if (!accumulator.find((date) => redundantDates(date, current))) {
+      accumulator.push(current);
+    }
     return accumulator;
   }, []);
   return uniqueDates.sort((a, b) => (a.start.date() > b.start.date() ? 1 : -1)); // sort by date ascending
