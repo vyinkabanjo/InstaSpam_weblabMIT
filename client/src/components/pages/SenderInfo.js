@@ -10,16 +10,20 @@ import ProfileIcon from "../../public/icons/Profile Icon.svg";
  * @param {string} name
  * @param {string} email
  * @param {string} time
+ * @param {Boolean} militarySetting
  */
 
 const SenderInfo = (props) => {
   const time = new Date(props.time);
+  const options = {
+    hour12: !props.militarySetting,
+  };
   return (
     <div className="u-flex u-flex-alignCenter SenderInfo-div">
       <p>
         <strong className="SenderInfo-name">{props.name}</strong> | {props.email}
       </p>
-      <p>{time.toLocaleDateString() + " | " + time.toLocaleTimeString()}</p>
+      <p>{time.toLocaleDateString() + " | " + time.toLocaleTimeString("en-US", options)}</p>
       {/* <img src={ProfileIcon} className="SenderInfo-icon"></img> */}
     </div>
   );
