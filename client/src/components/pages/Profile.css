@@ -3,6 +3,7 @@
   flex-direction: column;
   margin-left: var(--navBarWidth);
   margin-right: var(--rightBarWidth);
+  margin-bottom:40px;
   /* border-top: 2px solid var(--primary); */
 }
 
@@ -128,6 +129,11 @@
     --navBarWidth: 0;
     --rightBarWidth: 0;
     margin-top: var(--navBarResponsiveHeight);
+  }
+  
+  .Settings-container {
+    --navBarWidth: 0;
+    --rightBarWidth: 0;
   }
 
   #Profile-star-topRight {
