@@ -45,13 +45,13 @@ const Profile = (props) => {
   const handleReadCheck = (event) => {
     const value = event.target.checked;
     setReadChecked(value);
-    post("/api/readEmailSetting", { userID: props.userID, status: value }).then(() => {});
+    post("/api/readEmailSetting", { userID: props.userID, status: value });
   };
 
   const handleMilitaryClock = (event) => {
     const value = event.target.checked;
     setMilitaryClock(value);
-    post("/api/militarySetting", { userID: props.userID, status: value }).then(() => {});
+    post("/api/militarySetting", { userID: props.userID, status: value });
   };
 
   let flaggedEmails = null;
@@ -64,6 +64,7 @@ const Profile = (props) => {
         emailData={emailObj}
         readEmail={props.ReadEmail}
         flagEmail={props.FlagEmail}
+        militarySetting={militaryClock}
         flaggedEmailIDs={props.flaggedEmailIDs}
         unflagEmail={props.unflagEmail}
       />

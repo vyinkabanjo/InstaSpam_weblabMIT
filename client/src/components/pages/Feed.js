@@ -20,6 +20,15 @@ const Feed = (props) => {
   let startDate = null;
   const hasEmails = props.emailData.length !== 0;
 
+  const [militarySetting, setMilitarySetting] = useState();
+
+  // const getSettings = (userID) => {
+  useEffect(() => {
+    get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
+      setMilitarySetting(settingObj);
+    });
+  }, []);
+
   if (props.isLoading) {
     return (
       <div className="Feed-loadingContainer u-flexColumn u-flex-justifyCenter">
@@ -60,6 +69,7 @@ const Feed = (props) => {
             unflagEmail={props.unflagEmail}
             flaggedEmailIDs={props.flaggedEmailIDs}
             userID={props.userID}
+            militarySetting={militarySetting}
           />
           {/* If two emails ever have differing dates, put a divider between them */}
           {emailDay !== nextDay && nextDay !== undefined ? <Divider date={nextDate} /> : <></>}

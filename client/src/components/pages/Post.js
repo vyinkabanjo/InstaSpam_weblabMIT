@@ -16,6 +16,7 @@ import "./Post.css";
  * @param {object} content content of email, including subject, date, relevant links, etc.
  * @param {string[]} attachments array containing attachment links
  * @param {object} emailData object containing email data
+ * @param {boolean} militarySetting boolean containing preferences 24-hour clock usage
  */
 const parseDateTime = (dateTime) => {
   // TODO: make the format more readable
@@ -36,13 +37,6 @@ const parseDateTime = (dateTime) => {
   return result;
 };
 const Post = (props) => {
-  const [militarySetting, setMilitarySetting] = useState();
-
-  // const getSettings = (userID) => {
-  get(`/api/militarySetting`, { userID: props.userID }).then((settingObj) => {
-    setMilitarySetting(settingObj);
-  });
-
   const {
     senderName,
     senderEmail,
@@ -65,7 +59,7 @@ const Post = (props) => {
         name={senderName}
         email={senderEmail}
         time={timeReceived}
-        militarySetting={militarySetting}
+        militarySetting={props.militarySetting}
       />
       <Attachments media={attachments} />
       <div className="u-flex u-flex-alignCenter Post-info">
@@ -77,7 +71,7 @@ const Post = (props) => {
           venues={venues}
           attachments={attachments}
           userID={props.userID}
-          militarySetting={militarySetting}
+          militarySetting={props.militarySetting}
         />
         <Actions
           subject={header}
