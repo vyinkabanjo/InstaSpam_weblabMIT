@@ -32,37 +32,44 @@ function makeURLs(links, maxLen) {
 
 // Formats dates sent from the backend, which have two fields:
 // date (milliseconds since epoch) and displayTime
-function formatDate(date) {
+function formatDate(date, displayLong) {
   const dateObj = new Date(date.time);
   const endDateObj = date.end != undefined ? new Date(date.end) : undefined;
-  const fullDisplayOptions = {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  };
 
-  const shortDisplayOptions = {
-    hour12: true,
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  };
+  // Display Options for Date differently depending on if we're displaying its time
+  const displayOptions = date.displayTime
+    ? {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+        weekday: displayLong ? "long" : "short",
+        month: displayLong ? "long" : "short",
+        day: "numeric",
+      }
+    : {
+        hour12: true,
+        weekday: displayLong ? "long" : "short",
+        month: displayLong ? "long" : "short",
+        day: "numeric",
+      };
 
-  const endDisplayOptions = {
-    hour12: true,
-    hour: "numeric",
-    minute: "numeric",
-  };
+  // Get text representations of the start and end date (if it exists)
+  const startText = dateObj.toLocaleString("en-US", displayOptions);
+  const endText = endDateObj != undefined ? endDateObj.toLocaleString("en-US", displayOptions) : "";
 
-  const endText =
-    endDateObj != undefined ? endDateObj.toLocaleString("en-US", endDisplayOptions) : "";
+  // Get rid of the extraneous parts of the end date that we don't need to display
+  const delimiter = " ";
+  const startTokens = startText.replaceAll(",", "").split(delimiter);
+  const endTokens = endText.replaceAll(",", "").split(delimiter);
+  console.log("Start Tokens", startTokens);
+  console.log("End Tokens", endTokens);
+  const filteredEnd = endTokens
+    .filter((word, index) => {
+      return startTokens.indexOf(word) !== index || word.includes("AM") || word.includes("PM");
+    })
+    .join(" ");
 
-  return date.displayTime
-    ? dateObj.toLocaleString("en-US", fullDisplayOptions)
-    : dateObj.toLocaleString("en-US", shortDisplayOptions);
+  return endText.length ? [startText, filteredEnd].join(" \u2013 ") : startText;
 }
 
 const Summary = (props) => {
@@ -76,7 +83,7 @@ const Summary = (props) => {
       {allDates.length ? (
         <span>
           <strong className="Summary-strong">Date(s):</strong>{" "}
-          {allDates.map((date) => formatDate(date)).join("  |  ")}
+          {allDates.map((date) => formatDate(date, allDates.length <= 2)).join("  |  ")}
         </span>
       ) : (
         <></>
