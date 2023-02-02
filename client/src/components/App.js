@@ -52,11 +52,11 @@ const App = () => {
     post("/api/logout").then(setUserID(null));
   };
 
-  // useEffect(() => {
-  //   get("/api/read", { userID: userID }).then((readEmails) => {
-  //     emailsReadSetter(readEmails);
-  //   });
-  // }, [triggerRead, userID]);
+  useEffect(() => {
+    get("/api/read", { userID: userID }).then((readEmails) => {
+      emailsReadSetter(readEmails);
+    });
+  }, [triggerRead, userID]);
 
   useEffect(() => {
     get("/api/flag", { userID: userID }).then((flaggedEmails) => {
@@ -72,10 +72,9 @@ const App = () => {
         emailSetter(emailObjs);
         setIsLoading(false);
       });
-  }, [userID, triggerRead]);
+  }, [userID]);
 
   const ReadEmail = (email_ID, subject) => {
-    setTriggerRead(triggerRead + 1);
     post("/api/read", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
       setTriggerRead(triggerRead + 1);
     });
