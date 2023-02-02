@@ -66,7 +66,7 @@ const App = () => {
 
   useEffect(() => {
     if (userID !== undefined)
-      get("/api/emails", { skip: skip }).then((emailObjs) => {
+      get("/api/emails", { userID: userID, skip: skip }).then((emailObjs) => {
         setSkip(skip + 10);
         emailSetter(emailObjs);
         setIsLoading(false);

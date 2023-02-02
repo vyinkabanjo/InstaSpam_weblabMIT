@@ -12,6 +12,7 @@ var axios = require("axios");
  * @param accessToken: raw access token string
  */
 async function fetch(endpoint, accessToken) {
+  console.log("endpoint is", endpoint);
   const options = {
     headers: {
       Authorization: `Bearer ${accessToken}`,

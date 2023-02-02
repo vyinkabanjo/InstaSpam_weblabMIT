@@ -162,6 +162,34 @@ const getDates = (email_content, timeSent) => {
   );
 };
 
+async function getSettings(req) {
+  try {
+    const settings = await User.findById(req.query.userID).select(
+      "militaryClockDisplay readEmailsDisplay"
+    );
+
+    console.log(await settings);
+    return await settings;
+  } catch (err) {
+    res.status(500).send({ status: 500, error: err });
+  }
+}
+
+// async function getSettings (req) {
+//   try {
+//     const settings = User.findById(req.query.userID)
+//     .select("militaryClockDisplay readEmailsDisplay")
+
+//       console.log(settings);
+//       return settings;
+//     })
+//   }
+
+//     .catch((err) => {
+//       res.status(500).send({ status: 500, error: err });
+//     });
+// };
+
 /**
  * Returns a new Email object that condenses information from the Microsoft Graph API
  * @param {Object} email email object from Microsoft Graph API
@@ -173,13 +201,6 @@ function parseEmail(email, req) {
     senderName: email.from.emailAddress.name,
     header: email.subject,
     hasAttachment: email.hasAttachments,
-    // attachments: [
-    //   getOutlookImage(
-    //     "https://graph.microsoft.com/v1.0/me/mailFolders/inbox/messages/AAMkAGQ5ZmE1OWRhLWEyZjMtNDdjMy05MDkxLWE5ZDdjYjk5MGYxOQBGAAAAAADUUd0brNnoRIN5P34i1rIFBwB61lxwDLvUQqZrtY0R3GwIAAAAAAEMAAAP9LzBTsYnT6xwROru1J9IAAGMHagnAAA=/attachments",
-    //     req.session.accessToken,
-    //     req.session.csrfToken
-    //   ),
-    // ],
     attachments: getImages(email.body.content),
     emailID: email.id,
     content: email.body.content,
@@ -227,18 +248,32 @@ router.get("/user", (req, res) => {
 
 // get emails using Microsoft Graph API
 router.get("/emails", ensureLoggedIn, refreshToken, async (req, res, next) => {
-  try {
-    const graphResponse = await fetch(
-      GRAPH_ME_ENDPOINT + "/messages/" + DORM_SPAM_FILTER + "&$skip=" + String(req.query.skip),
-      req.session.accessToken
-    );
+  console.log("userID is", req.userID);
+  const Settings = await getSettings(req);
+  let UNREAD = "";
+  if (Settings) {
+    if (Settings.readEmailsDisplay === true) {
+      UNREAD = " and isRead eq false";
+    } else {
+      UNREAD = "";
+    }
+    console.log("unread is", UNREAD);
+    try {
+      const graphResponse = await fetch(
+        GRAPH_ME_ENDPOINT +
+          "/messages/" +
+          DORM_SPAM_FILTER +
+          UNREAD +
+          "&$skip=" +
+          String(req.query.skip),
+        req.session.accessToken
+      );
 
-    //TODO: Basic data transformation for now, do more with this
-    // TODO: Do something if "@odata.nextLink" property exists in the graphResponse
-    res.send(graphResponse.value.map((email) => parseEmail(email, req)));
-  } catch (error) {
-    res.status(500);
-    next(error);
+      res.send(graphResponse.value.map((email) => parseEmail(email, req)));
+    } catch (error) {
+      res.status(500);
+      next(error);
+    }
   }
 });
 
