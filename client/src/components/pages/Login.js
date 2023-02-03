@@ -49,7 +49,7 @@ const Login = (props) => {
         <div className="Login-extraInfo">
           <p>
             Created by Team Cache (Nnamdi Obi and Victory Yinka-Banjo) for{" "}
-            <a href="https://weblab.mit.edu/about/" target="_blank">
+            <a href="https://weblab.mit.edu" target="_blank">
               6.9620 web.lab
             </a>
             .
