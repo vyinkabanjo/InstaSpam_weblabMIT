@@ -37,22 +37,23 @@ const Feed = (props) => {
     );
   }
 
-  if (!hasEmails) {
-    return (
-      <section className="u-flexColumn Feed-container u-flex-justifyCenter u-flex-alignCenter Feed-container-empty">
-        <div className="u-flexColumn u-flex-justifyCenter u-flex-alignCenter">
-          <h1>No Unread Emails!</h1>
-          <p>Wait for a while or add some yourself from Outlook!</p>
-        </div>
-      </section>
-    );
-  }
-
   // TODO: delete read emails from DB after clearing them from feed
 
   if (hasEmails) {
     // emailsList = props.emailData;
     emailsList = props.emailData.filter((email) => !props.readEmailIDs.includes(email.emailID));
+
+    if (!emailsList.length) {
+      return (
+        <section className="u-flexColumn Feed-container u-flex-justifyCenter u-flex-alignCenter Feed-container-empty">
+          <div className="u-flexColumn u-flex-justifyCenter u-flex-alignCenter">
+            <h1>No Unread Emails!</h1>
+            <p>Wait for a while or add some yourself from Outlook!</p>
+          </div>
+        </section>
+      );
+    }
+
     startDate = new Date(emailsList[0].timeReceived);
     emailsList = emailsList.map((emailObj, id) => {
       const emailDay = new Date(emailObj.timeReceived).getDate();
