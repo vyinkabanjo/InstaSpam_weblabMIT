@@ -104,10 +104,11 @@ function filterDates(dates, strictness) {
   // We just want to remove dates that Chronos isn't too sure about
   const usableDates = dates.filter((date) => {
     return (
-      Object.keys(date.start.knownValues).length >= strictness && date.text.toLowerCase() !== "now"
+      Object.keys(date.start.knownValues).length >= strictness &&
+      date.text.toLowerCase() !== "now" &&
       // date.start.isCertain("year") &&
-      // date.start.isCertain("month") &&
-      // date.start.isCertain("day")
+      // date.start.isCertain("month")
+      date.start.isCertain("day")
     );
   });
   // Function to check redundancy between dates
