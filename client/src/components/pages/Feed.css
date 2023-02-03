@@ -20,6 +20,14 @@
     text-align: center;
 }
 
+.Feed-warningInfo {
+    width: 60%;
+    position: relative;
+    top: 20px;
+    text-align: center;
+    font-size: .8rem;
+}
+
 @keyframes rotation_anim {
   0% {
     transform: rotate(0deg);

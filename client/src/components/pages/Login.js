@@ -52,6 +52,7 @@ const Login = (props) => {
             <a href="https://weblab.mit.edu/about/" target="_blank">
               6.9620 web.lab
             </a>
+            .
           </p>
         </div>
         <img src={StarVector} id="Login-star-bottomLeft"></img>

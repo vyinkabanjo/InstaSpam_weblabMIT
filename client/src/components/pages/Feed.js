@@ -19,6 +19,7 @@ const Feed = (props) => {
   let emailsList = null;
   let startDate = null;
   const hasEmails = props.emailData.length !== 0;
+  let hasFilteredEmails;
 
   const [militarySetting, setMilitarySetting] = useState();
 
@@ -40,44 +41,50 @@ const Feed = (props) => {
   // TODO: delete read emails from DB after clearing them from feed
 
   if (hasEmails) {
-    // emailsList = props.emailData;
+    emailsList = props.emailData;
     emailsList = props.emailData.filter((email) => !props.readEmailIDs.includes(email.emailID));
-
-    if (!emailsList.length) {
-      return (
-        <section className="u-flexColumn Feed-container u-flex-justifyCenter u-flex-alignCenter Feed-container-empty">
-          <div className="u-flexColumn u-flex-justifyCenter u-flex-alignCenter">
-            <h1>No Unread Emails!</h1>
-            <p>Wait for a while or add some yourself from Outlook!</p>
-          </div>
-        </section>
-      );
-    }
-
-    startDate = new Date(emailsList[0].timeReceived);
-    emailsList = emailsList.map((emailObj, id) => {
-      const emailDay = new Date(emailObj.timeReceived).getDate();
-      const nextDate =
-        id + 1 < emailsList.length ? new Date(emailsList[id + 1].timeReceived) : undefined;
-      const nextDay = nextDate != undefined ? nextDate.getDate() : undefined;
-      return (
-        <div key={id}>
-          <Post
-            key={id}
-            emailData={emailObj}
-            ReadEmail={props.ReadEmail}
-            FlagEmail={props.FlagEmail}
-            unflagEmail={props.unflagEmail}
-            flaggedEmailIDs={props.flaggedEmailIDs}
-            userID={props.userID}
-            militarySetting={militarySetting}
-          />
-          {/* If two emails ever have differing dates, put a divider between them */}
-          {emailDay !== nextDay && nextDay !== undefined ? <Divider date={nextDate} /> : <></>}
-        </div>
-      );
-    });
+    hasFilteredEmails = emailsList.length;
+  } else {
+    hasFilteredEmails = false;
   }
+
+  if (!hasFilteredEmails) {
+    return (
+      <section className="u-flexColumn Feed-container u-flex-justifyCenter u-flex-alignCenter Feed-container-empty">
+        <div className="u-flexColumn u-flex-justifyCenter u-flex-alignCenter">
+          <h1>No Unread Emails!</h1>
+          <p>Wait for a while or add some yourself from Outlook!</p>
+        </div>
+        <p className="Feed-warningInfo">
+          (Note: Instaspam requires dormspam to be sent directly to your email inbox to work.)
+        </p>
+      </section>
+    );
+  }
+
+  startDate = new Date(emailsList[0].timeReceived);
+  emailsList = emailsList.map((emailObj, id) => {
+    const emailDay = new Date(emailObj.timeReceived).getDate();
+    const nextDate =
+      id + 1 < emailsList.length ? new Date(emailsList[id + 1].timeReceived) : undefined;
+    const nextDay = nextDate != undefined ? nextDate.getDate() : undefined;
+    return (
+      <div key={id}>
+        <Post
+          key={id}
+          emailData={emailObj}
+          ReadEmail={props.ReadEmail}
+          FlagEmail={props.FlagEmail}
+          unflagEmail={props.unflagEmail}
+          flaggedEmailIDs={props.flaggedEmailIDs}
+          userID={props.userID}
+          militarySetting={militarySetting}
+        />
+        {/* If two emails ever have differing dates, put a divider between them */}
+        {emailDay !== nextDay && nextDay !== undefined ? <Divider date={nextDate} /> : <></>}
+      </div>
+    );
+  });
   return (
     <>
       <section className="u-flexColumn Feed-container">
