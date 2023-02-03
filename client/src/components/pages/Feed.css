@@ -106,4 +106,9 @@
         margin: 0;
         margin-top: var(--navBarResponsiveHeight);
       }
+
+    .Feed-container-empty {
+        margin-top: var(--navBarResponsiveHeight);
+        height: calc(100vh - var(--navBarResponsiveHeight));
+    }
 }
