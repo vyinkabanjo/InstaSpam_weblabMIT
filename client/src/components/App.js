@@ -75,6 +75,7 @@ const App = () => {
   }, [userID]);
 
   const ReadEmail = (email_ID, subject) => {
+    // Remove object from email list
     emailSetter(emails.filter((email) => email.emailID !== email_ID));
     post("/api/read", { userID: userID, emailID: email_ID, subject: subject }).then(() => {
       setTriggerRead(triggerRead + 1);

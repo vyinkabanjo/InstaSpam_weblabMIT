@@ -69,9 +69,8 @@ const Feed = (props) => {
       id + 1 < emailsList.length ? new Date(emailsList[id + 1].timeReceived) : undefined;
     const nextDay = nextDate != undefined ? nextDate.getDate() : undefined;
     return (
-      <div key={id}>
+      <div key={emailObj.emailID}>
         <Post
-          key={id}
           emailData={emailObj}
           ReadEmail={props.ReadEmail}
           FlagEmail={props.FlagEmail}
