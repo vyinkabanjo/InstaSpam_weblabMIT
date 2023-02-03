@@ -61,7 +61,7 @@ const Post = (props) => {
         time={timeReceived}
         militarySetting={props.militarySetting}
       />
-      <Attachments media={attachments} />
+      <Attachments media={attachments} emailID={emailID} />
       <div className="u-flex u-flex-alignCenter Post-info">
         <Summary
           subject={header}

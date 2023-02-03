@@ -383,6 +383,26 @@ router.get("/flag", (req, res) => {
     });
 });
 
+// Route that gets attachment IDs based on content IDs sent to it, returns a list of attachment objects w/ some basic fields
+router.get("/attachmentIDs", async (req, res, next) => {
+  // Endpoint that selects all attachments of a message (but not the full data byte content since that can take a longgggg time)
+  const message_endpoint = `https://graph.microsoft.com/v1.0/me/messages/${req.query.emailID}/attachments?$select=id,contentType,isInline,size,microsoft.graph.fileAttachment/contentId`;
+  const graphResponse = await fetch(message_endpoint, req.session.accessToken);
+  res.send(
+    graphResponse.value
+      .filter((attachment) => req.query.contentIDs.includes(attachment.contentId))
+      .map((attachment) => attachment.id)
+  );
+});
+
+// Route that gets attachment data for a specific email and attachment
+router.get("/attachment", async (req, res, next) => {
+  // Endpoint that gets attachment data
+  const message_endpoint = `https://graph.microsoft.com/v1.0/me/messages/${req.query.emailID}/attachments/${req.query.attachmentID}`;
+  const graphResponse = await fetch(message_endpoint, req.session.accessToken);
+  res.send(graphResponse);
+});
+
 router.post("/militarySetting", (req, res) => {
   User.updateOne({ _id: req.body.userID }, { militaryClockDisplay: req.body.status })
     .then(() => {})
