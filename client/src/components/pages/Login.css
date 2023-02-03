@@ -64,7 +64,21 @@ h2.Login-prompt {
   height: 50px;
 }
 
-@media only screen and (max-width: 600px) {
+.Login-extraInfo {
+    width: 100vw;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom: 5px;
+    text-align:center;
+    font-size: 1em;
+}
+
+.Login-extraInfo a {
+    color: black;
+}
+
+@media only screen and (max-width: 700px) {
   .Login-buttonContent {
     width: 50vw;
   }
@@ -72,6 +86,12 @@ h2.Login-prompt {
   .Login-buttonContent p {
     display: none;
   }
+}
+
+@media only screen and (max-height: 475px) {
+    .Login-extraInfo {
+        display: none;
+    }
 }
 
 #Login-star-bottomLeft {

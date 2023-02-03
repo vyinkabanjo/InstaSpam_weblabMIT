@@ -46,6 +46,14 @@ const Login = (props) => {
             </button>
           </div>
         </div>
+        <div className="Login-extraInfo">
+          <p>
+            Created by Team Cache for{" "}
+            <a href="https://weblab.mit.edu/about/" target="_blank">
+              6.9620 web.lab
+            </a>
+          </p>
+        </div>
         <img src={StarVector} id="Login-star-bottomLeft"></img>
         <img src={StarVector} id="Login-star-topRight"></img>
       </div>
