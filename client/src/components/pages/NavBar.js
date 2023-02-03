@@ -32,7 +32,11 @@ const gotoProfile = () => {
 };
 
 const goHome = () => {
-  navigate("/");
+  if (window.location.pathname === "/") {
+    window.location.pathname = "/";
+  } else {
+    navigate("/");
+  }
   // window.location.reload();
 };
 
