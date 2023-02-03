@@ -42,7 +42,7 @@ const Feed = (props) => {
 
   if (hasEmails) {
     emailsList = props.emailData;
-    emailsList = props.emailData.filter((email) => !props.readEmailIDs.includes(email.emailID));
+    // emailsList = props.emailData.filter((email) => !props.readEmailIDs.includes(email.emailID));
     hasFilteredEmails = emailsList.length;
   } else {
     hasFilteredEmails = false;
