@@ -1,5 +1,6 @@
 .Login-container {
   position: relative;
+  overflow: hidden;
 }
 
 .Login-textContainer {
@@ -81,24 +82,7 @@ h2.Login-prompt {
     text-decoration: none;
 }
 
-@media only screen and (max-width: 700px) {
-  .Login-buttonContent {
-    width: 50vw;
-  }
-
-  .Login-buttonContent p {
-    display: none;
-  }
-}
-
-@media only screen and (max-height: 475px) {
-    .Login-extraInfo {
-        display: none;
-    }
-}
-
 #Login-star-bottomLeft {
-  overflow: hidden;
   position: absolute;
   left: -10vw;
   top: 65vh;
@@ -114,3 +98,20 @@ h2.Login-prompt {
   transform: rotate(27.99deg);
   z-index: -1;
 }
+
+@media only screen and (max-width: 700px) {
+    .Login-buttonContent {
+        width: 50vw;
+  }
+
+  .Login-buttonContent p {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 475px) {
+    .Login-extraInfo {
+        display: none;
+    }
+}
+
