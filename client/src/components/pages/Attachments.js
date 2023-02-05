@@ -43,13 +43,13 @@ const Attachments = (props) => {
   // Functions for moving carousel widget left or right
   const moveLeft = () => {
     if (activeIndex == 0) {
-      setActiveIndex(useableImages.length - 1);
+      setActiveIndex(allImages.length - 1);
     } else {
-      setActiveIndex((activeIndex - 1) % useableImages.length);
+      setActiveIndex((activeIndex - 1) % allImages.length);
     }
   };
   const moveRight = () => {
-    setActiveIndex((activeIndex + 1) % useableImages.length);
+    setActiveIndex((activeIndex + 1) % allImages.length);
   };
   return allImages.length ? (
     <div className="u-flex Attachment-container">
