@@ -42,7 +42,7 @@ const Attachments = (props) => {
   const allImages = [...useableImages, ...attachmentIDs];
   // Functions for moving carousel widget left or right
   const moveLeft = () => {
-    if (activeIndex == 0) {
+    if (activeIndex === 0) {
       setActiveIndex(allImages.length - 1);
     } else {
       setActiveIndex((activeIndex - 1) % allImages.length);
