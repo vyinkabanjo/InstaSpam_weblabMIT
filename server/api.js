@@ -399,8 +399,12 @@ router.get("/attachmentIDs", async (req, res, next) => {
 router.get("/attachment", async (req, res, next) => {
   // Endpoint that gets attachment data
   const message_endpoint = `https://graph.microsoft.com/v1.0/me/messages/${req.query.emailID}/attachments/${req.query.attachmentID}`;
-  const graphResponse = await fetch(message_endpoint, req.session.accessToken);
-  res.send(graphResponse);
+  try {
+    const graphResponse = await fetch(message_endpoint, req.session.accessToken);
+    res.send(graphResponse);
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.post("/militarySetting", (req, res) => {

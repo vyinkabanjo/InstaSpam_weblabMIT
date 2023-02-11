@@ -37,6 +37,11 @@
     object-fit: scale-down;
 }
 
+.Attachment-error {
+    display: flex;
+    align-items: center;
+}
+
 .Attachment-button {
     background-color: transparent;
     border: none;
@@ -44,10 +49,22 @@
     /* margin: 0px 20px; */
 }
 
+.Attachment-button img {
+    will-change: transform;
+    transition: transform .2s;
+}
+
+.Attachment-button:hover img{
+    transform: scale(.9);
+    transition: transform .1s ease;
+}
+
 .Attachment-button:nth-child(1) {
-    margin-right: 20px;
+    /* margin-right: 20px; */
+    padding-right: 20px;
 }
 
 .Attachment-button:nth-child(3) {
-    margin-left: 20px;
+    /* margin-left: 20px; */
+    padding-left: 20px;
 }

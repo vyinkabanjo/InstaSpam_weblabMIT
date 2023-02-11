@@ -15,24 +15,35 @@ import StarVector from "../../public/icons/Star Vector.svg";
 
 const OutlookAttachment = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isValid, setIsValid] = useState(true);
   const [imgData, setImgData] = useState("");
   useEffect(() => {
     get("api/attachment", { emailID: props.emailID, attachmentID: props.attachmentID })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setImgData(response);
         setIsLoaded(true);
       })
       .catch((error) => {
-        console.log(error);
+        // TODO: Return error image/p tag
+        // console.log(error);
+        setIsValid(false);
         setIsLoaded(true);
       });
   }, []);
+  // If the image is still loading, display the loading screen
   return isLoaded ? (
-    <img
-      src={`data:${imgData.contentType};base64,${imgData.contentBytes}`}
-      className="Attachment-image"
-    />
+    // If the image was able to be loaded, display it
+    isValid ? (
+      <img
+        src={`data:${imgData.contentType};base64,${imgData.contentBytes}`}
+        className="Attachment-image"
+      />
+    ) : (
+      <div className="Attachment-error">
+        <p>Error getting email attachment.</p>
+      </div>
+    )
   ) : (
     <img src={StarVector} alt="Loading" className="Feed-loading" />
   );

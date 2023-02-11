@@ -32,7 +32,7 @@ const Attachments = (props) => {
       get("/api/attachmentIDs", { emailID: props.emailID, contentIDs: cidImages }).then(
         (response) => {
           setAttachmentIDs(response);
-          console.log(response);
+          // console.log(response);
         }
       );
     }
