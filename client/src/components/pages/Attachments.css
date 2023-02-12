@@ -55,7 +55,11 @@
 }
 
 .Attachment-button:hover img{
-    transform: scale(.9);
+    transform: scale(.95);
+    transition: transform .1s ease;
+}
+.Attachment-button:active img{
+    transform: scale(.85);
     transition: transform .1s ease;
 }
 
